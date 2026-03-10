@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>✈ Our Travel App</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:#0a0f0a;--bg2:#111811;--bg3:#172017;--card:#1a241a;--card2:#1f2d1f;
+      --border:#2a3d2a;--green:#4ade80;--green2:#22c55e;--green3:#16a34a;
+      --green-dim:#166534;--green-glow:#4ade8033;--text:#e8f5e8;--text2:#a3bfa3;
+      --text3:#6b8f6b;--red:#f87171;--yellow:#fbbf24;--radius:14px;--radius-sm:8px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.4}
+
+    /* LOGIN */
+    #login-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem;position:relative;z-index:1}
+    .login-glow{position:absolute;width:600px;height:600px;background:radial-gradient(circle,#4ade8015 0%,transparent 70%);pointer-events:none}
+    .login-box{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:3rem;max-width:420px;width:100%;text-align:center;position:relative;box-shadow:0 0 80px #4ade8010,0 32px 64px #00000060}
+    .login-box .plane{font-size:3.5rem;margin-bottom:1.5rem;display:block;animation:float 3s ease-in-out infinite}
+    @keyframes float{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-10px) rotate(5deg)}}
+    .login-box h1{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--green);margin-bottom:.5rem;letter-spacing:-.5px}
+    .login-box p{color:var(--text2);font-size:.95rem;margin-bottom:2.5rem;line-height:1.6}
+    .btn-google{display:flex;align-items:center;justify-content:center;gap:.75rem;width:100%;padding:.875rem 1.5rem;background:var(--green);color:#0a0f0a;border:none;border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:600;cursor:pointer;transition:all .2s;box-shadow:0 0 24px var(--green-glow)}
+    .btn-google:hover{background:var(--green2);transform:translateY(-2px);box-shadow:0 0 40px #4ade8050}
+    .btn-google svg{width:20px;height:20px;flex-shrink:0}
+    #config-notice{display:none;background:#1a1505;border:1px solid #fbbf2440;border-radius:var(--radius);padding:1.25rem;margin-top:1.5rem;text-align:left}
+    #config-notice p{color:var(--yellow);font-size:.85rem;line-height:1.6}
+    #config-notice code{background:#2a2005;padding:2px 6px;border-radius:4px;font-family:monospace;font-size:.8rem;color:var(--yellow)}
+
+    /* APP */
+    #app{display:none;position:relative;z-index:1}
+    header{position:sticky;top:0;z-index:100;background:#0a0f0aee;backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:60px}
+    .header-logo{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:800;color:var(--green);letter-spacing:-.5px;display:flex;align-items:center;gap:.5rem}
+    .header-user{display:flex;align-items:center;gap:.75rem}
+    .user-avatar{width:32px;height:32px;border-radius:50%;border:2px solid var(--green-dim);object-fit:cover}
+    .user-name{font-size:.85rem;color:var(--text2);display:none}
+    @media(min-width:640px){.user-name{display:block}}
+    .btn-signout{background:transparent;border:1px solid var(--border);color:var(--text3);border-radius:var(--radius-sm);padding:.3rem .75rem;font-size:.8rem;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
+    .btn-signout:hover{border-color:var(--red);color:var(--red)}
+
+    /* NAV */
+    nav{display:flex;gap:.25rem;padding:.75rem 1.5rem;background:var(--bg2);border-bottom:1px solid var(--border);overflow-x:auto}
+    nav::-webkit-scrollbar{display:none}
+    .tab{display:flex;align-items:center;gap:.4rem;padding:.5rem 1rem;border-radius:var(--radius-sm);border:none;background:transparent;color:var(--text3);font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:500;cursor:pointer;transition:all .2s;white-space:nowrap}
+    .tab:hover{color:var(--text2);background:var(--card)}
+    .tab.active{background:var(--green-dim);color:var(--green);font-weight:600}
+
+    /* MAIN */
+    main{max-width:960px;margin:0 auto;padding:2rem 1.5rem}
+    .section{display:none}.section.active{display:block}
+    .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.75rem;flex-wrap:wrap;gap:1rem}
+    .section-title{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:700;color:var(--text);letter-spacing:-.5px}
+    .section-title span{color:var(--green)}
+
+    /* BUTTONS */
+    .btn{display:inline-flex;align-items:center;gap:.4rem;padding:.6rem 1.25rem;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:600;cursor:pointer;transition:all .2s;border:none}
+    .btn-primary{background:var(--green);color:#0a0f0a;box-shadow:0 0 16px var(--green-glow)}
+    .btn-primary:hover{background:var(--green2);transform:translateY(-1px);box-shadow:0 0 28px #4ade8050}
+    .btn-secondary{background:var(--card2);color:var(--text2);border:1px solid var(--border)}
+    .btn-secondary:hover{background:var(--card);color:var(--text)}
+    .btn-danger{background:transparent;color:var(--red);border:1px solid #f8717130}
+    .btn-danger:hover{background:#f8717115}
+    .btn-sm{padding:.35rem .75rem;font-size:.8rem}
+
+    /* CARDS */
+    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;transition:border-color .2s,box-shadow .2s}
+    .card:hover{border-color:var(--green-dim);box-shadow:0 0 20px #4ade8008}
+    .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem}
+    .card-title{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;color:var(--text);margin-bottom:.4rem}
+    .card-meta{font-size:.82rem;color:var(--text3);display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin-bottom:.75rem}
+    .card-actions{display:flex;gap:.5rem;margin-top:1rem;flex-wrap:wrap}
+
+    /* BADGES */
+    .badge{display:inline-flex;align-items:center;padding:.2rem .6rem;border-radius:999px;font-size:.75rem;font-weight:600}
+    .badge-green{background:#16a34a30;color:var(--green)}
+    .badge-yellow{background:#fbbf2420;color:var(--yellow)}
+    .badge-gray{background:var(--card2);color:var(--text3)}
+
+    /* MODAL */
+    .modal-overlay{display:none;position:fixed;inset:0;background:#00000090;backdrop-filter:blur(4px);z-index:1000;align-items:center;justify-content:center;padding:1rem}
+    .modal-overlay.open{display:flex}
+    .modal{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2rem;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;box-shadow:0 32px 80px #00000080;animation:modalIn .25s ease}
+    @keyframes modalIn{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+    .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
+    .modal-title{font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:700;color:var(--text)}
+    .modal-close{background:var(--card2);border:1px solid var(--border);color:var(--text3);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .2s}
+    .modal-close:hover{color:var(--red);border-color:var(--red)}
+
+    /* FORMS */
+    .form-group{margin-bottom:1.1rem}
+    .form-label{display:block;font-size:.82rem;font-weight:600;color:var(--text2);margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.5px}
+    .form-input,.form-select,.form-textarea{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.65rem .9rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.95rem;transition:border-color .2s,box-shadow .2s;outline:none}
+    .form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--green-dim);box-shadow:0 0 0 3px #4ade8015}
+    .form-select{cursor:pointer}.form-select option{background:var(--bg3)}
+    .form-textarea{resize:vertical;min-height:80px}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+    .form-actions{display:flex;gap:.75rem;justify-content:flex-end;margin-top:1.5rem}
+
+    /* EMPTY STATE */
+    .empty-state{text-align:center;padding:4rem 2rem;color:var(--text3)}
+    .empty-state .emoji{font-size:3rem;margin-bottom:1rem;display:block}
+    .empty-state h3{font-family:'Syne',sans-serif;font-size:1.2rem;color:var(--text2);margin-bottom:.5rem}
+    .empty-state p{font-size:.9rem}
+
+    /* SYNC BAR */
+    .sync-bar{display:flex;align-items:center;gap:.75rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:.75rem 1.25rem;margin-bottom:1.5rem;font-size:.85rem}
+    .sync-dot{width:8px;height:8px;border-radius:50%;background:var(--text3);flex-shrink:0}
+    .sync-dot.synced{background:var(--green);box-shadow:0 0 8px var(--green)}
+    .sync-dot.syncing{background:var(--yellow);animation:pulse 1s infinite}
+    .sync-dot.error{background:var(--red)}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+    .sync-text{color:var(--text2);flex:1}
+    .sync-time{color:var(--text3);font-size:.78rem}
+
+    /* PRIORITY BORDERS */
+    .priority-dream{border-left:3px solid var(--green)}
+    .priority-next{border-left:3px solid var(--yellow)}
+    .priority-someday{border-left:3px solid var(--text3)}
+
+    /* MAPS LINK */
+    .maps-link{display:inline-flex;align-items:center;gap:.3rem;color:var(--green);font-size:.82rem;text-decoration:none;transition:opacity .2s}
+    .maps-link:hover{opacity:.75}
+
+    /* TRIPS */
+    .trip-card{position:relative;overflow:hidden}
+    .trip-status-bar{position:absolute;top:0;left:0;right:0;height:3px}
+    .trip-status-bar.planning{background:var(--yellow)}
+    .trip-status-bar.booked{background:var(--green)}
+    .trip-status-bar.completed{background:var(--text3)}
+
+    /* FILE LIST */
+    .file-item{display:flex;align-items:center;justify-content:space-between;padding:.5rem .75rem;background:var(--bg3);border-radius:var(--radius-sm);margin-bottom:.4rem;font-size:.85rem}
+    .file-item-name{display:flex;align-items:center;gap:.5rem;color:var(--text2);overflow:hidden}
+    .file-item-name span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .file-upload-area{border:2px dashed var(--border);border-radius:var(--radius-sm);padding:1.5rem;text-align:center;cursor:pointer;transition:all .2s;color:var(--text3);font-size:.9rem;margin-top:.75rem}
+    .file-upload-area:hover{border-color:var(--green-dim);color:var(--text2);background:#4ade8005}
+
+    /* CHECKLIST */
+    .checklist-item{display:flex;align-items:center;gap:.75rem;padding:.6rem 0;border-bottom:1px solid var(--border)}
+    .checklist-item:last-child{border-bottom:none}
+    .checklist-item input[type="checkbox"]{width:18px;height:18px;accent-color:var(--green);cursor:pointer;flex-shrink:0}
+    .checklist-item label{flex:1;font-size:.95rem;cursor:pointer;transition:color .2s}
+    .checklist-item.done label{text-decoration:line-through;color:var(--text3)}
+    .checklist-add{display:flex;gap:.5rem;margin-top:1rem}
+    .checklist-add input{flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.55rem .9rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.9rem;outline:none}
+    .checklist-add input:focus{border-color:var(--green-dim)}
+
+    /* BUDGET */
+    .budget-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem}
+    .budget-stat{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;text-align:center}
+    .budget-stat-value{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;color:var(--green);margin-bottom:.3rem}
+    .budget-stat-label{font-size:.78rem;color:var(--text3);text-transform:uppercase;letter-spacing:.5px}
+    .budget-table{width:100%;border-collapse:collapse}
+    .budget-table th{text-align:left;font-size:.78rem;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);padding:.5rem .75rem;border-bottom:1px solid var(--border)}
+    .budget-table td{padding:.75rem .75rem;font-size:.9rem;border-bottom:1px solid var(--border);color:var(--text2)}
+    .budget-table tr:last-child td{border-bottom:none}
+    .budget-table tr:hover td{background:var(--card2)}
+    .amount-positive{color:var(--green);font-weight:600}
+    .amount-over{color:var(--red);font-weight:600}
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar{width:6px;height:6px}
+    ::-webkit-scrollbar-track{background:var(--bg2)}
+    ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+    ::-webkit-scrollbar-thumb:hover{background:var(--green-dim)}
+
+    /* TOAST */
+    #toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:.85rem 1.25rem;font-size:.9rem;color:var(--text);z-index:9999;box-shadow:0 8px 32px #00000060;transform:translateY(100px);opacity:0;transition:all .3s ease;max-width:320px}
+    #toast.show{transform:translateY(0);opacity:1}
+    #toast.success{border-color:var(--green-dim);color:var(--green)}
+    #toast.error{border-color:#f8717150;color:var(--red)}
+
+    /* SPINNER */
+    .spinner{width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--green);border-radius:50%;animation:spin .8s linear infinite;display:inline-block}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    @media(max-width:600px){.form-row{grid-template-columns:1fr}.budget-summary{grid-template-columns:1fr}.card-grid{grid-template-columns:1fr}main{padding:1.25rem 1rem}}
+  </style>
+</head>
+<body>
+
+<div id="login-screen">
+  <div class="login-glow"></div>
+  <div class="login-box">
+    <span class="plane">✈️</span>
+    <h1>Our Travel App</h1>
+    <p>Plan trips together, store documents, and track your adventures — all synced via Google Drive.</p>
+    <button class="btn-google" id="btn-login">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+      Sign in with Google
+    </button>
+    <div id="config-notice">
+      <p>⚠️ <strong>Setup required:</strong> Open this file and replace <code>YOUR_CLIENT_ID_HERE</code> with your actual OAuth Client ID before using the app.</p>
+    </div>
+  </div>
+</div>
+
+<div id="app">
+  <header>
+    <div class="header-logo">✈ travels</div>
+    <div class="header-user">
+      <img class="user-avatar" id="user-avatar" src="" alt="" />
+      <span class="user-name" id="user-name"></span>
+      <button class="btn-signout" id="btn-signout">Sign out</button>
+    </div>
+  </header>
+
+  <nav>
+    <button class="tab active" data-tab="wishlist"><span>🌍</span> Wishlist</button>
+    <button class="tab" data-tab="trips"><span>✈️</span> Trips</button>
+    <button class="tab" data-tab="checklist"><span>📋</span> Checklists</button>
+    <button class="tab" data-tab="budget"><span>💰</span> Budget</button>
+  </nav>
+
+  <main>
+    <div class="sync-bar">
+      <div class="sync-dot" id="sync-dot"></div>
+      <span class="sync-text" id="sync-text">Connecting to Google Drive...</span>
+      <span class="sync-time" id="sync-time"></span>
+      <button class="btn btn-secondary btn-sm" id="btn-sync">↻ Sync</button>
+    </div>
+
+    <section id="section-wishlist" class="section active">
+      <div class="section-header">
+        <h2 class="section-title">Places We <span>Want to Visit</span></h2>
+        <button class="btn btn-primary" id="btn-add-wish">+ Add Place</button>
+      </div>
+      <div class="card-grid" id="wishlist-grid"></div>
+    </section>
+
+    <section id="section-trips" class="section">
+      <div class="section-header">
+        <h2 class="section-title">Our <span>Trips</span></h2>
+        <button class="btn btn-primary" id="btn-add-trip">+ Add Trip</button>
+      </div>
+      <div class="card-grid" id="trips-grid"></div>
+    </section>
+
+    <section id="section-checklist" class="section">
+      <div class="section-header">
+        <h2 class="section-title">Packing <span>Checklists</span></h2>
+        <button class="btn btn-primary" id="btn-add-checklist">+ New Checklist</button>
+      </div>
+      <div class="card-grid" id="checklist-grid"></div>
+    </section>
+
+    <section id="section-budget" class="section">
+      <div class="section-header">
+        <h2 class="section-title">Trip <span>Budget</span></h2>
+        <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap">
+          <select class="form-select" id="budget-trip-select" style="width:auto;padding:.5rem .75rem"><option value="">Select trip...</option></select>
+          <button class="btn btn-primary" id="btn-add-expense">+ Add Expense</button>
+        </div>
+      </div>
+      <div class="budget-summary">
+        <div class="budget-stat"><div class="budget-stat-value" id="bs-estimated">$0</div><div class="budget-stat-label">Estimated</div></div>
+        <div class="budget-stat"><div class="budget-stat-value" id="bs-actual">$0</div><div class="budget-stat-label">Actual Spent</div></div>
+        <div class="budget-stat"><div class="budget-stat-value" id="bs-remaining">$0</div><div class="budget-stat-label">Remaining</div></div>
+      </div>
+      <div class="card">
+        <table class="budget-table">
+          <thead><tr><th>Category</th><th>Description</th><th>Estimated</th><th>Actual</th><th>Paid by</th><th></th></tr></thead>
+          <tbody id="budget-tbody"><tr><td colspan="6" style="text-align:center;color:var(--text3);padding:2rem">Select a trip to view expenses</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- WISHLIST MODAL -->
+<div class="modal-overlay" id="modal-wish">
+  <div class="modal">
+    <div class="modal-header"><span class="modal-title" id="wish-modal-title">Add Place</span><button class="modal-close" data-close="modal-wish">✕</button></div>
+    <div class="form-group"><label class="form-label">Place / Destination *</label><input class="form-input" id="wish-name" placeholder="e.g. Kyoto, Japan" /></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Country</label><input class="form-input" id="wish-country" placeholder="Japan" /></div>
+      <div class="form-group"><label class="form-label">Type</label>
+        <select class="form-select" id="wish-type">
+          <option value="city">🏙 City</option><option value="beach">🏖 Beach</option><option value="nature">🌿 Nature</option>
+          <option value="cultural">🏛 Cultural</option><option value="adventure">🧗 Adventure</option><option value="other">📍 Other</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Priority</label>
+        <select class="form-select" id="wish-priority">
+          <option value="dream">⭐ Dream Trip</option><option value="next">🔜 Next Up</option><option value="someday">☁ Someday</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label">Suggested by</label>
+        <select class="form-select" id="wish-by"><option value="me">Me</option><option value="partner">Partner</option><option value="both">Both of us</option></select>
+      </div>
+    </div>
+    <div class="form-group"><label class="form-label">Google Maps Link</label><input class="form-input" id="wish-maps" placeholder="Paste Google Maps URL here" /></div>
+    <div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="wish-notes" placeholder="Things to do, restaurants, tips..."></textarea></div>
+    <div class="form-actions"><button class="btn btn-secondary" data-close="modal-wish">Cancel</button><button class="btn btn-primary" id="btn-save-wish">Save Place</button></div>
+  </div>
+</div>
+
+<!-- TRIP MODAL -->
+<div class="modal-overlay" id="modal-trip">
+  <div class="modal">
+    <div class="modal-header"><span class="modal-title" id="trip-modal-title">Add Trip</span><button class="modal-close" data-close="modal-trip">✕</button></div>
+    <div class="form-group"><label class="form-label">Trip Name *</label><input class="form-input" id="trip-name" placeholder="e.g. Japan Spring 2025" /></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Destination</label><input class="form-input" id="trip-dest" placeholder="Tokyo, Japan" /></div>
+      <div class="form-group"><label class="form-label">Status</label>
+        <select class="form-select" id="trip-status">
+          <option value="planning">📝 Planning</option><option value="booked">✅ Booked</option><option value="completed">✔ Completed</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Start Date</label><input class="form-input" type="date" id="trip-start" /></div>
+      <div class="form-group"><label class="form-label">End Date</label><input class="form-input" type="date" id="trip-end" /></div>
+    </div>
+    <div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="trip-notes" placeholder="Hotels, itinerary notes..."></textarea></div>
+    <div class="form-actions"><button class="btn btn-secondary" data-close="modal-trip">Cancel</button><button class="btn btn-primary" id="btn-save-trip">Save Trip</button></div>
+  </div>
+</div>
+
+<!-- CHECKLIST MODAL -->
+<div class="modal-overlay" id="modal-checklist">
+  <div class="modal">
+    <div class="modal-header"><span class="modal-title">New Checklist</span><button class="modal-close" data-close="modal-checklist">✕</button></div>
+    <div class="form-group"><label class="form-label">Checklist Name *</label><input class="form-input" id="checklist-name" placeholder="e.g. Japan Packing List" /></div>
+    <div class="form-group"><label class="form-label">Linked Trip (optional)</label>
+      <select class="form-select" id="checklist-trip"><option value="">No trip linked</option></select>
+    </div>
+    <div class="form-actions"><button class="btn btn-secondary" data-close="modal-checklist">Cancel</button><button class="btn btn-primary" id="btn-save-checklist">Create Checklist</button></div>
+  </div>
+</div>
+
+<!-- EXPENSE MODAL -->
+<div class="modal-overlay" id="modal-expense">
+  <div class="modal">
+    <div class="modal-header"><span class="modal-title">Add Expense</span><button class="modal-close" data-close="modal-expense">✕</button></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Category</label>
+        <select class="form-select" id="exp-category">
+          <option value="flights">✈️ Flights</option><option value="accommodation">🏨 Accommodation</option>
+          <option value="food">🍜 Food</option><option value="transport">🚌 Transport</option>
+          <option value="activities">🎭 Activities</option><option value="shopping">🛍 Shopping</option><option value="other">📌 Other</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label">Paid by</label>
+        <select class="form-select" id="exp-paidby"><option value="me">Me</option><option value="partner">Partner</option><option value="split">Split</option></select>
+      </div>
+    </div>
+    <div class="form-group"><label class="form-label">Description</label><input class="form-input" id="exp-desc" placeholder="e.g. Return flights Tokyo" /></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Estimated ($)</label><input class="form-input" type="number" id="exp-estimated" placeholder="0.00" min="0" step="0.01" /></div>
+      <div class="form-group"><label class="form-label">Actual ($)</label><input class="form-input" type="number" id="exp-actual" placeholder="0.00" min="0" step="0.01" /></div>
+    </div>
+    <div class="form-actions"><button class="btn btn-secondary" data-close="modal-expense">Cancel</button><button class="btn btn-primary" id="btn-save-expense">Save Expense</button></div>
+  </div>
+</div>
+
+<!-- TRIP DETAIL MODAL -->
+<div class="modal-overlay" id="modal-trip-detail">
+  <div class="modal" style="max-width:600px">
+    <div class="modal-header"><span class="modal-title" id="detail-title">Trip Documents</span><button class="modal-close" data-close="modal-trip-detail">✕</button></div>
+    <div id="detail-content"></div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════
+// ⚙️  SET YOUR CLIENT ID HERE
+// ══════════════════════════════════════════
+const CLIENT_ID = '633441558716-3lbaitogvc09hr2pu4hqp254fbgci2s5.apps.googleusercontent.com';
+// ══════════════════════════════════════════
+
+const SCOPES = 'https://www.googleapis.com/auth/drive.file';
+const DATA_FILE_NAME = 'travel-app-data.json';
+
+let appData = { wishlist:[], trips:[], checklists:[], budget:[] };
+let driveFileId = null;
+let tokenClient = null;
+let editingId = null;
+
+function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2); }
+
+function showToast(msg, type='success'){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.className=`show ${type}`;
+  setTimeout(()=>t.className='',3000);
+}
+
+function setSyncState(state,text,time=''){
+  document.getElementById('sync-dot').className=`sync-dot ${state}`;
+  document.getElementById('sync-text').textContent=text;
+  document.getElementById('sync-time').textContent=time;
+}
+
+// ── AUTH ──
+function initGoogle(){
+  if(!CLIENT_ID||CLIENT_ID.includes('YOUR_CLIENT_ID')){
+    document.getElementById('config-notice').style.display='block'; return;
+  }
+  const s1=document.createElement('script'); s1.src='https://accounts.google.com/gsi/client';
+  s1.onload=()=>{
+    tokenClient=google.accounts.oauth2.initTokenClient({
+      client_id:CLIENT_ID, scope:SCOPES, callback:onTokenReceived
+    });
+  };
+  document.head.appendChild(s1);
+  const s2=document.createElement('script'); s2.src='https://apis.google.com/js/api.js';
+  s2.onload=()=>gapi.load('client',()=>gapi.client.init({
+    discoveryDocs:['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest']
+  }));
+  document.head.appendChild(s2);
+}
+
+function onTokenReceived(r){
+  if(r.error){ showToast('Sign in failed','error'); return; }
+  fetch('https://www.googleapis.com/oauth2/v3/userinfo',{
+    headers:{Authorization:'Bearer '+gapi.client.getToken().access_token}
+  }).then(x=>x.json()).then(info=>{
+    document.getElementById('user-avatar').src=info.picture||'';
+    document.getElementById('user-name').textContent=info.name||info.email||'';
+  });
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('app').style.display='block';
+  loadFromDrive();
+}
+
+document.getElementById('btn-login').addEventListener('click',()=>{
+  if(!tokenClient){ showToast('Set your CLIENT_ID first','error'); return; }
+  tokenClient.requestAccessToken();
+});
+
+document.getElementById('btn-signout').addEventListener('click',()=>{
+  const t=gapi.client.getToken();
+  if(t) google.accounts.oauth2.revoke(t.access_token);
+  gapi.client.setToken(null);
+  document.getElementById('app').style.display='none';
+  document.getElementById('login-screen').style.display='flex';
+  driveFileId=null;
+});
+
+// ── DRIVE ──
+async function loadFromDrive(){
+  setSyncState('syncing','Loading from Google Drive...');
+  try{
+    const res=await gapi.client.drive.files.list({
+      q:`name='${DATA_FILE_NAME}' and trashed=false`,
+      fields:'files(id,name)', spaces:'drive'
+    });
+    const files=res.result.files;
+    if(files.length>0){
+      driveFileId=files[0].id;
+      const c=await gapi.client.drive.files.get({fileId:driveFileId,alt:'media'});
+      appData=JSON.parse(c.body);
+    } else { await saveToDrive(); }
+    setSyncState('synced','Synced with Google Drive','just now');
+    renderAll();
+  }catch(e){
+    setSyncState('error','Drive error — working offline');
+    showToast('Could not load from Drive','error');
+    renderAll();
+  }
+}
+
+async function saveToDrive(){
+  setSyncState('syncing','Saving to Google Drive...');
+  const json=JSON.stringify(appData,null,2);
+  const token=gapi.client.getToken()?.access_token;
+  try{
+    if(driveFileId){
+      await fetch(`https://www.googleapis.com/upload/drive/v3/files/${driveFileId}?uploadType=media`,{
+        method:'PATCH',
+        headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},
+        body:json
+      });
+    } else {
+      const m=await gapi.client.drive.files.create({resource:{name:DATA_FILE_NAME,mimeType:'application/json'},fields:'id'});
+      driveFileId=m.result.id;
+      await fetch(`https://www.googleapis.com/upload/drive/v3/files/${driveFileId}?uploadType=media`,{
+        method:'PATCH',
+        headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},
+        body:json
+      });
+    }
+    setSyncState('synced','Synced with Google Drive',`Last saved ${new Date().toLocaleTimeString()}`);
+  }catch(e){ setSyncState('error','Save failed'); showToast('Could not save to Drive','error'); }
+}
+
+document.getElementById('btn-sync').addEventListener('click',loadFromDrive);
+
+// ── TABS ──
+document.querySelectorAll('.tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('section-'+tab.dataset.tab).classList.add('active');
+  });
+});
+
+// ── MODALS ──
+function openModal(id){ document.getElementById(id).classList.add('open'); }
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>closeModal(b.dataset.close)));
+document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{ if(e.target===o) o.classList.remove('open'); }));
+
+// ══ WISHLIST ══
+function renderWishlist(){
+  const grid=document.getElementById('wishlist-grid');
+  if(!appData.wishlist.length){
+    grid.innerHTML=`<div class="empty-state" style="grid-column:1/-1"><span class="emoji">🗺️</span><h3>No places yet</h3><p>Start adding destinations you'd love to visit together.</p></div>`;
+    return;
+  }
+  const te={city:'🏙',beach:'🏖',nature:'🌿',cultural:'🏛',adventure:'🧗',other:'📍'};
+  const pl={dream:'⭐ Dream Trip',next:'🔜 Next Up',someday:'☁ Someday'};
+  const pb={dream:'badge-green',next:'badge-yellow',someday:'badge-gray'};
+  grid.innerHTML=appData.wishlist.map(w=>`
+    <div class="card priority-${w.priority}">
+      <div class="card-title">${te[w.type]||'📍'} ${w.name}</div>
+      <div class="card-meta">
+        ${w.country?`<span>${w.country}</span>`:''}
+        <span class="badge ${pb[w.priority]}">${pl[w.priority]}</span>
+        <span>by ${w.suggestedBy}</span>
+      </div>
+      ${w.mapsLink?`<a class="maps-link" href="${w.mapsLink}" target="_blank">📍 Open in Maps ↗</a>`:''}
+      ${w.notes?`<p style="font-size:.85rem;color:var(--text2);margin-top:.5rem;line-height:1.5">${w.notes}</p>`:''}
+      <div class="card-actions">
+        <button class="btn btn-secondary btn-sm" onclick="editWish('${w.id}')">✏ Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteWish('${w.id}')">🗑 Remove</button>
+      </div>
+    </div>`).join('');
+}
+
+document.getElementById('btn-add-wish').addEventListener('click',()=>{
+  editingId=null;
+  document.getElementById('wish-modal-title').textContent='Add Place';
+  ['wish-name','wish-country','wish-maps','wish-notes'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('wish-priority').value='dream';
+  document.getElementById('wish-type').value='city';
+  document.getElementById('wish-by').value='me';
+  openModal('modal-wish');
+});
+
+function editWish(id){
+  const w=appData.wishlist.find(x=>x.id===id); if(!w) return;
+  editingId=id;
+  document.getElementById('wish-modal-title').textContent='Edit Place';
+  document.getElementById('wish-name').value=w.name;
+  document.getElementById('wish-country').value=w.country||'';
+  document.getElementById('wish-type').value=w.type;
+  document.getElementById('wish-priority').value=w.priority;
+  document.getElementById('wish-by').value=w.suggestedBy;
+  document.getElementById('wish-maps').value=w.mapsLink||'';
+  document.getElementById('wish-notes').value=w.notes||'';
+  openModal('modal-wish');
+}
+
+document.getElementById('btn-save-wish').addEventListener('click',()=>{
+  const name=document.getElementById('wish-name').value.trim();
+  if(!name){ showToast('Please enter a place name','error'); return; }
+  const item={
+    id:editingId||uid(), name,
+    country:document.getElementById('wish-country').value.trim(),
+    type:document.getElementById('wish-type').value,
+    priority:document.getElementById('wish-priority').value,
+    suggestedBy:document.getElementById('wish-by').value,
+    mapsLink:document.getElementById('wish-maps').value.trim(),
+    notes:document.getElementById('wish-notes').value.trim(),
+    createdAt:editingId?appData.wishlist.find(x=>x.id===editingId)?.createdAt:Date.now()
+  };
+  if(editingId) appData.wishlist=appData.wishlist.map(x=>x.id===editingId?item:x);
+  else appData.wishlist.push(item);
+  closeModal('modal-wish'); renderWishlist(); saveToDrive();
+  showToast(editingId?'Place updated!':'Place added!');
+});
+
+function deleteWish(id){
+  if(!confirm('Remove this place?')) return;
+  appData.wishlist=appData.wishlist.filter(x=>x.id!==id);
+  renderWishlist(); saveToDrive(); showToast('Place removed');
+}
+
+// ══ TRIPS ══
+function renderTrips(){
+  const grid=document.getElementById('trips-grid');
+  const sb={planning:'badge-yellow',booked:'badge-green',completed:'badge-gray'};
+  const sl={planning:'📝 Planning',booked:'✅ Booked',completed:'✔ Completed'};
+  if(!appData.trips.length){
+    grid.innerHTML=`<div class="empty-state" style="grid-column:1/-1"><span class="emoji">🛫</span><h3>No trips yet</h3><p>Add your planned or past trips here.</p></div>`;
+  } else {
+    grid.innerHTML=appData.trips.map(t=>{
+      const fc=(t.files||[]).length;
+      return `<div class="card trip-card">
+        <div class="trip-status-bar ${t.status}"></div>
+        <div class="card-title" style="margin-top:.5rem">${t.name}</div>
+        <div style="font-size:.82rem;color:var(--text3)">${t.destination||''}</div>
+        <div class="card-meta" style="margin-top:.5rem">
+          ${t.startDate?`<span>📅 ${t.startDate}${t.endDate?' → '+t.endDate:''}</span>`:''}
+          <span class="badge ${sb[t.status]}">${sl[t.status]}</span>
+        </div>
+        ${t.notes?`<p style="font-size:.85rem;color:var(--text2);margin-top:.5rem;line-height:1.5">${t.notes}</p>`:''}
+        <div style="font-size:.82rem;color:var(--text3);margin-top:.5rem">📎 ${fc} document${fc!==1?'s':''}</div>
+        <div class="card-actions">
+          <button class="btn btn-secondary btn-sm" onclick="openTripDetail('${t.id}')">📂 Documents</button>
+          <button class="btn btn-secondary btn-sm" onclick="editTrip('${t.id}')">✏ Edit</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteTrip('${t.id}')">🗑</button>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  const sel=document.getElementById('budget-trip-select');
+  const prev=sel.value;
+  sel.innerHTML='<option value="">Select trip...</option>'+appData.trips.map(t=>`<option value="${t.id}">${t.name}</option>`).join('');
+  if(prev) sel.value=prev;
+
+  const csel=document.getElementById('checklist-trip');
+  csel.innerHTML='<option value="">No trip linked</option>'+appData.trips.map(t=>`<option value="${t.id}">${t.name}</option>`).join('');
+}
+
+document.getElementById('btn-add-trip').addEventListener('click',()=>{
+  editingId=null;
+  document.getElementById('trip-modal-title').textContent='Add Trip';
+  ['trip-name','trip-dest','trip-notes'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('trip-start').value='';
+  document.getElementById('trip-end').value='';
+  document.getElementById('trip-status').value='planning';
+  openModal('modal-trip');
+});
+
+function editTrip(id){
+  const t=appData.trips.find(x=>x.id===id); if(!t) return;
+  editingId=id;
+  document.getElementById('trip-modal-title').textContent='Edit Trip';
+  document.getElementById('trip-name').value=t.name;
+  document.getElementById('trip-dest').value=t.destination||'';
+  document.getElementById('trip-status').value=t.status;
+  document.getElementById('trip-start').value=t.startDate||'';
+  document.getElementById('trip-end').value=t.endDate||'';
+  document.getElementById('trip-notes').value=t.notes||'';
+  openModal('modal-trip');
+}
+
+document.getElementById('btn-save-trip').addEventListener('click',()=>{
+  const name=document.getElementById('trip-name').value.trim();
+  if(!name){ showToast('Please enter a trip name','error'); return; }
+  const ex=editingId?appData.trips.find(x=>x.id===editingId):null;
+  const item={
+    id:editingId||uid(), name,
+    destination:document.getElementById('trip-dest').value.trim(),
+    status:document.getElementById('trip-status').value,
+    startDate:document.getElementById('trip-start').value,
+    endDate:document.getElementById('trip-end').value,
+    notes:document.getElementById('trip-notes').value.trim(),
+    files:ex?.files||[],
+    createdAt:ex?.createdAt||Date.now()
+  };
+  if(editingId) appData.trips=appData.trips.map(x=>x.id===editingId?item:x);
+  else appData.trips.push(item);
+  closeModal('modal-trip'); renderTrips(); saveToDrive();
+  showToast(editingId?'Trip updated!':'Trip added!');
+});
+
+function deleteTrip(id){
+  if(!confirm('Delete this trip?')) return;
+  appData.trips=appData.trips.filter(x=>x.id!==id);
+  appData.budget=appData.budget.filter(x=>x.tripId!==id);
+  renderTrips(); renderBudget(); saveToDrive(); showToast('Trip deleted');
+}
+
+function openTripDetail(id){
+  const trip=appData.trips.find(x=>x.id===id); if(!trip) return;
+  document.getElementById('detail-title').textContent=trip.name+' — Documents';
+  const files=trip.files||[];
+  document.getElementById('detail-content').innerHTML=`
+    <div>
+      ${files.length===0?`<p style="color:var(--text3);font-size:.9rem;margin-bottom:1rem">No documents yet. Upload plane tickets, hotel confirmations, etc.</p>`:''}
+      ${files.map(f=>`
+        <div class="file-item">
+          <div class="file-item-name">📄 <span>${f.name}</span></div>
+          <div style="display:flex;gap:.5rem">
+            <a href="${f.url}" target="_blank" class="btn btn-secondary btn-sm">↗ Open</a>
+            <button class="btn btn-danger btn-sm" onclick="deleteFile('${id}','${f.fileId}')">🗑</button>
+          </div>
+        </div>`).join('')}
+    </div>
+    <div class="file-upload-area" onclick="document.getElementById('file-input-${id}').click()">
+      <input type="file" id="file-input-${id}" style="display:none" multiple onchange="uploadFiles(event,'${id}')" />
+      📎 Click to upload documents (PDF, images, etc.)
+    </div>
+    <div id="upload-progress" style="margin-top:.75rem;font-size:.85rem;color:var(--text2)"></div>`;
+  openModal('modal-trip-detail');
+}
+
+async function uploadFiles(event,tripId){
+  const files=Array.from(event.target.files); if(!files.length) return;
+  const progress=document.getElementById('upload-progress');
+  const token=gapi.client.getToken()?.access_token;
+  if(!token){ showToast('Not authenticated','error'); return; }
+  for(const file of files){
+    progress.innerHTML=`<span class="spinner"></span> Uploading ${file.name}...`;
+    try{
+      const meta=JSON.stringify({name:file.name});
+      const form=new FormData();
+      form.append('metadata',new Blob([meta],{type:'application/json'}));
+      form.append('file',file);
+      const res=await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id,webViewLink',{
+        method:'POST', headers:{Authorization:`Bearer ${token}`}, body:form
+      });
+      const data=await res.json();
+      const trip=appData.trips.find(x=>x.id===tripId);
+      if(!trip.files) trip.files=[];
+      trip.files.push({name:file.name,fileId:data.id,url:data.webViewLink});
+      saveToDrive(); renderTrips(); showToast(`${file.name} uploaded!`);
+    }catch(e){ showToast(`Failed to upload ${file.name}`,'error'); }
+  }
+  progress.innerHTML='';
+  openTripDetail(tripId);
+}
+
+function deleteFile(tripId,fileId){
+  if(!confirm('Remove this document?')) return;
+  const trip=appData.trips.find(x=>x.id===tripId);
+  trip.files=(trip.files||[]).filter(f=>f.fileId!==fileId);
+  renderTrips(); saveToDrive(); openTripDetail(tripId); showToast('Document removed');
+}
+
+// ══ CHECKLISTS ══
+function renderChecklists(){
+  const grid=document.getElementById('checklist-grid');
+  if(!appData.checklists.length){
+    grid.innerHTML=`<div class="empty-state" style="grid-column:1/-1"><span class="emoji">📦</span><h3>No checklists yet</h3><p>Create packing lists for each trip.</p></div>`;
+    return;
+  }
+  grid.innerHTML=appData.checklists.map(cl=>{
+    const total=cl.items?.length||0;
+    const done=cl.items?.filter(i=>i.checked).length||0;
+    const trip=cl.tripId?appData.trips.find(t=>t.id===cl.tripId):null;
+    const pct=total>0?Math.round((done/total)*100):0;
+    return `<div class="card">
+      <div class="card-title">${cl.name}</div>
+      <div class="card-meta">
+        ${trip?`<span class="badge badge-green">✈ ${trip.name}</span>`:''}
+        <span>${done}/${total} done</span>
+      </div>
+      <div style="background:var(--bg3);border-radius:999px;height:4px;margin:.5rem 0">
+        <div style="background:var(--green);height:4px;border-radius:999px;width:${pct}%;transition:width .3s"></div>
+      </div>
+      <div id="cl-items-${cl.id}">
+        ${(cl.items||[]).map(item=>`
+          <div class="checklist-item${item.checked?' done':''}" id="cli-${item.id}">
+            <input type="checkbox" ${item.checked?'checked':''} onchange="toggleCheck('${cl.id}','${item.id}',this.checked)" />
+            <label>${item.text}</label>
+            <button class="btn btn-danger btn-sm" onclick="deleteCheckItem('${cl.id}','${item.id}')">✕</button>
+          </div>`).join('')}
+      </div>
+      <div class="checklist-add">
+        <input type="text" placeholder="Add item..." id="cl-add-${cl.id}" onkeydown="if(event.key==='Enter')addCheckItem('${cl.id}')" />
+        <button class="btn btn-primary btn-sm" onclick="addCheckItem('${cl.id}')">+</button>
+      </div>
+      <div class="card-actions" style="margin-top:.75rem">
+        <button class="btn btn-danger btn-sm" onclick="deleteChecklist('${cl.id}')">🗑 Delete List</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+document.getElementById('btn-add-checklist').addEventListener('click',()=>{
+  document.getElementById('checklist-name').value='';
+  document.getElementById('checklist-trip').value='';
+  openModal('modal-checklist');
+});
+
+document.getElementById('btn-save-checklist').addEventListener('click',()=>{
+  const name=document.getElementById('checklist-name').value.trim();
+  if(!name){ showToast('Please enter a list name','error'); return; }
+  appData.checklists.push({id:uid(),name,tripId:document.getElementById('checklist-trip').value,items:[],createdAt:Date.now()});
+  closeModal('modal-checklist'); renderChecklists(); saveToDrive(); showToast('Checklist created!');
+});
+
+function addCheckItem(clId){
+  const input=document.getElementById('cl-add-'+clId);
+  const text=input.value.trim(); if(!text) return;
+  const cl=appData.checklists.find(x=>x.id===clId);
+  if(!cl.items) cl.items=[];
+  cl.items.push({id:uid(),text,checked:false});
+  input.value=''; renderChecklists(); saveToDrive();
+}
+
+function toggleCheck(clId,itemId,checked){
+  const item=appData.checklists.find(x=>x.id===clId)?.items?.find(x=>x.id===itemId);
+  if(item){ item.checked=checked; renderChecklists(); saveToDrive(); }
+}
+
+function deleteCheckItem(clId,itemId){
+  const cl=appData.checklists.find(x=>x.id===clId);
+  if(cl){ cl.items=cl.items.filter(x=>x.id!==itemId); renderChecklists(); saveToDrive(); }
+}
+
+function deleteChecklist(id){
+  if(!confirm('Delete this checklist?')) return;
+  appData.checklists=appData.checklists.filter(x=>x.id!==id);
+  renderChecklists(); saveToDrive(); showToast('Checklist deleted');
+}
+
+// ══ BUDGET ══
+function renderBudget(){
+  const tripId=document.getElementById('budget-trip-select').value;
+  const tbody=document.getElementById('budget-tbody');
+  const ce={flights:'✈️',accommodation:'🏨',food:'🍜',transport:'🚌',activities:'🎭',shopping:'🛍',other:'📌'};
+  if(!tripId){
+    tbody.innerHTML=`<tr><td colspan="6" style="text-align:center;color:var(--text3);padding:2rem">Select a trip to view expenses</td></tr>`;
+    ['bs-estimated','bs-actual','bs-remaining'].forEach(id=>document.getElementById(id).textContent='$0');
+    return;
+  }
+  const expenses=appData.budget.filter(x=>x.tripId===tripId);
+  const est=expenses.reduce((s,x)=>s+(parseFloat(x.estimated)||0),0);
+  const act=expenses.reduce((s,x)=>s+(parseFloat(x.actual)||0),0);
+  const rem=est-act;
+  document.getElementById('bs-estimated').textContent='$'+est.toFixed(2);
+  document.getElementById('bs-actual').textContent='$'+act.toFixed(2);
+  const re=document.getElementById('bs-remaining');
+  re.textContent='$'+Math.abs(rem).toFixed(2)+(rem<0?' over':'');
+  re.style.color=rem<0?'var(--red)':'var(--green)';
+  if(!expenses.length){
+    tbody.innerHTML=`<tr><td colspan="6" style="text-align:center;color:var(--text3);padding:2rem">No expenses yet for this trip</td></tr>`; return;
+  }
+  tbody.innerHTML=expenses.map(e=>`<tr>
+    <td>${ce[e.category]||'📌'} ${e.category}</td>
+    <td>${e.description}</td>
+    <td>$${parseFloat(e.estimated||0).toFixed(2)}</td>
+    <td class="${parseFloat(e.actual||0)>parseFloat(e.estimated||0)?'amount-over':'amount-positive'}">$${parseFloat(e.actual||0).toFixed(2)}</td>
+    <td>${e.paidBy}</td>
+    <td><button class="btn btn-danger btn-sm" onclick="deleteExpense('${e.id}')">🗑</button></td>
+  </tr>`).join('');
+}
+
+document.getElementById('budget-trip-select').addEventListener('change',renderBudget);
+
+document.getElementById('btn-add-expense').addEventListener('click',()=>{
+  if(!document.getElementById('budget-trip-select').value){ showToast('Select a trip first','error'); return; }
+  document.getElementById('exp-desc').value='';
+  document.getElementById('exp-estimated').value='';
+  document.getElementById('exp-actual').value='';
+  document.getElementById('exp-category').value='flights';
+  document.getElementById('exp-paidby').value='me';
+  openModal('modal-expense');
+});
+
+document.getElementById('btn-save-expense').addEventListener('click',()=>{
+  const desc=document.getElementById('exp-desc').value.trim();
+  if(!desc){ showToast('Please enter a description','error'); return; }
+  appData.budget.push({
+    id:uid(), tripId:document.getElementById('budget-trip-select').value,
+    category:document.getElementById('exp-category').value,
+    description:desc,
+    estimated:document.getElementById('exp-estimated').value,
+    actual:document.getElementById('exp-actual').value,
+    paidBy:document.getElementById('exp-paidby').value,
+    createdAt:Date.now()
+  });
+  closeModal('modal-expense'); renderBudget(); saveToDrive(); showToast('Expense added!');
+});
+
+function deleteExpense(id){
+  if(!confirm('Remove this expense?')) return;
+  appData.budget=appData.budget.filter(x=>x.id!==id);
+  renderBudget(); saveToDrive(); showToast('Expense removed');
+}
+
+function renderAll(){ renderWishlist(); renderTrips(); renderChecklists(); renderBudget(); }
+
+initGoogle();
+</script>
+</body>
+</html>
