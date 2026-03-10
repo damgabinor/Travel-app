@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>✈ Our Travel App</title>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
   <style>
-    :root {
-      --bg:#0a0f0a;--bg2:#111811;--bg3:#172017;--card:#1a241a;--card2:#1f2d1f;
-      --border:#2a3d2a;--green:#4ade80;--green2:#22c55e;--green3:#16a34a;
-      --green-dim:#166534;--green-glow:#4ade8033;--text:#e8f5e8;--text2:#a3bfa3;
-      --text3:#6b8f6b;--red:#f87171;--yellow:#fbbf24;--blue:#60a5fa;--radius:14px;--radius-sm:8px;
+    :root{
+      --bg:#0a0f1a;--bg2:#111829;--bg3:#172240;--card:#1a2947;--card2:#1f3356;
+      --border:#2a4a7a;--blue:#a8d8ff;--blue2:#7ec8ff;--blue-dim:#1e3a8a;--blue-glow:#a8d8ff33;
+      --text:#e0f2ff;--text2:#a8c8ff;--text3:#7a9cff;
+      --red:#f87171;--yellow:#fbbf24;--purple:#c084fc;--orange:#fb923c;
+      --radius:14px;--radius-sm:8px;
     }
     *{box-sizing:border-box;margin:0;padding:0}
     body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
@@ -18,25 +19,25 @@
 
     /* LOGIN */
     #login-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem;position:relative;z-index:1}
-    .login-glow{position:absolute;width:600px;height:600px;background:radial-gradient(circle,#4ade8015 0%,transparent 70%);pointer-events:none}
-    .login-box{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:3rem;max-width:420px;width:100%;text-align:center;position:relative;box-shadow:0 0 80px #4ade8010,0 32px 64px #00000060}
-    .login-box .plane{font-size:3.5rem;margin-bottom:1.5rem;display:block;animation:float 3s ease-in-out infinite}
+    .login-glow{position:absolute;width:600px;height:600px;background:radial-gradient(circle,#a8d8ff15 0%,transparent 70%);pointer-events:none}
+    .login-box{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:3rem;max-width:420px;width:100%;text-align:center;position:relative;box-shadow:0 0 80px #a8d8ff10,0 32px 64px #00000060}
+    .plane{font-size:3.5rem;margin-bottom:1.5rem;display:block;animation:float 3s ease-in-out infinite}
     @keyframes float{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-10px) rotate(5deg)}}
-    .login-box h1{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--green);margin-bottom:.5rem;letter-spacing:-.5px}
+    .login-box h1{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--blue);margin-bottom:.5rem;letter-spacing:-.5px}
     .login-box p{color:var(--text2);font-size:.95rem;margin-bottom:2.5rem;line-height:1.6}
-    .btn-google{display:flex;align-items:center;justify-content:center;gap:.75rem;width:100%;padding:.875rem 1.5rem;background:var(--green);color:#0a0f0a;border:none;border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:600;cursor:pointer;transition:all .2s;box-shadow:0 0 24px var(--green-glow)}
-    .btn-google:hover{background:var(--green2);transform:translateY(-2px);box-shadow:0 0 40px #4ade8050}
+    .btn-google{display:flex;align-items:center;justify-content:center;gap:.75rem;width:100%;padding:.875rem 1.5rem;background:var(--blue);color:#0a0f1a;border:none;border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:600;cursor:pointer;transition:all .2s;box-shadow:0 0 24px var(--blue-glow)}
+    .btn-google:hover{background:var(--blue2);transform:translateY(-2px);box-shadow:0 0 40px #a8d8ff50}
     .btn-google svg{width:20px;height:20px;flex-shrink:0}
     #config-notice{display:none;background:#1a1505;border:1px solid #fbbf2440;border-radius:var(--radius);padding:1.25rem;margin-top:1.5rem;text-align:left}
     #config-notice p{color:var(--yellow);font-size:.85rem;line-height:1.6}
     #config-notice code{background:#2a2005;padding:2px 6px;border-radius:4px;font-family:monospace;font-size:.8rem;color:var(--yellow)}
 
-    /* APP */
+    /* APP SHELL */
     #app{display:none;position:relative;z-index:1}
-    header{position:sticky;top:0;z-index:100;background:#0a0f0aee;backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:60px}
-    .header-logo{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:800;color:var(--green);letter-spacing:-.5px;display:flex;align-items:center;gap:.5rem}
+    header{position:sticky;top:0;z-index:100;background:#0a0f1aee;backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:60px}
+    .header-logo{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:800;color:var(--blue);letter-spacing:-.5px}
     .header-user{display:flex;align-items:center;gap:.75rem}
-    .user-avatar{width:32px;height:32px;border-radius:50%;border:2px solid var(--green-dim);object-fit:cover}
+    .user-avatar{width:32px;height:32px;border-radius:50%;border:2px solid var(--blue-dim);object-fit:cover}
     .user-name{font-size:.85rem;color:var(--text2);display:none}
     @media(min-width:640px){.user-name{display:block}}
     .btn-signout{background:transparent;border:1px solid var(--border);color:var(--text3);border-radius:var(--radius-sm);padding:.3rem .75rem;font-size:.8rem;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
@@ -47,19 +48,19 @@
     nav::-webkit-scrollbar{display:none}
     .tab{display:flex;align-items:center;gap:.4rem;padding:.5rem 1rem;border-radius:var(--radius-sm);border:none;background:transparent;color:var(--text3);font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:500;cursor:pointer;transition:all .2s;white-space:nowrap}
     .tab:hover{color:var(--text2);background:var(--card)}
-    .tab.active{background:var(--green-dim);color:var(--green);font-weight:600}
+    .tab.active{background:var(--blue-dim);color:var(--blue);font-weight:600}
 
     /* MAIN */
     main{max-width:960px;margin:0 auto;padding:2rem 1.5rem}
     .section{display:none}.section.active{display:block}
     .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.75rem;flex-wrap:wrap;gap:1rem}
-    .section-title{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:700;color:var(--text);letter-spacing:-.5px}
-    .section-title span{color:var(--green)}
+    .section-title{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:700;letter-spacing:-.5px}
+    .section-title span{color:var(--blue)}
 
     /* BUTTONS */
     .btn{display:inline-flex;align-items:center;gap:.4rem;padding:.6rem 1.25rem;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:600;cursor:pointer;transition:all .2s;border:none}
-    .btn-primary{background:var(--green);color:#0a0f0a;box-shadow:0 0 16px var(--green-glow)}
-    .btn-primary:hover{background:var(--green2);transform:translateY(-1px);box-shadow:0 0 28px #4ade8050}
+    .btn-primary{background:var(--blue);color:#0a0f1a;box-shadow:0 0 16px var(--blue-glow)}
+    .btn-primary:hover{background:var(--blue2);transform:translateY(-1px);box-shadow:0 0 28px #a8d8ff50}
     .btn-secondary{background:var(--card2);color:var(--text2);border:1px solid var(--border)}
     .btn-secondary:hover{background:var(--card);color:var(--text)}
     .btn-danger{background:transparent;color:var(--red);border:1px solid #f8717130}
@@ -68,26 +69,35 @@
 
     /* CARDS */
     .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;transition:border-color .2s,box-shadow .2s}
-    .card:hover{border-color:var(--green-dim);box-shadow:0 0 20px #4ade8008}
+    .card:hover{border-color:var(--blue-dim);box-shadow:0 0 20px #a8d8ff08}
     .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem}
     .card-title{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;color:var(--text);margin-bottom:.4rem}
-    .card-meta{font-size:.82rem;color:var(--text3);display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin-bottom:.75rem}
+    .card-meta{font-size:.82rem;color:var(--text3);display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin-bottom:.6rem}
     .card-actions{display:flex;gap:.5rem;margin-top:1rem;flex-wrap:wrap}
 
     /* BADGES */
     .badge{display:inline-flex;align-items:center;padding:.2rem .6rem;border-radius:999px;font-size:.75rem;font-weight:600}
-    .badge-green{background:#16a34a30;color:var(--green)}
+    .badge-blue{background:#a8d8ff20;color:var(--blue)}
     .badge-yellow{background:#fbbf2420;color:var(--yellow)}
     .badge-gray{background:var(--card2);color:var(--text3)}
     .badge-blue{background:#60a5fa20;color:var(--blue)}
+    .badge-purple{background:#c084fc20;color:var(--purple)}
+
+    /* STATUS LEFT BORDER */
+    .s-planning{border-left:3px solid var(--yellow)}
+    .s-booked{border-left:3px solid var(--blue)}
+    .s-completed{border-left:3px solid var(--text3)}
+    .p-dream{border-left:3px solid var(--blue)}
+    .p-next{border-left:3px solid var(--yellow)}
+    .p-someday{border-left:3px solid var(--text3)}
 
     /* MODAL */
     .modal-overlay{display:none;position:fixed;inset:0;background:#00000090;backdrop-filter:blur(4px);z-index:1000;align-items:center;justify-content:center;padding:1rem}
     .modal-overlay.open{display:flex}
-    .modal{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2rem;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;box-shadow:0 32px 80px #00000080;animation:modalIn .25s ease}
-    @keyframes modalIn{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+    .modal{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2rem;width:100%;max-width:540px;max-height:90vh;overflow-y:auto;box-shadow:0 32px 80px #00000080;animation:modalIn .25s ease}
+    @keyframes modalIn{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:none}}
     .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
-    .modal-title{font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:700;color:var(--text)}
+    .modal-title{font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:700}
     .modal-close{background:var(--card2);border:1px solid var(--border);color:var(--text3);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .2s}
     .modal-close:hover{color:var(--red);border-color:var(--red)}
 
@@ -95,16 +105,12 @@
     .form-group{margin-bottom:1.1rem}
     .form-label{display:block;font-size:.82rem;font-weight:600;color:var(--text2);margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.5px}
     .form-input,.form-select,.form-textarea{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.65rem .9rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.95rem;transition:border-color .2s,box-shadow .2s;outline:none}
-    .form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--green-dim);box-shadow:0 0 0 3px #4ade8015}
+    .form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--blue-dim);box-shadow:0 0 0 3px #a8d8ff15}
     .form-select{cursor:pointer}.form-select option{background:var(--bg3)}
     .form-textarea{resize:vertical;min-height:80px}
     .form-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
     .form-actions{display:flex;gap:.75rem;justify-content:flex-end;margin-top:1.5rem}
-
-    /* SEGMENT CONTROL */
-    .segment-control{display:flex;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:3px;gap:3px;margin-bottom:1.25rem}
-    .segment-btn{flex:1;padding:.5rem;border:none;border-radius:6px;background:transparent;color:var(--text3);font-family:'DM Sans',sans-serif;font-size:.875rem;font-weight:500;cursor:pointer;transition:all .2s}
-    .segment-btn.active{background:var(--green-dim);color:var(--green);font-weight:600}
+    .form-hint{font-size:.75rem;color:var(--text3);margin-top:.2rem}
 
     /* EMPTY STATE */
     .empty-state{text-align:center;padding:4rem 2rem;color:var(--text3)}
@@ -115,106 +121,85 @@
     /* SYNC BAR */
     .sync-bar{display:flex;align-items:center;gap:.75rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:.75rem 1.25rem;margin-bottom:1.5rem;font-size:.85rem}
     .sync-dot{width:8px;height:8px;border-radius:50%;background:var(--text3);flex-shrink:0}
-    .sync-dot.synced{background:var(--green);box-shadow:0 0 8px var(--green)}
+    .sync-dot.synced{background:var(--blue);box-shadow:0 0 8px var(--blue)}
     .sync-dot.syncing{background:var(--yellow);animation:pulse 1s infinite}
     .sync-dot.error{background:var(--red)}
     @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-    .sync-text{color:var(--text2);flex:1}
-    .sync-time{color:var(--text3);font-size:.78rem}
-
-    /* PRIORITY / STATUS BORDERS */
-    .priority-dream{border-left:3px solid var(--green)}
-    .priority-next{border-left:3px solid var(--yellow)}
-    .priority-someday{border-left:3px solid var(--text3)}
-    .status-planning{border-left:3px solid var(--yellow)}
-    .status-booked{border-left:3px solid var(--green)}
-    .status-completed{border-left:3px solid var(--text3)}
+    .sync-text{color:var(--text2);flex:1}.sync-time{color:var(--text3);font-size:.78rem}
 
     /* MAPS LINK */
-    .maps-link{display:inline-flex;align-items:center;gap:.3rem;color:var(--green);font-size:.82rem;text-decoration:none;transition:opacity .2s}
+    .maps-link{display:inline-flex;align-items:center;gap:.3rem;color:var(--blue);font-size:.82rem;text-decoration:none;transition:opacity .2s}
     .maps-link:hover{opacity:.75}
-
-    /* TRIPS */
-    .trip-card{position:relative;overflow:hidden}
-    .trip-status-bar{position:absolute;top:0;left:0;right:0;height:3px}
-    .trip-status-bar.planning{background:var(--yellow)}
-    .trip-status-bar.booked{background:var(--green)}
-    .trip-status-bar.completed{background:var(--text3)}
 
     /* FILE LIST */
     .file-item{display:flex;align-items:center;justify-content:space-between;padding:.5rem .75rem;background:var(--bg3);border-radius:var(--radius-sm);margin-bottom:.4rem;font-size:.85rem}
-    .file-item-name{display:flex;align-items:center;gap:.5rem;color:var(--text2);overflow:hidden}
+    .file-item-name{display:flex;align-items:center;gap:.5rem;color:var(--text2);overflow:hidden;flex:1;min-width:0}
     .file-item-name span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .file-upload-area{border:2px dashed var(--border);border-radius:var(--radius-sm);padding:1.5rem;text-align:center;cursor:pointer;transition:all .2s;color:var(--text3);font-size:.9rem;margin-top:.75rem}
-    .file-upload-area:hover{border-color:var(--green-dim);color:var(--text2);background:#4ade8005}
+    .file-upload-area{border:2px dashed var(--border);border-radius:var(--radius-sm);padding:1.25rem;text-align:center;cursor:pointer;transition:all .2s;color:var(--text3);font-size:.9rem;margin-top:.75rem}
+    .file-upload-area:hover{border-color:var(--blue-dim);color:var(--text2);background:#a8d8ff05}
 
     /* CHECKLIST */
     .checklist-item{display:flex;align-items:center;gap:.75rem;padding:.6rem 0;border-bottom:1px solid var(--border)}
     .checklist-item:last-child{border-bottom:none}
-    .checklist-item input[type="checkbox"]{width:18px;height:18px;accent-color:var(--green);cursor:pointer;flex-shrink:0}
-    .checklist-item label{flex:1;font-size:.95rem;cursor:pointer;transition:color .2s}
+    .checklist-item input[type=checkbox]{width:18px;height:18px;accent-color:var(--blue);cursor:pointer;flex-shrink:0}
+    .checklist-item label{flex:1;font-size:.95rem;cursor:pointer}
     .checklist-item.done label{text-decoration:line-through;color:var(--text3)}
     .checklist-add{display:flex;gap:.5rem;margin-top:1rem}
     .checklist-add input{flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.55rem .9rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.9rem;outline:none}
-    .checklist-add input:focus{border-color:var(--green-dim)}
+    .checklist-add input:focus{border-color:var(--blue-dim)}
 
     /* BUDGET */
     .budget-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem}
     .budget-stat{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;text-align:center}
-    .budget-stat-value{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;color:var(--green);margin-bottom:.3rem}
+    .budget-stat-value{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;color:var(--blue);margin-bottom:.3rem}
     .budget-stat-label{font-size:.78rem;color:var(--text3);text-transform:uppercase;letter-spacing:.5px}
     .budget-table{width:100%;border-collapse:collapse}
     .budget-table th{text-align:left;font-size:.78rem;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);padding:.5rem .75rem;border-bottom:1px solid var(--border)}
-    .budget-table td{padding:.75rem .75rem;font-size:.9rem;border-bottom:1px solid var(--border);color:var(--text2)}
+    .budget-table td{padding:.75rem;font-size:.9rem;border-bottom:1px solid var(--border);color:var(--text2)}
     .budget-table tr:last-child td{border-bottom:none}
     .budget-table tr:hover td{background:var(--card2)}
-    .amount-positive{color:var(--green);font-weight:600}
-    .amount-over{color:var(--red);font-weight:600}
+    .amount-pos{color:var(--blue);font-weight:600}.amount-over{color:var(--red);font-weight:600}
 
-    /* ── CALENDAR ── */
-    .cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
-    .cal-month{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:700;color:var(--text)}
+    /* CALENDAR */
+    .gcal-bar{display:flex;align-items:center;gap:.5rem;font-size:.82rem;color:var(--text3);margin-bottom:1rem}
+    .gcal-dot{width:7px;height:7px;border-radius:50%;background:var(--text3);flex-shrink:0}
+    .gcal-dot.ok{background:var(--blue)}.gcal-dot.err{background:var(--red)}.gcal-dot.syncing{background:var(--yellow);animation:pulse 1s infinite}
+    .cal-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem}
+    .cal-month-lbl{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:700}
     .cal-nav{display:flex;gap:.5rem}
-    .cal-nav-btn{background:var(--card2);border:1px solid var(--border);color:var(--text2);width:36px;height:36px;border-radius:var(--radius-sm);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .2s}
-    .cal-nav-btn:hover{border-color:var(--green-dim);color:var(--green)}
+    .cal-btn{background:var(--card2);border:1px solid var(--border);color:var(--text2);height:36px;border-radius:var(--radius-sm);cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;transition:all .2s;padding:0 .75rem}
+    .cal-btn:hover{border-color:var(--blue-dim);color:var(--blue)}
     .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;background:var(--border);border-radius:var(--radius);overflow:hidden;border:1px solid var(--border)}
-    .cal-day-header{background:var(--bg2);padding:.5rem;text-align:center;font-size:.75rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.5px}
-    .cal-day{background:var(--bg3);min-height:90px;padding:.4rem;cursor:pointer;transition:background .15s;position:relative}
-    .cal-day:hover{background:var(--card)}
+    .cal-day-hdr{background:var(--bg2);padding:.5rem;text-align:center;font-size:.72rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.5px}
+    .cal-day{background:var(--bg3);min-height:88px;padding:.4rem;cursor:pointer;transition:background .15s;position:relative}
+    .cal-day:hover{background:var(--card2)}
+    .cal-day.today .cal-dn{color:var(--blue);font-weight:700}
     .cal-day.today{background:var(--card2)}
-    .cal-day.today .cal-day-num{color:var(--green);font-weight:700}
-    .cal-day.other-month .cal-day-num{color:var(--text3)}
-    .cal-day-num{font-size:.8rem;font-weight:600;color:var(--text2);margin-bottom:.25rem;display:block}
-    .cal-event{font-size:.7rem;border-radius:4px;padding:2px 5px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;line-height:1.4}
-    .cal-event.trip{background:#16a34a40;color:var(--green);border-left:2px solid var(--green)}
-    .cal-event.activity{background:#60a5fa20;color:var(--blue);border-left:2px solid var(--blue)}
-    .cal-event.wishlist-item{background:#fbbf2420;color:var(--yellow);border-left:2px solid var(--yellow)}
-    .cal-gcal-badge{font-size:.65rem;color:var(--text3);margin-top:1px;display:flex;align-items:center;gap:2px}
-    .cal-add-hint{position:absolute;bottom:3px;right:3px;font-size:.65rem;color:var(--text3);opacity:0;transition:opacity .2s}
+    .cal-day.other-month .cal-dn{color:var(--text3)}
+    .cal-dn{font-size:.8rem;font-weight:600;color:var(--text2);margin-bottom:.2rem;display:block}
+    .cal-ev{font-size:.68rem;border-radius:4px;padding:2px 5px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.4}
+    .cal-ev.act{background:#a8d8ff20;color:var(--blue);border-left:2px solid var(--blue)}
+    .cal-ev.trp{background:#a8d8ff20;color:var(--blue);border-left:2px solid var(--blue)}
+    .cal-ev.acc{background:#c084fc20;color:var(--purple);border-left:2px solid var(--purple)}
+    .cal-add-hint{position:absolute;bottom:3px;right:4px;font-size:.62rem;color:var(--text3);opacity:0;transition:opacity .15s}
     .cal-day:hover .cal-add-hint{opacity:1}
     .cal-legend{display:flex;gap:1rem;flex-wrap:wrap;margin-top:1rem;font-size:.8rem;color:var(--text3)}
     .cal-legend-item{display:flex;align-items:center;gap:.35rem}
     .cal-legend-dot{width:10px;height:10px;border-radius:2px}
-    .gcal-status{display:flex;align-items:center;gap:.5rem;font-size:.82rem;color:var(--text3);margin-bottom:1rem}
-    .gcal-status-dot{width:7px;height:7px;border-radius:50%;background:var(--text3);flex-shrink:0}
-    .gcal-status-dot.ok{background:var(--green)}
-    .gcal-status-dot.err{background:var(--red)}
-    .gcal-status-dot.syncing{background:var(--yellow);animation:pulse 1s infinite}
 
     /* SCROLLBAR */
     ::-webkit-scrollbar{width:6px;height:6px}
     ::-webkit-scrollbar-track{background:var(--bg2)}
     ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
-    ::-webkit-scrollbar-thumb:hover{background:var(--green-dim)}
+    ::-webkit-scrollbar-thumb:hover{background:var(--blue-dim)}
 
     /* TOAST */
     #toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:.85rem 1.25rem;font-size:.9rem;color:var(--text);z-index:9999;box-shadow:0 8px 32px #00000060;transform:translateY(100px);opacity:0;transition:all .3s ease;max-width:320px}
     #toast.show{transform:translateY(0);opacity:1}
-    #toast.success{border-color:var(--green-dim);color:var(--green)}
+    #toast.success{border-color:var(--blue-dim);color:var(--blue)}
     #toast.error{border-color:#f8717150;color:var(--red)}
 
-    /* SPINNER */
-    .spinner{width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--green);border-radius:50%;animation:spin .8s linear infinite;display:inline-block;vertical-align:middle}
+    .spinner{width:18px;height:18px;border:2px solid var(--border);border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite;display:inline-block;vertical-align:middle}
     @keyframes spin{to{transform:rotate(360deg)}}
 
     @media(max-width:600px){
@@ -222,9 +207,9 @@
       .budget-summary{grid-template-columns:1fr}
       .card-grid{grid-template-columns:1fr}
       main{padding:1.25rem 1rem}
-      .cal-day{min-height:60px}
-      .cal-event{display:none}
-      .cal-day.has-events::after{content:'•';color:var(--green);font-size:1rem;display:block;text-align:center}
+      .cal-day{min-height:56px}
+      .cal-ev{display:none}
+      .cal-day.has-ev::after{content:'•';color:var(--blue);display:block;text-align:center;font-size:1rem}
     }
   </style>
 </head>
@@ -236,14 +221,12 @@
   <div class="login-box">
     <span class="plane">✈️</span>
     <h1>Our Travel App</h1>
-    <p>Plan trips together, store documents, and track your adventures — all synced via Google Drive.</p>
+    <p>Plan trips together, store documents, and track your adventures — synced via Google Drive.</p>
     <button class="btn-google" id="btn-login">
       <svg viewBox="0 0 24 24" fill="none"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
       Sign in with Google
     </button>
-    <div id="config-notice">
-      <p>⚠️ <strong>Setup required:</strong> Open this file and replace <code>YOUR_CLIENT_ID_HERE</code> with your actual OAuth Client ID.</p>
-    </div>
+    <div id="config-notice"><p>⚠️ <strong>Setup required:</strong> Replace <code>YOUR_CLIENT_ID_HERE</code> with your OAuth Client ID.</p></div>
   </div>
 </div>
 
@@ -252,53 +235,65 @@
   <header>
     <div class="header-logo">✈ travels</div>
     <div class="header-user">
-      <img class="user-avatar" id="user-avatar" src="" alt="" />
+      <img class="user-avatar" id="user-avatar" src="" alt=""/>
       <span class="user-name" id="user-name"></span>
       <button class="btn-signout" id="btn-signout">Sign out</button>
     </div>
   </header>
-
   <nav>
-    <button class="tab active" data-tab="activities"><span>🎯</span> Activities</button>
-    <button class="tab" data-tab="trips"><span>✈️</span> Trips</button>
-    <button class="tab" data-tab="checklist"><span>📋</span> Checklists</button>
-    <button class="tab" data-tab="budget"><span>💰</span> Budget</button>
-    <button class="tab" data-tab="calendar"><span>📅</span> Calendar</button>
+    <button class="tab active" data-tab="wishlist">🌍 Wishlist</button>
+    <button class="tab" data-tab="activities">🎯 Activities</button>
+    <button class="tab" data-tab="transport">✈️ Transport</button>
+    <button class="tab" data-tab="accommodation">🏨 Accommodation</button>
+    <button class="tab" data-tab="checklist">📋 Checklists</button>
+    <button class="tab" data-tab="budget">💰 Budget</button>
+    <button class="tab" data-tab="calendar">📅 Calendar</button>
   </nav>
-
   <main>
     <div class="sync-bar">
       <div class="sync-dot" id="sync-dot"></div>
-      <span class="sync-text" id="sync-text">Connecting to Google Drive...</span>
+      <span class="sync-text" id="sync-text">Connecting...</span>
       <span class="sync-time" id="sync-time"></span>
       <button class="btn btn-secondary btn-sm" id="btn-sync">↻ Sync</button>
     </div>
 
+    <!-- WISHLIST -->
+    <section id="section-wishlist" class="section active">
+      <div class="section-header">
+        <h2 class="section-title">Our <span>Wishlist</span></h2>
+        <button class="btn btn-primary" id="btn-add-wish">+ Add Place</button>
+      </div>
+      <div class="card-grid" id="wishlist-grid"></div>
+    </section>
+
     <!-- ACTIVITIES -->
-    <section id="section-activities" class="section active">
+    <section id="section-activities" class="section">
       <div class="section-header">
         <h2 class="section-title">Our <span>Activities</span></h2>
-        <button class="btn btn-primary" id="btn-add-activity">+ Add</button>
-      </div>
-      <!-- Filter tabs -->
-      <div style="display:flex;gap:.5rem;margin-bottom:1.25rem;flex-wrap:wrap">
-        <button class="btn btn-secondary btn-sm act-filter active" data-filter="all">All</button>
-        <button class="btn btn-secondary btn-sm act-filter" data-filter="wishlist">🌍 Wishlist</button>
-        <button class="btn btn-secondary btn-sm act-filter" data-filter="activity">🎯 Activities</button>
+        <button class="btn btn-primary" id="btn-add-activity">+ Add Activity</button>
       </div>
       <div class="card-grid" id="activities-grid"></div>
     </section>
 
-    <!-- TRIPS -->
-    <section id="section-trips" class="section">
+    <!-- TRANSPORT -->
+    <section id="section-transport" class="section">
       <div class="section-header">
-        <h2 class="section-title">Our <span>Trips</span></h2>
-        <button class="btn btn-primary" id="btn-add-trip">+ Add Trip</button>
+        <h2 class="section-title">Our <span>Transportation</span></h2>
+        <button class="btn btn-primary" id="btn-add-transport">+ Add Transport</button>
       </div>
-      <div class="card-grid" id="trips-grid"></div>
+      <div class="card-grid" id="transport-grid"></div>
     </section>
 
-    <!-- CHECKLIST -->
+    <!-- ACCOMMODATION -->
+    <section id="section-accommodation" class="section">
+      <div class="section-header">
+        <h2 class="section-title">Our <span>Accommodation</span></h2>
+        <button class="btn btn-primary" id="btn-add-accommodation">+ Add Accommodation</button>
+      </div>
+      <div class="card-grid" id="accommodation-grid"></div>
+    </section>
+
+    <!-- CHECKLISTS -->
     <section id="section-checklist" class="section">
       <div class="section-header">
         <h2 class="section-title">Packing <span>Checklists</span></h2>
@@ -310,373 +305,336 @@
     <!-- BUDGET -->
     <section id="section-budget" class="section">
       <div class="section-header">
-        <h2 class="section-title">Trip <span>Budget</span></h2>
-        <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap">
-          <select class="form-select" id="budget-trip-select" style="width:auto;padding:.5rem .75rem"><option value="">Select trip...</option></select>
-          <button class="btn btn-primary" id="btn-add-expense">+ Add Expense</button>
-        </div>
+        <h2 class="section-title">Expenses & <span>Budget</span></h2>
+        <button class="btn btn-primary" id="btn-add-expense">+ Add Expense</button>
       </div>
       <div class="budget-summary">
-        <div class="budget-stat"><div class="budget-stat-value" id="bs-estimated">$0</div><div class="budget-stat-label">Estimated</div></div>
-        <div class="budget-stat"><div class="budget-stat-value" id="bs-actual">$0</div><div class="budget-stat-label">Actual Spent</div></div>
-        <div class="budget-stat"><div class="budget-stat-value" id="bs-remaining">$0</div><div class="budget-stat-label">Remaining</div></div>
+        <div class="budget-stat"><div class="budget-stat-value" id="bs-est">$0</div><div class="budget-stat-label">Estimated</div></div>
+        <div class="budget-stat"><div class="budget-stat-value" id="bs-act">$0</div><div class="budget-stat-label">Actual Spent</div></div>
+        <div class="budget-stat"><div class="budget-stat-value" id="bs-rem">$0</div><div class="budget-stat-label">Remaining</div></div>
       </div>
       <div class="card">
         <table class="budget-table">
           <thead><tr><th>Category</th><th>Description</th><th>Estimated</th><th>Actual</th><th>Paid by</th><th></th></tr></thead>
-          <tbody id="budget-tbody"><tr><td colspan="6" style="text-align:center;color:var(--text3);padding:2rem">Select a trip to view expenses</td></tr></tbody>
+          <tbody id="budget-tbody"><tr><td colspan="6" style="text-align:center;color:var(--text3);padding:2rem">No expenses yet</td></tr></tbody>
         </table>
       </div>
     </section>
 
     <!-- CALENDAR -->
     <section id="section-calendar" class="section">
-      <div class="section-header">
-        <h2 class="section-title">📅 <span>Calendar</span></h2>
-      </div>
-      <div class="gcal-status">
-        <div class="gcal-status-dot" id="gcal-dot"></div>
-        <span id="gcal-text">Connecting to Google Calendar...</span>
-      </div>
-      <div class="cal-header">
-        <div class="cal-month" id="cal-month-label"></div>
+      <div class="section-header"><h2 class="section-title">📅 <span>Calendar</span></h2></div>
+      <div class="gcal-bar"><div class="gcal-dot" id="gcal-dot"></div><span id="gcal-text">Connecting to Google Calendar...</span></div>
+      <div class="cal-toolbar">
+        <div class="cal-month-lbl" id="cal-lbl"></div>
         <div class="cal-nav">
-          <button class="cal-nav-btn" id="cal-prev">‹</button>
-          <button class="cal-nav-btn" id="cal-today-btn" style="width:auto;padding:0 .75rem;font-size:.8rem">Today</button>
-          <button class="cal-nav-btn" id="cal-next">›</button>
+          <button class="cal-btn" id="cal-prev">‹</button>
+          <button class="cal-btn" id="cal-today" style="font-size:.85rem">Today</button>
+          <button class="cal-btn" id="cal-next">›</button>
         </div>
       </div>
       <div class="cal-grid" id="cal-grid"></div>
       <div class="cal-legend">
-        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--green)"></div>Trip (booked)</div>
-        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--blue)"></div>Activity (booked)</div>
-        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--yellow)"></div>Wishlist item</div>
+        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--blue)"></div>Activity</div>
+        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--blue)"></div>Transport</div>
+        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--purple)"></div>Accommodation</div>
       </div>
     </section>
   </main>
 </div>
 
-<!-- ═══════════════════ MODALS ═══════════════════ -->
+<!-- ═══ MODALS ═══ -->
 
-<!-- ACTIVITY MODAL -->
-<div class="modal-overlay" id="modal-activity">
+<!-- WISHLIST -->
+<div class="modal-overlay" id="modal-wish">
   <div class="modal">
-    <div class="modal-header">
-      <span class="modal-title" id="activity-modal-title">Add Activity</span>
-      <button class="modal-close" data-close="modal-activity">✕</button>
-    </div>
-    <!-- Type selector -->
-    <div class="segment-control">
-      <button class="segment-btn active" id="seg-wishlist" onclick="setActivityType('wishlist')">🌍 Wishlist</button>
-      <button class="segment-btn" id="seg-activity" onclick="setActivityType('activity')">🎯 Activity</button>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Name *</label>
-      <input class="form-input" id="act-name" placeholder="e.g. Kyoto, Japan / Snorkeling in Maldives" />
-    </div>
+    <div class="modal-header"><span class="modal-title" id="wish-title">Add Place</span><button class="modal-close" data-close="modal-wish">✕</button></div>
+    <div class="form-group"><label class="form-label">Place / Destination *</label><input class="form-input" id="w-name" placeholder="e.g. Kyoto, Japan"/></div>
     <div class="form-row">
-      <div class="form-group">
-        <label class="form-label">Country</label>
-        <input class="form-input" id="act-country" placeholder="Japan" />
-      </div>
-      <div class="form-group">
-        <label class="form-label">Type</label>
-        <select class="form-select" id="act-type">
-          <option value="city">🏙 City</option><option value="beach">🏖 Beach</option>
-          <option value="nature">🌿 Nature</option><option value="cultural">🏛 Cultural</option>
-          <option value="adventure">🧗 Adventure</option><option value="food">🍜 Food</option>
-          <option value="other">📍 Other</option>
+      <div class="form-group"><label class="form-label">Country</label><input class="form-input" id="w-country" placeholder="Japan"/></div>
+      <div class="form-group"><label class="form-label">Type</label>
+        <select class="form-select" id="w-type">
+          <option value="city">🏙 City</option><option value="beach">🏖 Beach</option><option value="nature">🌿 Nature</option>
+          <option value="cultural">🏛 Cultural</option><option value="adventure">🧗 Adventure</option><option value="other">📍 Other</option>
         </select>
       </div>
     </div>
-    <!-- WISHLIST fields -->
-    <div id="act-wishlist-fields">
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Priority</label>
-          <select class="form-select" id="act-priority">
-            <option value="dream">⭐ Dream Trip</option>
-            <option value="next">🔜 Next Up</option>
-            <option value="someday">☁ Someday</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Suggested by</label>
-          <select class="form-select" id="act-by">
-            <option value="me">Me</option><option value="partner">Partner</option><option value="both">Both of us</option>
-          </select>
-        </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Priority</label>
+        <select class="form-select" id="w-priority">
+          <option value="dream">⭐ Dream Trip</option><option value="next">🔜 Next Up</option><option value="someday">☁ Someday</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label">Suggested by</label>
+        <select class="form-select" id="w-by"><option value="me">Me</option><option value="partner">Partner</option><option value="both">Both</option></select>
       </div>
     </div>
-    <!-- ACTIVITY fields -->
-    <div id="act-activity-fields" style="display:none">
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Status</label>
-          <select class="form-select" id="act-status">
-            <option value="planning">📝 Planning</option>
-            <option value="booked">✅ Booked</option>
-            <option value="completed">✔ Completed</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Suggested by</label>
-          <select class="form-select" id="act-by2">
-            <option value="me">Me</option><option value="partner">Partner</option><option value="both">Both of us</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Start Date & Time</label>
-          <input class="form-input" type="datetime-local" id="act-start" />
-        </div>
-        <div class="form-group">
-          <label class="form-label">End Date & Time <span style="color:var(--text3);font-weight:400">(optional)</span></label>
-          <input class="form-input" type="datetime-local" id="act-end" />
-        </div>
-      </div>
-    </div>
-    <!-- Shared fields -->
-    <div class="form-group">
-      <label class="form-label">Google Maps Link</label>
-      <input class="form-input" id="act-maps" placeholder="Paste Google Maps URL here" />
-    </div>
-    <div class="form-group">
-      <label class="form-label">Notes</label>
-      <textarea class="form-textarea" id="act-notes" placeholder="Details, tips, links..."></textarea>
-    </div>
-    <div class="form-actions">
-      <button class="btn btn-secondary" data-close="modal-activity">Cancel</button>
-      <button class="btn btn-primary" id="btn-save-activity">Save</button>
-    </div>
+    <div class="form-group"><label class="form-label">Google Maps Link</label><input class="form-input" id="w-maps" placeholder="Paste Google Maps URL"/></div>
+    <div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="w-notes" placeholder="Things to do, restaurants, tips..."></textarea></div>
+    <div class="form-actions"><button class="btn btn-secondary" data-close="modal-wish">Cancel</button><button class="btn btn-primary" id="btn-save-wish">Save</button></div>
   </div>
 </div>
 
-<!-- TRIP MODAL -->
-<div class="modal-overlay" id="modal-trip">
+<!-- ACTIVITY -->
+<div class="modal-overlay" id="modal-activity">
   <div class="modal">
-    <div class="modal-header"><span class="modal-title" id="trip-modal-title">Add Trip</span><button class="modal-close" data-close="modal-trip">✕</button></div>
-    <div class="form-group"><label class="form-label">Trip Name *</label><input class="form-input" id="trip-name" placeholder="e.g. Japan Spring 2025" /></div>
+    <div class="modal-header"><span class="modal-title" id="act-title">Add Activity</span><button class="modal-close" data-close="modal-activity">✕</button></div>
+    <div class="form-group"><label class="form-label">Activity Name *</label><input class="form-input" id="a-name" placeholder="e.g. Snorkeling in Maldives"/></div>
     <div class="form-row">
-      <div class="form-group"><label class="form-label">Destination</label><input class="form-input" id="trip-dest" placeholder="Tokyo, Japan" /></div>
+      <div class="form-group"><label class="form-label">Location / Country</label><input class="form-input" id="a-country" placeholder="Maldives"/></div>
+      <div class="form-group"><label class="form-label">Type</label>
+        <select class="form-select" id="a-type">
+          <option value="adventure">🧗 Adventure</option><option value="food">🍜 Food &amp; Drink</option><option value="cultural">🏛 Cultural</option>
+          <option value="nature">🌿 Nature</option><option value="entertainment">🎭 Entertainment</option><option value="sport">⚽ Sport</option><option value="other">📍 Other</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
       <div class="form-group"><label class="form-label">Status</label>
-        <select class="form-select" id="trip-status">
+        <select class="form-select" id="a-status">
+          <option value="planning">📝 Planning</option><option value="booked">✅ Booked</option><option value="completed">✔ Completed</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label">Linked Trip</label>
+        <select class="form-select" id="a-trip"><option value="">None</option></select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Start Date &amp; Time</label><input class="form-input" type="datetime-local" id="a-start"/></div>
+      <div class="form-group"><label class="form-label">End <span style="font-weight:400;color:var(--text3)">(optional)</span></label><input class="form-input" type="datetime-local" id="a-end"/><div class="form-hint">Defaults to 1 hour if empty</div></div>
+    </div>
+    <div class="form-group"><label class="form-label">Google Maps Link</label><input class="form-input" id="a-maps" placeholder="Paste Google Maps URL"/></div>
+    <div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="a-notes" placeholder="Details, booking ref, tips..."></textarea></div>
+    <div class="form-group"><label class="form-label">Documents</label>
+      <div id="a-file-list"></div>
+      <div class="file-upload-area" onclick="document.getElementById('a-file-input').click()">
+        <input type="file" id="a-file-input" style="display:none" multiple/>📎 Upload documents
+      </div>
+      <div id="a-upload-prog"></div>
+    </div>
+    <div class="form-actions"><button class="btn btn-secondary" data-close="modal-activity">Cancel</button><button class="btn btn-primary" id="btn-save-activity">Save</button></div>
+  </div>
+</div>
+
+<!-- TRANSPORT -->
+<div class="modal-overlay" id="modal-transport">
+  <div class="modal">
+    <div class="modal-header"><span class="modal-title" id="trp-title">Add Transport</span><button class="modal-close" data-close="modal-transport">✕</button></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Type</label>
+        <select class="form-select" id="t-type">
+          <option value="flight">✈️ Flight</option><option value="train">🚆 Train</option><option value="bus">🚌 Bus</option>
+          <option value="car">🚗 Car</option><option value="boat">⛵ Boat</option><option value="other">📍 Other</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label">Status</label>
+        <select class="form-select" id="t-status">
+          <option value="planning">📝 Planning</option><option value="booked">✅ Booked</option><option value="completed">✔ Completed</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group"><label class="form-label">Name / Reference *</label><input class="form-input" id="t-name" placeholder="e.g. Flight to Tokyo · AA123"/></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">From (Starting Point)</label><input class="form-input" id="t-from" placeholder="New York JFK"/></div>
+      <div class="form-group"><label class="form-label">To (Destination)</label><input class="form-input" id="t-to" placeholder="Tokyo NRT"/></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Departure</label><input class="form-input" type="datetime-local" id="t-start"/></div>
+      <div class="form-group"><label class="form-label">Arrival <span style="font-weight:400;color:var(--text3)">(optional)</span></label><input class="form-input" type="datetime-local" id="t-end"/></div>
+    </div>
+    <div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="t-notes" placeholder="Booking ref, seat numbers, terminal..."></textarea></div>
+    <div class="form-group"><label class="form-label">Documents</label>
+      <div id="t-file-list"></div>
+      <div class="file-upload-area" onclick="document.getElementById('t-file-input').click()">
+        <input type="file" id="t-file-input" style="display:none" multiple/>📎 Upload tickets / confirmations
+      </div>
+      <div id="t-upload-prog"></div>
+    </div>
+    <div class="form-actions"><button class="btn btn-secondary" data-close="modal-transport">Cancel</button><button class="btn btn-primary" id="btn-save-transport">Save</button></div>
+  </div>
+</div>
+
+<!-- ACCOMMODATION -->
+<div class="modal-overlay" id="modal-accommodation">
+  <div class="modal">
+    <div class="modal-header"><span class="modal-title" id="acc-title">Add Accommodation</span><button class="modal-close" data-close="modal-accommodation">✕</button></div>
+    <div class="form-group"><label class="form-label">Name *</label><input class="form-input" id="ac-name" placeholder="e.g. Park Hyatt Tokyo"/></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Location</label><input class="form-input" id="ac-location" placeholder="Tokyo, Japan"/></div>
+      <div class="form-group"><label class="form-label">Status</label>
+        <select class="form-select" id="ac-status">
           <option value="planning">📝 Planning</option><option value="booked">✅ Booked</option><option value="completed">✔ Completed</option>
         </select>
       </div>
     </div>
     <div class="form-row">
-      <div class="form-group"><label class="form-label">Start Date</label><input class="form-input" type="date" id="trip-start" /></div>
-      <div class="form-group"><label class="form-label">End Date</label><input class="form-input" type="date" id="trip-end" /></div>
+      <div class="form-group"><label class="form-label">Check-in</label><input class="form-input" type="datetime-local" id="ac-checkin"/></div>
+      <div class="form-group"><label class="form-label">Check-out</label><input class="form-input" type="datetime-local" id="ac-checkout"/></div>
     </div>
-    <div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="trip-notes" placeholder="Hotels, itinerary notes..."></textarea></div>
-    <div class="form-actions"><button class="btn btn-secondary" data-close="modal-trip">Cancel</button><button class="btn btn-primary" id="btn-save-trip">Save Trip</button></div>
+    <div class="form-group"><label class="form-label">Google Maps Link</label><input class="form-input" id="ac-maps" placeholder="Paste Google Maps URL"/></div>
+    <div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="ac-notes" placeholder="Booking ref, address, check-in info..."></textarea></div>
+    <div class="form-group"><label class="form-label">Documents</label>
+      <div id="ac-file-list"></div>
+      <div class="file-upload-area" onclick="document.getElementById('ac-file-input').click()">
+        <input type="file" id="ac-file-input" style="display:none" multiple/>📎 Upload confirmation / vouchers
+      </div>
+      <div id="ac-upload-prog"></div>
+    </div>
+    <div class="form-actions"><button class="btn btn-secondary" data-close="modal-accommodation">Cancel</button><button class="btn btn-primary" id="btn-save-accommodation">Save</button></div>
   </div>
 </div>
 
-<!-- CHECKLIST MODAL -->
+<!-- CHECKLIST -->
 <div class="modal-overlay" id="modal-checklist">
   <div class="modal">
     <div class="modal-header"><span class="modal-title">New Checklist</span><button class="modal-close" data-close="modal-checklist">✕</button></div>
-    <div class="form-group"><label class="form-label">Checklist Name *</label><input class="form-input" id="checklist-name" placeholder="e.g. Japan Packing List" /></div>
+    <div class="form-group"><label class="form-label">Name *</label><input class="form-input" id="cl-name" placeholder="e.g. Japan Packing List"/></div>
     <div class="form-group"><label class="form-label">Linked Trip (optional)</label>
-      <select class="form-select" id="checklist-trip"><option value="">No trip linked</option></select>
+      <select class="form-select" id="cl-trip"><option value="">None</option></select>
     </div>
     <div class="form-actions"><button class="btn btn-secondary" data-close="modal-checklist">Cancel</button><button class="btn btn-primary" id="btn-save-checklist">Create</button></div>
   </div>
 </div>
 
-<!-- EXPENSE MODAL -->
+<!-- EXPENSE -->
 <div class="modal-overlay" id="modal-expense">
   <div class="modal">
     <div class="modal-header"><span class="modal-title">Add Expense</span><button class="modal-close" data-close="modal-expense">✕</button></div>
     <div class="form-row">
       <div class="form-group"><label class="form-label">Category</label>
-        <select class="form-select" id="exp-category">
+        <select class="form-select" id="ex-cat">
           <option value="flights">✈️ Flights</option><option value="accommodation">🏨 Accommodation</option>
           <option value="food">🍜 Food</option><option value="transport">🚌 Transport</option>
           <option value="activities">🎭 Activities</option><option value="shopping">🛍 Shopping</option><option value="other">📌 Other</option>
         </select>
       </div>
       <div class="form-group"><label class="form-label">Paid by</label>
-        <select class="form-select" id="exp-paidby"><option value="me">Me</option><option value="partner">Partner</option><option value="split">Split</option></select>
+        <select class="form-select" id="ex-paidby"><option value="me">Me</option><option value="partner">Partner</option><option value="split">Split</option></select>
       </div>
     </div>
-    <div class="form-group"><label class="form-label">Description</label><input class="form-input" id="exp-desc" placeholder="e.g. Return flights Tokyo" /></div>
+    <div class="form-group"><label class="form-label">Description</label><input class="form-input" id="ex-desc" placeholder="e.g. Return flights Tokyo"/></div>
     <div class="form-row">
-      <div class="form-group"><label class="form-label">Estimated ($)</label><input class="form-input" type="number" id="exp-estimated" placeholder="0.00" min="0" step="0.01" /></div>
-      <div class="form-group"><label class="form-label">Actual ($)</label><input class="form-input" type="number" id="exp-actual" placeholder="0.00" min="0" step="0.01" /></div>
+      <div class="form-group"><label class="form-label">Estimated ($)</label><input class="form-input" type="number" id="ex-est" placeholder="0.00" min="0" step="0.01"/></div>
+      <div class="form-group"><label class="form-label">Actual ($)</label><input class="form-input" type="number" id="ex-act" placeholder="0.00" min="0" step="0.01"/></div>
     </div>
-    <div class="form-actions"><button class="btn btn-secondary" data-close="modal-expense">Cancel</button><button class="btn btn-primary" id="btn-save-expense">Save Expense</button></div>
+    <div class="form-actions"><button class="btn btn-secondary" data-close="modal-expense">Cancel</button><button class="btn btn-primary" id="btn-save-expense">Save</button></div>
   </div>
 </div>
 
-<!-- TRIP DETAIL MODAL -->
-<div class="modal-overlay" id="modal-trip-detail">
-  <div class="modal" style="max-width:600px">
-    <div class="modal-header"><span class="modal-title" id="detail-title">Trip Documents</span><button class="modal-close" data-close="modal-trip-detail">✕</button></div>
-    <div id="detail-content"></div>
-  </div>
-</div>
-
-<!-- CALENDAR ADD MODAL -->
+<!-- CALENDAR ADD -->
 <div class="modal-overlay" id="modal-cal-add">
   <div class="modal">
-    <div class="modal-header"><span class="modal-title" id="cal-add-title">Add to Calendar</span><button class="modal-close" data-close="modal-cal-add">✕</button></div>
-    <div class="segment-control">
-      <button class="segment-btn active" id="cal-seg-act" onclick="setCalAddType('activity')">🎯 Activity</button>
-      <button class="segment-btn" id="cal-seg-trip" onclick="setCalAddType('trip')">✈️ Trip</button>
-    </div>
-    <div id="cal-add-content"></div>
+    <div class="modal-header"><span class="modal-title" id="cal-add-title">Add Event</span><button class="modal-close" data-close="modal-cal-add">✕</button></div>
+    <div style="display:flex;gap:.5rem;margin-bottom:1.25rem;flex-wrap:wrap" id="cal-add-tabs"></div>
+    <div id="cal-add-form"></div>
   </div>
 </div>
 
 <div id="toast"></div>
 
 <script>
-// ══════════════════════════════════════════
-// ⚙️  SET YOUR CLIENT ID HERE
-// ══════════════════════════════════════════
+// ══════════════════════════
+// ⚙️  YOUR CLIENT ID
+// ══════════════════════════
 const CLIENT_ID = '633441558716-3lbaitogvc09hr2pu4hqp254fbgci2s5.apps.googleusercontent.com';
-// ══════════════════════════════════════════
+// ══════════════════════════
 
 const SCOPES = 'https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/calendar.events';
-const DATA_FILE_NAME = 'travel-app-data.json';
+const DATA_FILE = 'travel-app-data.json';
 
-let appData = { activities:[], trips:[], checklists:[], budget:[] };
-let driveFileId = null;
-let tokenClient = null;
-let editingId = null;
-let currentActivityType = 'wishlist';
-let calViewDate = new Date();
-let calAddDate = null;
-let calAddType = 'activity';
-let gcalOk = false;
+let D = { wishlist:[], activities:[], transport:[], accommodation:[], checklists:[], budget:[] };
+let driveFileId = null, tokenClient = null, editId = null, gcalOk = false;
+let calDate = new Date(), calAddDate = null, calAddType = 'activity';
+let pf = { a:[], t:[], ac:[] }; // pending files per modal
 
-function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2); }
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2);
+const $ = id => document.getElementById(id);
+const setVal = (id, v) => { const el=$(id); if(el) el.value = v ?? ''; };
+const getVal = id => { const el=$(id); return el ? el.value : ''; };
 
-function showToast(msg, type='success'){
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.className=`show ${type}`;
-  setTimeout(()=>t.className='',3000);
+const TTE = { flight:'✈️', train:'🚆', bus:'🚌', car:'🚗', boat:'⛵', other:'📍' };
+const SL = { planning:'📝 Planning', booked:'✅ Booked', completed:'✔ Completed' };
+const SB = { planning:'badge-yellow', booked:'badge-blue', completed:'badge-gray' };
+const PL = { dream:'⭐ Dream Trip', next:'🔜 Next Up', someday:'☁ Someday' };
+const PB = { dream:'badge-blue', next:'badge-yellow', someday:'badge-gray' };
+const PBord = { dream:'p-dream', next:'p-next', someday:'p-someday' };
+
+function toast(msg, type='success'){
+  const t=$('toast'); t.textContent=msg; t.className=`show ${type}`;
+  setTimeout(()=>t.className='', 3200);
 }
-
-function setSyncState(state,text,time=''){
-  document.getElementById('sync-dot').className=`sync-dot ${state}`;
-  document.getElementById('sync-text').textContent=text;
-  document.getElementById('sync-time').textContent=time;
+function syncState(s,txt,time=''){
+  $('sync-dot').className=`sync-dot ${s}`; $('sync-text').textContent=txt; $('sync-time').textContent=time;
 }
-
-function setGcalState(state, text){
-  document.getElementById('gcal-dot').className=`gcal-status-dot ${state}`;
-  document.getElementById('gcal-text').textContent=text;
-}
+function gcalState(s,txt){ $('gcal-dot').className=`gcal-dot ${s}`; $('gcal-text').textContent=txt; }
+function fmtDT(dt){ if(!dt) return ''; const d=new Date(dt); return isNaN(d)?dt:d.toLocaleString([],{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}); }
 
 // ── AUTH ──
 function initGoogle(){
-  if(!CLIENT_ID||CLIENT_ID.includes('YOUR_CLIENT_ID')){
-    document.getElementById('config-notice').style.display='block'; return;
-  }
+  if(!CLIENT_ID||CLIENT_ID.includes('YOUR_CLIENT_ID')){ $('config-notice').style.display='block'; return; }
   const s1=document.createElement('script'); s1.src='https://accounts.google.com/gsi/client';
-  s1.onload=()=>{
-    tokenClient=google.accounts.oauth2.initTokenClient({
-      client_id:CLIENT_ID, scope:SCOPES, callback:onTokenReceived
-    });
-  };
+  s1.onload=()=>{ tokenClient=google.accounts.oauth2.initTokenClient({client_id:CLIENT_ID,scope:SCOPES,callback:onToken}); };
   document.head.appendChild(s1);
   const s2=document.createElement('script'); s2.src='https://apis.google.com/js/api.js';
-  s2.onload=()=>gapi.load('client',()=>gapi.client.init({
-    discoveryDocs:[
-      'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest',
-      'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'
-    ]
-  }));
+  s2.onload=()=>gapi.load('client',()=>gapi.client.init({discoveryDocs:[
+    'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest',
+    'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'
+  ]}));
   document.head.appendChild(s2);
 }
-
-function onTokenReceived(r){
-  if(r.error){ showToast('Sign in failed','error'); return; }
-  fetch('https://www.googleapis.com/oauth2/v3/userinfo',{
-    headers:{Authorization:'Bearer '+gapi.client.getToken().access_token}
-  }).then(x=>x.json()).then(info=>{
-    document.getElementById('user-avatar').src=info.picture||'';
-    document.getElementById('user-name').textContent=info.name||info.email||'';
-  });
-  document.getElementById('login-screen').style.display='none';
-  document.getElementById('app').style.display='block';
-  loadFromDrive();
-  initGcal();
+function onToken(r){
+  if(r.error){ toast('Sign in failed','error'); return; }
+  fetch('https://www.googleapis.com/oauth2/v3/userinfo',{headers:{Authorization:'Bearer '+gapi.client.getToken().access_token}})
+    .then(x=>x.json()).then(i=>{ $('user-avatar').src=i.picture||''; $('user-name').textContent=i.name||i.email||''; });
+  $('login-screen').style.display='none'; $('app').style.display='block';
+  loadDrive(); initGcal();
 }
-
-document.getElementById('btn-login').addEventListener('click',()=>{
-  if(!tokenClient){ showToast('Set your CLIENT_ID first','error'); return; }
-  tokenClient.requestAccessToken();
-});
-
-document.getElementById('btn-signout').addEventListener('click',()=>{
-  const t=gapi.client.getToken();
-  if(t) google.accounts.oauth2.revoke(t.access_token);
-  gapi.client.setToken(null);
-  document.getElementById('app').style.display='none';
-  document.getElementById('login-screen').style.display='flex';
-  driveFileId=null; gcalOk=false;
+$('btn-login').addEventListener('click',()=>{ if(!tokenClient){ toast('Set your CLIENT_ID first','error'); return; } tokenClient.requestAccessToken(); });
+$('btn-signout').addEventListener('click',()=>{
+  const t=gapi.client.getToken(); if(t) google.accounts.oauth2.revoke(t.access_token);
+  gapi.client.setToken(null); $('app').style.display='none'; $('login-screen').style.display='flex'; driveFileId=null; gcalOk=false;
 });
 
 // ── DRIVE ──
-async function loadFromDrive(){
-  setSyncState('syncing','Loading from Google Drive...');
+async function loadDrive(){
+  syncState('syncing','Loading from Google Drive...');
   try{
-    const res=await gapi.client.drive.files.list({
-      q:`name='${DATA_FILE_NAME}' and trashed=false`,
-      fields:'files(id,name)', spaces:'drive'
-    });
+    const res=await gapi.client.drive.files.list({q:`name='${DATA_FILE}' and trashed=false`,fields:'files(id)',spaces:'drive'});
     const files=res.result.files;
-    if(files.length>0){
+    if(files.length){
       driveFileId=files[0].id;
       const c=await gapi.client.drive.files.get({fileId:driveFileId,alt:'media'});
       const loaded=JSON.parse(c.body);
-      // migrate old wishlist key to activities
-      if(loaded.wishlist && !loaded.activities){
-        loaded.activities=loaded.wishlist.map(w=>({...w,itemType:'wishlist'}));
-        delete loaded.wishlist;
+      // data migrations from previous versions
+      if(loaded.trips&&!loaded.transport){ loaded.transport=loaded.trips; delete loaded.trips; }
+      if(loaded.activities){
+        const wishes=loaded.activities.filter(a=>a.itemType==='wishlist');
+        const acts=loaded.activities.filter(a=>a.itemType==='activity'||!a.itemType);
+        if(!loaded.wishlist||!loaded.wishlist.length) loaded.wishlist=wishes;
+        loaded.activities=acts.map(a=>{ delete a.itemType; return a; });
       }
-      appData={activities:[],trips:[],checklists:[],budget:[],...loaded};
-    } else { await saveToDrive(); }
-    setSyncState('synced','Synced with Google Drive','just now');
+      D={wishlist:[],activities:[],transport:[],accommodation:[],checklists:[],budget:[],...loaded};
+    } else { await saveDrive(); }
+    syncState('synced','Synced with Google Drive','just now');
     renderAll();
-  }catch(e){
-    setSyncState('error','Drive error — working offline');
-    showToast('Could not load from Drive','error');
-    renderAll();
-  }
+  }catch(e){ syncState('error','Drive error — working offline'); toast('Could not load from Drive','error'); renderAll(); }
 }
-
-async function saveToDrive(){
-  setSyncState('syncing','Saving to Google Drive...');
-  const json=JSON.stringify(appData,null,2);
+async function saveDrive(){
+  syncState('syncing','Saving...');
   const token=gapi.client.getToken()?.access_token;
+  const body=JSON.stringify(D,null,2);
   try{
     if(driveFileId){
-      await fetch(`https://www.googleapis.com/upload/drive/v3/files/${driveFileId}?uploadType=media`,{
-        method:'PATCH',
-        headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},
-        body:json
-      });
+      await fetch(`https://www.googleapis.com/upload/drive/v3/files/${driveFileId}?uploadType=media`,{method:'PATCH',headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},body});
     } else {
-      const m=await gapi.client.drive.files.create({resource:{name:DATA_FILE_NAME,mimeType:'application/json'},fields:'id'});
+      const m=await gapi.client.drive.files.create({resource:{name:DATA_FILE,mimeType:'application/json'},fields:'id'});
       driveFileId=m.result.id;
-      await fetch(`https://www.googleapis.com/upload/drive/v3/files/${driveFileId}?uploadType=media`,{
-        method:'PATCH',
-        headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},
-        body:json
-      });
+      await fetch(`https://www.googleapis.com/upload/drive/v3/files/${driveFileId}?uploadType=media`,{method:'PATCH',headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},body});
     }
-    setSyncState('synced','Synced with Google Drive',`Last saved ${new Date().toLocaleTimeString()}`);
-  }catch(e){ setSyncState('error','Save failed'); showToast('Could not save to Drive','error'); }
+    syncState('synced','Synced',`Saved ${new Date().toLocaleTimeString()}`);
+  }catch(e){ syncState('error','Save failed'); toast('Save failed','error'); }
 }
-
-document.getElementById('btn-sync').addEventListener('click',()=>{ loadFromDrive(); initGcal(); });
+$('btn-sync').addEventListener('click',()=>{ loadDrive(); initGcal(); });
 
 // ── TABS ──
 document.querySelectorAll('.tab').forEach(tab=>{
@@ -684,759 +642,494 @@ document.querySelectorAll('.tab').forEach(tab=>{
     document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
     document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
     tab.classList.add('active');
-    document.getElementById('section-'+tab.dataset.tab).classList.add('active');
+    $('section-'+tab.dataset.tab).classList.add('active');
     if(tab.dataset.tab==='calendar') renderCalendar();
   });
 });
 
 // ── MODALS ──
-function openModal(id){ document.getElementById(id).classList.add('open'); }
-function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+const openModal = id => $(id).classList.add('open');
+const closeModal = id => $(id).classList.remove('open');
 document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>closeModal(b.dataset.close)));
 document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{ if(e.target===o) o.classList.remove('open'); }));
 
-// ══ GOOGLE CALENDAR ══
+// ── GCAL ──
 async function initGcal(){
-  setGcalState('syncing','Syncing with Google Calendar...');
+  gcalState('syncing','Syncing...');
   try{
-    // just verify we can list calendars
     await gapi.client.calendar.calendarList.list({maxResults:1});
-    gcalOk=true;
-    setGcalState('ok','Synced with Google Calendar');
-    await syncAllToGcal();
-  }catch(e){
-    gcalOk=false;
-    setGcalState('err','Google Calendar unavailable — check Calendar API scope');
-  }
+    gcalOk=true; gcalState('ok','Synced with Google Calendar');
+    await syncAllGcal();
+  }catch(e){ gcalOk=false; gcalState('err','Google Calendar unavailable'); }
 }
-
-async function syncAllToGcal(){
-  if(!gcalOk) return;
-  const token=gapi.client.getToken()?.access_token;
-  if(!token) return;
-
-  // sync booked trips
-  for(const trip of appData.trips){
-    if(trip.status==='booked' && trip.startDate && !trip.gcalEventId){
-      trip.gcalEventId = await createGcalEvent({
-        summary: '✈️ '+trip.name,
-        description: trip.notes||'',
-        start: trip.startDate,
-        end: trip.endDate||trip.startDate,
-        allDay: true
-      });
-    }
-  }
-
-  // sync booked activities
-  for(const act of appData.activities){
-    if(act.itemType==='activity' && act.status==='booked' && act.startDate && !act.gcalEventId){
-      act.gcalEventId = await createGcalEvent({
-        summary: '🎯 '+act.name,
-        description: act.notes||'',
-        start: act.startDate,
-        end: act.endDate||null,
-        allDay: false,
-        defaultDuration: 60
-      });
-    }
-  }
-
-  await saveToDrive();
-  renderCalendar();
+async function syncAllGcal(){
+  if(!gcalOk) return; let changed=false;
+  for(const a of D.activities){ if(a.status==='booked'&&a.startDate&&!a.gcalEventId){ a.gcalEventId=await mkGcalEvent('🎯 '+a.name,a.notes||'',a.startDate,a.endDate||null,false); changed=true; } }
+  for(const t of D.transport){ if(t.status==='booked'&&t.startDate&&!t.gcalEventId){ t.gcalEventId=await mkGcalEvent(`${TTE[t.type]||'✈️'} ${t.name}`,`${t.from||''}→${t.to||''}\n${t.notes||''}`,t.startDate,t.endDate||null,false); changed=true; } }
+  for(const a of D.accommodation){ if(a.status==='booked'&&a.checkin&&!a.gcalEventId){ a.gcalEventId=await mkGcalEvent('🏨 '+a.name,a.notes||'',a.checkin,a.checkout||null,false); changed=true; } }
+  if(changed){ await saveDrive(); renderCalendar(); }
 }
-
-async function createGcalEvent({summary, description, start, end, allDay, defaultDuration=60}){
+async function mkGcalEvent(summary,description,start,end,allDay){
   try{
-    let eventBody;
-    if(allDay){
-      eventBody={
-        summary, description,
-        start:{date: start},
-        end:{date: end||start}
-      };
-    } else {
-      const startDt=new Date(start);
-      let endDt = end ? new Date(end) : new Date(startDt.getTime()+defaultDuration*60000);
-      eventBody={
-        summary, description,
-        start:{dateTime: startDt.toISOString()},
-        end:{dateTime: endDt.toISOString()}
-      };
-    }
-    const res=await gapi.client.calendar.events.insert({
-      calendarId:'primary',
-      resource:eventBody
-    });
-    return res.result.id;
+    const s=new Date(start), e=end?new Date(end):new Date(s.getTime()+3600000);
+    const body=allDay?{summary,description,start:{date:start.slice(0,10)},end:{date:(end||start).slice(0,10)}}:{summary,description,start:{dateTime:s.toISOString()},end:{dateTime:e.toISOString()}};
+    return (await gapi.client.calendar.events.insert({calendarId:'primary',resource:body})).result.id;
   }catch(e){ return null; }
 }
+async function rmGcalEvent(id){ if(gcalOk&&id) try{ await gapi.client.calendar.events.delete({calendarId:'primary',eventId:id}); }catch(e){} }
 
-async function deleteGcalEvent(eventId){
-  if(!gcalOk||!eventId) return;
-  try{ await gapi.client.calendar.events.delete({calendarId:'primary',eventId}); }catch(e){}
-}
-
-// ══ ACTIVITIES ══
-let actFilter='all';
-
-document.querySelectorAll('.act-filter').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    document.querySelectorAll('.act-filter').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    actFilter=btn.dataset.filter;
-    renderActivities();
-  });
-});
-
-function setActivityType(type){
-  currentActivityType=type;
-  document.getElementById('seg-wishlist').classList.toggle('active',type==='wishlist');
-  document.getElementById('seg-activity').classList.toggle('active',type==='activity');
-  document.getElementById('act-wishlist-fields').style.display=type==='wishlist'?'block':'none';
-  document.getElementById('act-activity-fields').style.display=type==='activity'?'block':'none';
-}
-
-function renderActivities(){
-  const grid=document.getElementById('activities-grid');
-  let items=appData.activities||[];
-  if(actFilter!=='all') items=items.filter(x=>x.itemType===actFilter);
-
-  if(!items.length){
-    grid.innerHTML=`<div class="empty-state" style="grid-column:1/-1"><span class="emoji">${actFilter==='activity'?'🎯':'🗺️'}</span><h3>Nothing here yet</h3><p>${actFilter==='wishlist'?'Add places you dream of visiting.':actFilter==='activity'?'Add planned activities with dates.':'Add places to visit or activities to do together.'}</p></div>`;
-    return;
+// ── FILE UPLOAD UTILITY ──
+async function uploadFiles(fileList, progId){
+  const token=gapi.client.getToken()?.access_token;
+  if(!token){ toast('Not authenticated','error'); return []; }
+  const uploaded=[], prog=$(progId);
+  for(const file of fileList){
+    if(prog) prog.innerHTML=`<span class="spinner"></span> Uploading ${file.name}...`;
+    try{
+      const form=new FormData();
+      form.append('metadata',new Blob([JSON.stringify({name:file.name})],{type:'application/json'}));
+      form.append('file',file);
+      const res=await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id,webViewLink',{method:'POST',headers:{Authorization:`Bearer ${token}`},body:form});
+      const data=await res.json();
+      uploaded.push({name:file.name,fileId:data.id,url:data.webViewLink});
+    }catch(e){ toast(`Failed: ${file.name}`,'error'); }
   }
+  if(prog) prog.innerHTML='';
+  return uploaded;
+}
+function renderFiles(files, listId, delFn){
+  const el=$(listId); if(!el) return;
+  el.innerHTML=files.map(f=>`<div class="file-item"><div class="file-item-name">📄 <span>${f.name}</span></div><div style="display:flex;gap:.5rem"><a href="${f.url}" target="_blank" class="btn btn-secondary btn-sm">↗</a><button class="btn btn-danger btn-sm" onclick="${delFn}('${f.fileId}')">🗑</button></div></div>`).join('');
+}
 
-  const te={city:'🏙',beach:'🏖',nature:'🌿',cultural:'🏛',adventure:'🧗',food:'🍜',other:'📍'};
-  const pl={dream:'⭐ Dream Trip',next:'🔜 Next Up',someday:'☁ Someday'};
-  const pb={dream:'badge-green',next:'badge-yellow',someday:'badge-gray'};
-  const sl={planning:'📝 Planning',booked:'✅ Booked',completed:'✔ Completed'};
-  const sb={planning:'badge-yellow',booked:'badge-green',completed:'badge-gray'};
-
-  grid.innerHTML=items.map(a=>{
-    const isAct=a.itemType==='activity';
-    const borderClass=isAct?`status-${a.status||'planning'}`:`priority-${a.priority||'dream'}`;
-    const gcalBadge=a.gcalEventId?`<span style="font-size:.75rem;color:var(--text3)">📅 On calendar</span>`:'';
-    return `<div class="card ${borderClass}">
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem">
-        <div class="card-title">${te[a.type]||'📍'} ${a.name}</div>
-        <span class="badge ${isAct?'badge-blue':'badge-gray'}" style="flex-shrink:0">${isAct?'🎯 Activity':'🌍 Wishlist'}</span>
+// ════════════════════════
+// WISHLIST
+// ════════════════════════
+function renderWishlist(){
+  const g=$('wishlist-grid');
+  if(!D.wishlist.length){ g.innerHTML=`<div class="empty-state" style="grid-column:1/-1"><span class="emoji">🗺️</span><h3>No places yet</h3><p>Add destinations you dream of visiting together.</p></div>`; return; }
+  const te={city:'🏙',beach:'🏖',nature:'🌿',cultural:'🏛',adventure:'🧗',other:'📍'};
+  g.innerHTML=D.wishlist.map(w=>`
+    <div class="card ${PBord[w.priority||'dream']}">
+      <div class="card-title">${te[w.type]||'📍'} ${w.name}</div>
+      <div class="card-meta">
+        ${w.country?`<span>${w.country}</span>`:''}
+        <span class="badge ${PB[w.priority||'dream']}">${PL[w.priority||'dream']}</span>
+        <span>by ${w.suggestedBy||'—'}</span>
       </div>
+      ${w.mapsLink?`<a class="maps-link" href="${w.mapsLink}" target="_blank">📍 Open in Maps ↗</a>`:''}
+      ${w.notes?`<p style="font-size:.85rem;color:var(--text2);margin-top:.5rem;line-height:1.5">${w.notes}</p>`:''}
+      <div class="card-actions">
+        <button class="btn btn-secondary btn-sm" onclick="editWish('${w.id}')">✏ Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="delWish('${w.id}')">🗑</button>
+      </div>
+    </div>`).join('');
+}
+$('btn-add-wish').addEventListener('click',()=>{
+  editId=null; $('wish-title').textContent='Add Place';
+  ['w-name','w-country','w-maps','w-notes'].forEach(id=>setVal(id,''));
+  setVal('w-priority','dream'); setVal('w-type','city'); setVal('w-by','me');
+  openModal('modal-wish');
+});
+function editWish(id){
+  const w=D.wishlist.find(x=>x.id===id); if(!w) return;
+  editId=id; $('wish-title').textContent='Edit Place';
+  setVal('w-name',w.name); setVal('w-country',w.country); setVal('w-type',w.type||'city');
+  setVal('w-priority',w.priority||'dream'); setVal('w-by',w.suggestedBy||'me');
+  setVal('w-maps',w.mapsLink); setVal('w-notes',w.notes);
+  openModal('modal-wish');
+}
+$('btn-save-wish').addEventListener('click',()=>{
+  const name=getVal('w-name').trim(); if(!name){ toast('Enter a place name','error'); return; }
+  const ex=editId?D.wishlist.find(x=>x.id===editId):null;
+  const item={id:editId||uid(),name,country:getVal('w-country').trim(),type:getVal('w-type'),priority:getVal('w-priority'),suggestedBy:getVal('w-by'),mapsLink:getVal('w-maps').trim(),notes:getVal('w-notes').trim(),createdAt:ex?.createdAt||Date.now()};
+  if(editId) D.wishlist=D.wishlist.map(x=>x.id===editId?item:x); else D.wishlist.push(item);
+  closeModal('modal-wish'); renderWishlist(); saveDrive(); toast(editId?'Updated!':'Place added!');
+});
+function delWish(id){ if(!confirm('Remove this place?')) return; D.wishlist=D.wishlist.filter(x=>x.id!==id); renderWishlist(); saveDrive(); toast('Removed'); }
+
+// ════════════════════════
+// ACTIVITIES
+// ════════════════════════
+function renderActivities(){
+  const g=$('activities-grid');
+  if(!D.activities.length){ g.innerHTML=`<div class="empty-state" style="grid-column:1/-1"><span class="emoji">🎯</span><h3>No activities yet</h3><p>Add activities you plan to do on your trips.</p></div>`; return; }
+  const te={adventure:'🧗',food:'🍜',cultural:'🏛',nature:'🌿',entertainment:'🎭',sport:'⚽',other:'📍'};
+  g.innerHTML=D.activities.map(a=>`
+    <div class="card s-${a.status||'planning'}">
+      <div class="card-title">${te[a.type]||'📍'} ${a.name}</div>
       <div class="card-meta">
         ${a.country?`<span>${a.country}</span>`:''}
-        ${isAct
-          ?`<span class="badge ${sb[a.status||'planning']}">${sl[a.status||'planning']}</span>`
-          :`<span class="badge ${pb[a.priority||'dream']}">${pl[a.priority||'dream']}</span>`
-        }
-        <span>by ${a.suggestedBy||a.suggestedBy2||'—'}</span>
+        <span class="badge ${SB[a.status||'planning']}">${SL[a.status||'planning']}</span>
+        ${a.gcalEventId?`<span style="font-size:.72rem;color:var(--text3)">📅</span>`:''}
       </div>
-      ${isAct&&a.startDate?`<div style="font-size:.82rem;color:var(--text3);margin-bottom:.4rem">🕐 ${formatDateTime(a.startDate)}${a.endDate?' → '+formatDateTime(a.endDate):' (1h)'}</div>`:''}
-      ${gcalBadge}
-      ${a.mapsLink?`<a class="maps-link" href="${a.mapsLink}" target="_blank">📍 Open in Maps ↗</a>`:''}
-      ${a.notes?`<p style="font-size:.85rem;color:var(--text2);margin-top:.5rem;line-height:1.5">${a.notes}</p>`:''}
+      ${a.startDate?`<div style="font-size:.82rem;color:var(--text3);margin-bottom:.4rem">🕐 ${fmtDT(a.startDate)}${a.endDate?' → '+fmtDT(a.endDate):' (1h)'}</div>`:''}
+      ${a.mapsLink?`<a class="maps-link" href="${a.mapsLink}" target="_blank">📍 Maps ↗</a>`:''}
+      ${a.notes?`<p style="font-size:.85rem;color:var(--text2);margin-top:.4rem;line-height:1.5">${a.notes}</p>`:''}
+      ${(a.files||[]).length?`<div style="font-size:.8rem;color:var(--text3);margin-top:.4rem">📎 ${a.files.length} doc${a.files.length!==1?'s':''}</div>`:''}
       <div class="card-actions">
-        ${isAct&&a.status==='booked'&&a.startDate&&!a.gcalEventId&&gcalOk?`<button class="btn btn-secondary btn-sm" onclick="addActivityToGcal('${a.id}')">📅 Add to Calendar</button>`:''}
+        ${a.status==='booked'&&a.startDate&&!a.gcalEventId&&gcalOk?`<button class="btn btn-secondary btn-sm" onclick="addActGcal('${a.id}')">📅</button>`:''}
         <button class="btn btn-secondary btn-sm" onclick="editActivity('${a.id}')">✏ Edit</button>
-        <button class="btn btn-danger btn-sm" onclick="deleteActivity('${a.id}')">🗑</button>
+        <button class="btn btn-danger btn-sm" onclick="delActivity('${a.id}')">🗑</button>
       </div>
-    </div>`;
-  }).join('');
+    </div>`).join('');
 }
+function populateTripSel(selId){ $(selId).innerHTML='<option value="">None</option>'+D.transport.map(t=>`<option value="${t.id}">${t.name}</option>`).join(''); }
 
-function formatDateTime(dt){
-  if(!dt) return '';
-  const d=new Date(dt);
-  if(isNaN(d)) return dt;
-  return d.toLocaleString([],{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
-}
-
-document.getElementById('btn-add-activity').addEventListener('click',()=>{
-  editingId=null;
-  document.getElementById('activity-modal-title').textContent='Add Activity';
-  ['act-name','act-country','act-maps','act-notes','act-start','act-end'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('act-priority').value='dream';
-  document.getElementById('act-type').value='city';
-  document.getElementById('act-by').value='me';
-  document.getElementById('act-by2').value='me';
-  document.getElementById('act-status').value='planning';
-  setActivityType('wishlist');
+$('btn-add-activity').addEventListener('click',()=>{
+  editId=null; pf.a=[];
+  $('act-title').textContent='Add Activity';
+  ['a-name','a-country','a-maps','a-notes','a-start','a-end'].forEach(id=>setVal(id,''));
+  setVal('a-status','planning'); setVal('a-type','adventure');
+  $('a-file-list').innerHTML=''; $('a-upload-prog').innerHTML=''; $('a-file-input').value='';
+  populateTripSel('a-trip');
   openModal('modal-activity');
 });
+$('a-file-input').addEventListener('change',async e=>{
+  const up=await uploadFiles(Array.from(e.target.files),'a-upload-prog');
+  pf.a=[...pf.a,...up]; renderFiles(pf.a,'a-file-list','delPfA');
+});
+function delPfA(fid){ pf.a=pf.a.filter(f=>f.fileId!==fid); renderFiles(pf.a,'a-file-list','delPfA'); }
 
 function editActivity(id){
-  const a=appData.activities.find(x=>x.id===id); if(!a) return;
-  editingId=id;
-  document.getElementById('activity-modal-title').textContent='Edit Activity';
-  document.getElementById('act-name').value=a.name;
-  document.getElementById('act-country').value=a.country||'';
-  document.getElementById('act-type').value=a.type||'city';
-  document.getElementById('act-maps').value=a.mapsLink||'';
-  document.getElementById('act-notes').value=a.notes||'';
-  if(a.itemType==='activity'){
-    setActivityType('activity');
-    document.getElementById('act-status').value=a.status||'planning';
-    document.getElementById('act-by2').value=a.suggestedBy||'me';
-    document.getElementById('act-start').value=a.startDate||'';
-    document.getElementById('act-end').value=a.endDate||'';
-  } else {
-    setActivityType('wishlist');
-    document.getElementById('act-priority').value=a.priority||'dream';
-    document.getElementById('act-by').value=a.suggestedBy||'me';
-  }
+  const a=D.activities.find(x=>x.id===id); if(!a) return;
+  editId=id; pf.a=[...(a.files||[])];
+  $('act-title').textContent='Edit Activity';
+  setVal('a-name',a.name); setVal('a-country',a.country); setVal('a-type',a.type||'adventure');
+  setVal('a-status',a.status||'planning'); setVal('a-start',a.startDate); setVal('a-end',a.endDate);
+  setVal('a-maps',a.mapsLink); setVal('a-notes',a.notes);
+  $('a-upload-prog').innerHTML=''; renderFiles(pf.a,'a-file-list','delPfA');
+  populateTripSel('a-trip'); setVal('a-trip',a.tripId||'');
   openModal('modal-activity');
 }
-
-document.getElementById('btn-save-activity').addEventListener('click',async()=>{
-  const name=document.getElementById('act-name').value.trim();
-  if(!name){ showToast('Please enter a name','error'); return; }
-  const existing=editingId?appData.activities.find(x=>x.id===editingId):null;
-  const isAct=currentActivityType==='activity';
-
-  const item={
-    id:editingId||uid(),
-    itemType:currentActivityType,
-    name,
-    country:document.getElementById('act-country').value.trim(),
-    type:document.getElementById('act-type').value,
-    mapsLink:document.getElementById('act-maps').value.trim(),
-    notes:document.getElementById('act-notes').value.trim(),
-    gcalEventId:existing?.gcalEventId||null,
-    createdAt:existing?.createdAt||Date.now()
-  };
-
-  if(isAct){
-    item.status=document.getElementById('act-status').value;
-    item.suggestedBy=document.getElementById('act-by2').value;
-    item.startDate=document.getElementById('act-start').value;
-    item.endDate=document.getElementById('act-end').value;
-  } else {
-    item.priority=document.getElementById('act-priority').value;
-    item.suggestedBy=document.getElementById('act-by').value;
+$('btn-save-activity').addEventListener('click',async()=>{
+  const name=getVal('a-name').trim(); if(!name){ toast('Enter a name','error'); return; }
+  const ex=editId?D.activities.find(x=>x.id===editId):null;
+  const ns=getVal('a-status');
+  if(ex?.gcalEventId&&ns!=='booked') await rmGcalEvent(ex.gcalEventId);
+  const item={id:editId||uid(),name,country:getVal('a-country').trim(),type:getVal('a-type'),status:ns,startDate:getVal('a-start'),endDate:getVal('a-end'),mapsLink:getVal('a-maps').trim(),notes:getVal('a-notes').trim(),tripId:getVal('a-trip'),files:[...pf.a],gcalEventId:ns==='booked'?(ex?.gcalEventId||null):null,createdAt:ex?.createdAt||Date.now()};
+  if(editId) D.activities=D.activities.map(x=>x.id===editId?item:x); else D.activities.push(item);
+  closeModal('modal-activity'); renderActivities(); await saveDrive();
+  if(item.status==='booked'&&item.startDate&&!item.gcalEventId&&gcalOk){
+    item.gcalEventId=await mkGcalEvent('🎯 '+item.name,item.notes||'',item.startDate,item.endDate||null,false);
+    if(item.gcalEventId){ D.activities=D.activities.map(x=>x.id===item.id?item:x); await saveDrive(); renderCalendar(); }
   }
-
-  // if status changed away from booked, remove gcal event
-  if(existing?.gcalEventId && isAct && item.status!=='booked'){
-    await deleteGcalEvent(existing.gcalEventId);
-    item.gcalEventId=null;
-  }
-
-  if(editingId) appData.activities=appData.activities.map(x=>x.id===editingId?item:x);
-  else appData.activities.push(item);
-
-  closeModal('modal-activity');
-  renderActivities();
-  await saveToDrive();
-
-  // auto-add to gcal if booked activity with date
-  if(isAct && item.status==='booked' && item.startDate && !item.gcalEventId && gcalOk){
-    await addActivityToGcal(item.id);
-  }
-
-  showToast(editingId?'Updated!':'Saved!');
+  toast(editId?'Updated!':'Activity added!');
 });
-
-async function addActivityToGcal(id){
-  const act=appData.activities.find(x=>x.id===id); if(!act) return;
-  const evId=await createGcalEvent({
-    summary:'🎯 '+act.name,
-    description:act.notes||'',
-    start:act.startDate,
-    end:act.endDate||null,
-    allDay:false,
-    defaultDuration:60
-  });
-  if(evId){
-    act.gcalEventId=evId;
-    await saveToDrive();
-    renderActivities();
-    renderCalendar();
-    showToast('Added to Google Calendar!');
-  } else {
-    showToast('Could not add to Calendar','error');
-  }
+async function addActGcal(id){
+  const a=D.activities.find(x=>x.id===id); if(!a) return;
+  a.gcalEventId=await mkGcalEvent('🎯 '+a.name,a.notes||'',a.startDate,a.endDate||null,false);
+  if(a.gcalEventId){ await saveDrive(); renderActivities(); renderCalendar(); toast('Added to Calendar!'); }
+  else toast('Calendar error','error');
+}
+async function delActivity(id){
+  if(!confirm('Delete this activity?')) return;
+  const a=D.activities.find(x=>x.id===id); if(a?.gcalEventId) await rmGcalEvent(a.gcalEventId);
+  D.activities=D.activities.filter(x=>x.id!==id); renderActivities(); await saveDrive(); toast('Deleted');
 }
 
-async function deleteActivity(id){
-  if(!confirm('Delete this item?')) return;
-  const act=appData.activities.find(x=>x.id===id);
-  if(act?.gcalEventId) await deleteGcalEvent(act.gcalEventId);
-  appData.activities=appData.activities.filter(x=>x.id!==id);
-  renderActivities(); await saveToDrive(); showToast('Deleted');
+// ════════════════════════
+// TRANSPORT
+// ════════════════════════
+function renderTransport(){
+  const g=$('transport-grid');
+  if(!D.transport.length){ g.innerHTML=`<div class="empty-state" style="grid-column:1/-1"><span class="emoji">✈️</span><h3>No transport yet</h3><p>Add flights, trains, buses and more.</p></div>`; return; }
+  g.innerHTML=D.transport.map(t=>`
+    <div class="card s-${t.status||'planning'}">
+      <div class="card-title">${TTE[t.type]||'✈️'} ${t.name}</div>
+      <div class="card-meta">
+        <span class="badge ${SB[t.status||'planning']}">${SL[t.status||'planning']}</span>
+        ${t.gcalEventId?`<span style="font-size:.72rem;color:var(--text3)">📅</span>`:''}
+      </div>
+      ${(t.from||t.to)?`<div style="font-size:.85rem;color:var(--text2);margin-bottom:.4rem">📍 ${t.from||'?'} → ${t.to||'?'}</div>`:''}
+      ${t.startDate?`<div style="font-size:.82rem;color:var(--text3);margin-bottom:.4rem">🕐 ${fmtDT(t.startDate)}${t.endDate?' → '+fmtDT(t.endDate):''}</div>`:''}
+      ${t.notes?`<p style="font-size:.85rem;color:var(--text2);margin-top:.4rem;line-height:1.5">${t.notes}</p>`:''}
+      ${(t.files||[]).length?`<div style="font-size:.8rem;color:var(--text3);margin-top:.4rem">📎 ${t.files.length} doc${t.files.length!==1?'s':''}</div>`:''}
+      <div class="card-actions">
+        <button class="btn btn-secondary btn-sm" onclick="editTransport('${t.id}')">✏ Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="delTransport('${t.id}')">🗑</button>
+      </div>
+    </div>`).join('');
 }
-
-// ══ TRIPS ══
-function renderTrips(){
-  const grid=document.getElementById('trips-grid');
-  const sb={planning:'badge-yellow',booked:'badge-green',completed:'badge-gray'};
-  const sl={planning:'📝 Planning',booked:'✅ Booked',completed:'✔ Completed'};
-  if(!appData.trips.length){
-    grid.innerHTML=`<div class="empty-state" style="grid-column:1/-1"><span class="emoji">🛫</span><h3>No trips yet</h3><p>Add your planned or past trips here.</p></div>`;
-  } else {
-    grid.innerHTML=appData.trips.map(t=>{
-      const fc=(t.files||[]).length;
-      return `<div class="card trip-card">
-        <div class="trip-status-bar ${t.status}"></div>
-        <div class="card-title" style="margin-top:.5rem">${t.name}</div>
-        <div style="font-size:.82rem;color:var(--text3)">${t.destination||''}</div>
-        <div class="card-meta" style="margin-top:.5rem">
-          ${t.startDate?`<span>📅 ${t.startDate}${t.endDate?' → '+t.endDate:''}</span>`:''}
-          <span class="badge ${sb[t.status]}">${sl[t.status]}</span>
-          ${t.gcalEventId?`<span style="font-size:.75rem;color:var(--text3)">📅 On calendar</span>`:''}
-        </div>
-        ${t.notes?`<p style="font-size:.85rem;color:var(--text2);margin-top:.5rem;line-height:1.5">${t.notes}</p>`:''}
-        <div style="font-size:.82rem;color:var(--text3);margin-top:.5rem">📎 ${fc} document${fc!==1?'s':''}</div>
-        <div class="card-actions">
-          <button class="btn btn-secondary btn-sm" onclick="openTripDetail('${t.id}')">📂 Docs</button>
-          <button class="btn btn-secondary btn-sm" onclick="editTrip('${t.id}')">✏ Edit</button>
-          <button class="btn btn-danger btn-sm" onclick="deleteTrip('${t.id}')">🗑</button>
-        </div>
-      </div>`;
-    }).join('');
-  }
-  const sel=document.getElementById('budget-trip-select');
-  const prev=sel.value;
-  sel.innerHTML='<option value="">Select trip...</option>'+appData.trips.map(t=>`<option value="${t.id}">${t.name}</option>`).join('');
-  if(prev) sel.value=prev;
-  document.getElementById('checklist-trip').innerHTML='<option value="">No trip linked</option>'+appData.trips.map(t=>`<option value="${t.id}">${t.name}</option>`).join('');
-}
-
-document.getElementById('btn-add-trip').addEventListener('click',()=>{
-  editingId=null;
-  document.getElementById('trip-modal-title').textContent='Add Trip';
-  ['trip-name','trip-dest','trip-notes'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('trip-start').value='';
-  document.getElementById('trip-end').value='';
-  document.getElementById('trip-status').value='planning';
-  openModal('modal-trip');
+$('btn-add-transport').addEventListener('click',()=>{
+  editId=null; pf.t=[];
+  $('trp-title').textContent='Add Transport';
+  ['t-name','t-from','t-to','t-notes','t-start','t-end'].forEach(id=>setVal(id,''));
+  setVal('t-type','flight'); setVal('t-status','planning');
+  $('t-file-list').innerHTML=''; $('t-upload-prog').innerHTML=''; $('t-file-input').value='';
+  openModal('modal-transport');
 });
-
-function editTrip(id){
-  const t=appData.trips.find(x=>x.id===id); if(!t) return;
-  editingId=id;
-  document.getElementById('trip-modal-title').textContent='Edit Trip';
-  document.getElementById('trip-name').value=t.name;
-  document.getElementById('trip-dest').value=t.destination||'';
-  document.getElementById('trip-status').value=t.status;
-  document.getElementById('trip-start').value=t.startDate||'';
-  document.getElementById('trip-end').value=t.endDate||'';
-  document.getElementById('trip-notes').value=t.notes||'';
-  openModal('modal-trip');
-}
-
-document.getElementById('btn-save-trip').addEventListener('click',async()=>{
-  const name=document.getElementById('trip-name').value.trim();
-  if(!name){ showToast('Please enter a trip name','error'); return; }
-  const ex=editingId?appData.trips.find(x=>x.id===editingId):null;
-  const newStatus=document.getElementById('trip-status').value;
-
-  // remove gcal event if status changed away from booked
-  if(ex?.gcalEventId && newStatus!=='booked'){
-    await deleteGcalEvent(ex.gcalEventId);
-    ex.gcalEventId=null;
-  }
-
-  const item={
-    id:editingId||uid(), name,
-    destination:document.getElementById('trip-dest').value.trim(),
-    status:newStatus,
-    startDate:document.getElementById('trip-start').value,
-    endDate:document.getElementById('trip-end').value,
-    notes:document.getElementById('trip-notes').value.trim(),
-    files:ex?.files||[],
-    gcalEventId:ex?.gcalEventId||null,
-    createdAt:ex?.createdAt||Date.now()
-  };
-  if(editingId) appData.trips=appData.trips.map(x=>x.id===editingId?item:x);
-  else appData.trips.push(item);
-
-  closeModal('modal-trip');
-  renderTrips();
-  await saveToDrive();
-
-  // auto-add to gcal if booked with date
-  if(item.status==='booked' && item.startDate && !item.gcalEventId && gcalOk){
-    const evId=await createGcalEvent({
-      summary:'✈️ '+item.name,
-      description:item.notes||'',
-      start:item.startDate,
-      end:item.endDate||item.startDate,
-      allDay:true
-    });
-    if(evId){
-      appData.trips.find(x=>x.id===item.id).gcalEventId=evId;
-      await saveToDrive();
-      renderTrips();
-      renderCalendar();
-      showToast('Trip added to Google Calendar!');
-    }
-  } else {
-    showToast(editingId?'Trip updated!':'Trip added!');
-  }
+$('t-file-input').addEventListener('change',async e=>{
+  const up=await uploadFiles(Array.from(e.target.files),'t-upload-prog');
+  pf.t=[...pf.t,...up]; renderFiles(pf.t,'t-file-list','delPfT');
 });
-
-async function deleteTrip(id){
-  if(!confirm('Delete this trip?')) return;
-  const trip=appData.trips.find(x=>x.id===id);
-  if(trip?.gcalEventId) await deleteGcalEvent(trip.gcalEventId);
-  appData.trips=appData.trips.filter(x=>x.id!==id);
-  appData.budget=appData.budget.filter(x=>x.tripId!==id);
-  renderTrips(); renderBudget(); await saveToDrive(); showToast('Trip deleted');
+function delPfT(fid){ pf.t=pf.t.filter(f=>f.fileId!==fid); renderFiles(pf.t,'t-file-list','delPfT'); }
+function editTransport(id){
+  const t=D.transport.find(x=>x.id===id); if(!t) return;
+  editId=id; pf.t=[...(t.files||[])];
+  $('trp-title').textContent='Edit Transport';
+  setVal('t-name',t.name); setVal('t-type',t.type||'flight'); setVal('t-status',t.status||'planning');
+  setVal('t-from',t.from); setVal('t-to',t.to); setVal('t-start',t.startDate); setVal('t-end',t.endDate); setVal('t-notes',t.notes);
+  $('t-upload-prog').innerHTML=''; renderFiles(pf.t,'t-file-list','delPfT');
+  openModal('modal-transport');
 }
-
-function openTripDetail(id){
-  const trip=appData.trips.find(x=>x.id===id); if(!trip) return;
-  document.getElementById('detail-title').textContent=trip.name+' — Documents';
-  const files=trip.files||[];
-  document.getElementById('detail-content').innerHTML=`
-    <div>
-      ${files.length===0?`<p style="color:var(--text3);font-size:.9rem;margin-bottom:1rem">No documents yet.</p>`:''}
-      ${files.map(f=>`
-        <div class="file-item">
-          <div class="file-item-name">📄 <span>${f.name}</span></div>
-          <div style="display:flex;gap:.5rem">
-            <a href="${f.url}" target="_blank" class="btn btn-secondary btn-sm">↗ Open</a>
-            <button class="btn btn-danger btn-sm" onclick="deleteFile('${id}','${f.fileId}')">🗑</button>
-          </div>
-        </div>`).join('')}
-    </div>
-    <div class="file-upload-area" onclick="document.getElementById('file-input-${id}').click()">
-      <input type="file" id="file-input-${id}" style="display:none" multiple onchange="uploadFiles(event,'${id}')" />
-      📎 Click to upload documents
-    </div>
-    <div id="upload-progress" style="margin-top:.75rem;font-size:.85rem;color:var(--text2)"></div>`;
-  openModal('modal-trip-detail');
-}
-
-async function uploadFiles(event,tripId){
-  const files=Array.from(event.target.files); if(!files.length) return;
-  const progress=document.getElementById('upload-progress');
-  const token=gapi.client.getToken()?.access_token;
-  if(!token){ showToast('Not authenticated','error'); return; }
-  for(const file of files){
-    progress.innerHTML=`<span class="spinner"></span> Uploading ${file.name}...`;
-    try{
-      const meta=JSON.stringify({name:file.name});
-      const form=new FormData();
-      form.append('metadata',new Blob([meta],{type:'application/json'}));
-      form.append('file',file);
-      const res=await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id,webViewLink',{
-        method:'POST', headers:{Authorization:`Bearer ${token}`}, body:form
-      });
-      const data=await res.json();
-      const trip=appData.trips.find(x=>x.id===tripId);
-      if(!trip.files) trip.files=[];
-      trip.files.push({name:file.name,fileId:data.id,url:data.webViewLink});
-      saveToDrive(); renderTrips(); showToast(`${file.name} uploaded!`);
-    }catch(e){ showToast(`Failed to upload ${file.name}`,'error'); }
+$('btn-save-transport').addEventListener('click',async()=>{
+  const name=getVal('t-name').trim(); if(!name){ toast('Enter a name/reference','error'); return; }
+  const ex=editId?D.transport.find(x=>x.id===editId):null;
+  const ns=getVal('t-status');
+  if(ex?.gcalEventId&&ns!=='booked') await rmGcalEvent(ex.gcalEventId);
+  const item={id:editId||uid(),name,type:getVal('t-type'),status:ns,from:getVal('t-from').trim(),to:getVal('t-to').trim(),startDate:getVal('t-start'),endDate:getVal('t-end'),notes:getVal('t-notes').trim(),files:[...pf.t],gcalEventId:ns==='booked'?(ex?.gcalEventId||null):null,createdAt:ex?.createdAt||Date.now()};
+  if(editId) D.transport=D.transport.map(x=>x.id===editId?item:x); else D.transport.push(item);
+  closeModal('modal-transport'); renderTransport(); populateBudgetSel(); await saveDrive();
+  if(item.status==='booked'&&item.startDate&&!item.gcalEventId&&gcalOk){
+    item.gcalEventId=await mkGcalEvent(`${TTE[item.type]||'✈️'} ${item.name}`,`${item.from}→${item.to}\n${item.notes||''}`,item.startDate,item.endDate||null,false);
+    if(item.gcalEventId){ D.transport=D.transport.map(x=>x.id===item.id?item:x); await saveDrive(); renderCalendar(); }
   }
-  progress.innerHTML='';
-  openTripDetail(tripId);
+  toast(editId?'Updated!':'Transport added!');
+});
+async function delTransport(id){
+  if(!confirm('Delete this transport?')) return;
+  const t=D.transport.find(x=>x.id===id); if(t?.gcalEventId) await rmGcalEvent(t.gcalEventId);
+  D.transport=D.transport.filter(x=>x.id!==id); renderTransport(); populateBudgetSel(); await saveDrive(); toast('Deleted');
 }
 
-function deleteFile(tripId,fileId){
-  if(!confirm('Remove this document?')) return;
-  const trip=appData.trips.find(x=>x.id===tripId);
-  trip.files=(trip.files||[]).filter(f=>f.fileId!==fileId);
-  renderTrips(); saveToDrive(); openTripDetail(tripId); showToast('Document removed');
+// ════════════════════════
+// ACCOMMODATION
+// ════════════════════════
+function renderAccommodation(){
+  const g=$('accommodation-grid');
+  if(!D.accommodation.length){ g.innerHTML=`<div class="empty-state" style="grid-column:1/-1"><span class="emoji">🏨</span><h3>No accommodation yet</h3><p>Add hotels, hostels, Airbnbs and more.</p></div>`; return; }
+  g.innerHTML=D.accommodation.map(a=>`
+    <div class="card s-${a.status||'planning'}">
+      <div class="card-title">🏨 ${a.name}</div>
+      <div class="card-meta">
+        ${a.location?`<span>${a.location}</span>`:''}
+        <span class="badge ${SB[a.status||'planning']}">${SL[a.status||'planning']}</span>
+        ${a.gcalEventId?`<span style="font-size:.72rem;color:var(--text3)">📅</span>`:''}
+      </div>
+      ${a.checkin?`<div style="font-size:.82rem;color:var(--text3);margin-bottom:.4rem">📅 Check-in: ${fmtDT(a.checkin)}${a.checkout?' · Check-out: '+fmtDT(a.checkout):''}</div>`:''}
+      ${a.mapsLink?`<a class="maps-link" href="${a.mapsLink}" target="_blank">📍 Maps ↗</a>`:''}
+      ${a.notes?`<p style="font-size:.85rem;color:var(--text2);margin-top:.4rem;line-height:1.5">${a.notes}</p>`:''}
+      ${(a.files||[]).length?`<div style="font-size:.8rem;color:var(--text3);margin-top:.4rem">📎 ${a.files.length} doc${a.files.length!==1?'s':''}</div>`:''}
+      <div class="card-actions">
+        <button class="btn btn-secondary btn-sm" onclick="editAccommodation('${a.id}')">✏ Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="delAccommodation('${a.id}')">🗑</button>
+      </div>
+    </div>`).join('');
+}
+$('btn-add-accommodation').addEventListener('click',()=>{
+  editId=null; pf.ac=[];
+  $('acc-title').textContent='Add Accommodation';
+  ['ac-name','ac-location','ac-maps','ac-notes','ac-checkin','ac-checkout'].forEach(id=>setVal(id,''));
+  setVal('ac-status','planning');
+  $('ac-file-list').innerHTML=''; $('ac-upload-prog').innerHTML=''; $('ac-file-input').value='';
+  openModal('modal-accommodation');
+});
+$('ac-file-input').addEventListener('change',async e=>{
+  const up=await uploadFiles(Array.from(e.target.files),'ac-upload-prog');
+  pf.ac=[...pf.ac,...up]; renderFiles(pf.ac,'ac-file-list','delPfAc');
+});
+function delPfAc(fid){ pf.ac=pf.ac.filter(f=>f.fileId!==fid); renderFiles(pf.ac,'ac-file-list','delPfAc'); }
+function editAccommodation(id){
+  const a=D.accommodation.find(x=>x.id===id); if(!a) return;
+  editId=id; pf.ac=[...(a.files||[])];
+  $('acc-title').textContent='Edit Accommodation';
+  setVal('ac-name',a.name); setVal('ac-location',a.location); setVal('ac-status',a.status||'planning');
+  setVal('ac-checkin',a.checkin); setVal('ac-checkout',a.checkout); setVal('ac-maps',a.mapsLink); setVal('ac-notes',a.notes);
+  $('ac-upload-prog').innerHTML=''; renderFiles(pf.ac,'ac-file-list','delPfAc');
+  openModal('modal-accommodation');
+}
+$('btn-save-accommodation').addEventListener('click',async()=>{
+  const name=getVal('ac-name').trim(); if(!name){ toast('Enter a name','error'); return; }
+  const ex=editId?D.accommodation.find(x=>x.id===editId):null;
+  const ns=getVal('ac-status');
+  if(ex?.gcalEventId&&ns!=='booked') await rmGcalEvent(ex.gcalEventId);
+  const item={id:editId||uid(),name,location:getVal('ac-location').trim(),status:ns,checkin:getVal('ac-checkin'),checkout:getVal('ac-checkout'),mapsLink:getVal('ac-maps').trim(),notes:getVal('ac-notes').trim(),files:[...pf.ac],gcalEventId:ns==='booked'?(ex?.gcalEventId||null):null,createdAt:ex?.createdAt||Date.now()};
+  if(editId) D.accommodation=D.accommodation.map(x=>x.id===editId?item:x); else D.accommodation.push(item);
+  closeModal('modal-accommodation'); renderAccommodation(); await saveDrive();
+  if(item.status==='booked'&&item.checkin&&!item.gcalEventId&&gcalOk){
+    item.gcalEventId=await mkGcalEvent('🏨 '+item.name,item.notes||'',item.checkin,item.checkout||null,false);
+    if(item.gcalEventId){ D.accommodation=D.accommodation.map(x=>x.id===item.id?item:x); await saveDrive(); renderCalendar(); }
+  }
+  toast(editId?'Updated!':'Accommodation added!');
+});
+async function delAccommodation(id){
+  if(!confirm('Delete?')) return;
+  const a=D.accommodation.find(x=>x.id===id); if(a?.gcalEventId) await rmGcalEvent(a.gcalEventId);
+  D.accommodation=D.accommodation.filter(x=>x.id!==id); renderAccommodation(); await saveDrive(); toast('Deleted');
 }
 
-// ══ CHECKLISTS ══
+// ════════════════════════
+// CHECKLISTS
+// ════════════════════════
 function renderChecklists(){
-  const grid=document.getElementById('checklist-grid');
-  if(!appData.checklists.length){
-    grid.innerHTML=`<div class="empty-state" style="grid-column:1/-1"><span class="emoji">📦</span><h3>No checklists yet</h3><p>Create packing lists for each trip.</p></div>`;
-    return;
-  }
-  grid.innerHTML=appData.checklists.map(cl=>{
+  const g=$('checklist-grid');
+  if(!D.checklists.length){ g.innerHTML=`<div class="empty-state" style="grid-column:1/-1"><span class="emoji">📦</span><h3>No checklists yet</h3><p>Create packing lists for your trips.</p></div>`; return; }
+  g.innerHTML=D.checklists.map(cl=>{
     const total=cl.items?.length||0, done=cl.items?.filter(i=>i.checked).length||0;
-    const trip=cl.tripId?appData.trips.find(t=>t.id===cl.tripId):null;
-    const pct=total>0?Math.round((done/total)*100):0;
+    const pct=total>0?Math.round(done/total*100):0;
+    const trip=cl.tripId?D.transport.find(t=>t.id===cl.tripId):null;
     return `<div class="card">
       <div class="card-title">${cl.name}</div>
-      <div class="card-meta">
-        ${trip?`<span class="badge badge-green">✈ ${trip.name}</span>`:''}
-        <span>${done}/${total} done</span>
-      </div>
+      <div class="card-meta">${trip?`<span class="badge badge-blue">✈ ${trip.name}</span>`:''}<span>${done}/${total} done</span></div>
       <div style="background:var(--bg3);border-radius:999px;height:4px;margin:.5rem 0">
-        <div style="background:var(--green);height:4px;border-radius:999px;width:${pct}%;transition:width .3s"></div>
+        <div style="background:var(--blue);height:4px;border-radius:999px;width:${pct}%;transition:width .3s"></div>
       </div>
-      <div id="cl-items-${cl.id}">
-        ${(cl.items||[]).map(item=>`
-          <div class="checklist-item${item.checked?' done':''}" id="cli-${item.id}">
-            <input type="checkbox" ${item.checked?'checked':''} onchange="toggleCheck('${cl.id}','${item.id}',this.checked)" />
-            <label>${item.text}</label>
-            <button class="btn btn-danger btn-sm" onclick="deleteCheckItem('${cl.id}','${item.id}')">✕</button>
-          </div>`).join('')}
-      </div>
+      ${(cl.items||[]).map(item=>`
+        <div class="checklist-item${item.checked?' done':''}">
+          <input type="checkbox" ${item.checked?'checked':''} onchange="toggleCheck('${cl.id}','${item.id}',this.checked)"/>
+          <label>${item.text}</label>
+          <button class="btn btn-danger btn-sm" onclick="delCheckItem('${cl.id}','${item.id}')">✕</button>
+        </div>`).join('')}
       <div class="checklist-add">
-        <input type="text" placeholder="Add item..." id="cl-add-${cl.id}" onkeydown="if(event.key==='Enter')addCheckItem('${cl.id}')" />
+        <input type="text" placeholder="Add item..." id="cla-${cl.id}" onkeydown="if(event.key==='Enter')addCheckItem('${cl.id}')"/>
         <button class="btn btn-primary btn-sm" onclick="addCheckItem('${cl.id}')">+</button>
       </div>
       <div class="card-actions" style="margin-top:.75rem">
-        <button class="btn btn-danger btn-sm" onclick="deleteChecklist('${cl.id}')">🗑 Delete</button>
+        <button class="btn btn-danger btn-sm" onclick="delChecklist('${cl.id}')">🗑 Delete</button>
       </div>
     </div>`;
   }).join('');
 }
-
-document.getElementById('btn-add-checklist').addEventListener('click',()=>{
-  document.getElementById('checklist-name').value='';
-  document.getElementById('checklist-trip').value='';
+$('btn-add-checklist').addEventListener('click',()=>{
+  setVal('cl-name','');
+  $('cl-trip').innerHTML='<option value="">None</option>'+D.transport.map(t=>`<option value="${t.id}">${t.name}</option>`).join('');
   openModal('modal-checklist');
 });
-document.getElementById('btn-save-checklist').addEventListener('click',()=>{
-  const name=document.getElementById('checklist-name').value.trim();
-  if(!name){ showToast('Please enter a list name','error'); return; }
-  appData.checklists.push({id:uid(),name,tripId:document.getElementById('checklist-trip').value,items:[],createdAt:Date.now()});
-  closeModal('modal-checklist'); renderChecklists(); saveToDrive(); showToast('Checklist created!');
+$('btn-save-checklist').addEventListener('click',()=>{
+  const name=getVal('cl-name').trim(); if(!name){ toast('Enter a name','error'); return; }
+  D.checklists.push({id:uid(),name,tripId:getVal('cl-trip'),items:[],createdAt:Date.now()});
+  closeModal('modal-checklist'); renderChecklists(); saveDrive(); toast('Created!');
 });
-function addCheckItem(clId){
-  const input=document.getElementById('cl-add-'+clId);
-  const text=input.value.trim(); if(!text) return;
-  const cl=appData.checklists.find(x=>x.id===clId);
-  if(!cl.items) cl.items=[];
-  cl.items.push({id:uid(),text,checked:false});
-  input.value=''; renderChecklists(); saveToDrive();
-}
-function toggleCheck(clId,itemId,checked){
-  const item=appData.checklists.find(x=>x.id===clId)?.items?.find(x=>x.id===itemId);
-  if(item){ item.checked=checked; renderChecklists(); saveToDrive(); }
-}
-function deleteCheckItem(clId,itemId){
-  const cl=appData.checklists.find(x=>x.id===clId);
-  if(cl){ cl.items=cl.items.filter(x=>x.id!==itemId); renderChecklists(); saveToDrive(); }
-}
-function deleteChecklist(id){
-  if(!confirm('Delete this checklist?')) return;
-  appData.checklists=appData.checklists.filter(x=>x.id!==id);
-  renderChecklists(); saveToDrive(); showToast('Checklist deleted');
-}
+function addCheckItem(id){ const inp=$('cla-'+id); const text=inp.value.trim(); if(!text) return; const cl=D.checklists.find(x=>x.id===id); if(!cl.items) cl.items=[]; cl.items.push({id:uid(),text,checked:false}); inp.value=''; renderChecklists(); saveDrive(); }
+function toggleCheck(clId,itemId,checked){ const item=D.checklists.find(x=>x.id===clId)?.items?.find(x=>x.id===itemId); if(item){ item.checked=checked; renderChecklists(); saveDrive(); } }
+function delCheckItem(clId,itemId){ const cl=D.checklists.find(x=>x.id===clId); if(cl){ cl.items=cl.items.filter(x=>x.id!==itemId); renderChecklists(); saveDrive(); } }
+function delChecklist(id){ if(!confirm('Delete checklist?')) return; D.checklists=D.checklists.filter(x=>x.id!==id); renderChecklists(); saveDrive(); toast('Deleted'); }
 
-// ══ BUDGET ══
+// ════════════════════════
+// BUDGET
+// ════════════════════════
+function populateBudgetSel(){
+  // Placeholder function - trip selection removed
+}
 function renderBudget(){
-  const tripId=document.getElementById('budget-trip-select').value;
-  const tbody=document.getElementById('budget-tbody');
+  const tbody=$('budget-tbody');
   const ce={flights:'✈️',accommodation:'🏨',food:'🍜',transport:'🚌',activities:'🎭',shopping:'🛍',other:'📌'};
-  if(!tripId){
-    tbody.innerHTML=`<tr><td colspan="6" style="text-align:center;color:var(--text3);padding:2rem">Select a trip to view expenses</td></tr>`;
-    ['bs-estimated','bs-actual','bs-remaining'].forEach(id=>document.getElementById(id).textContent='$0');
-    return;
-  }
-  const expenses=appData.budget.filter(x=>x.tripId===tripId);
+  const expenses=D.budget||[];
   const est=expenses.reduce((s,x)=>s+(parseFloat(x.estimated)||0),0);
   const act=expenses.reduce((s,x)=>s+(parseFloat(x.actual)||0),0);
   const rem=est-act;
-  document.getElementById('bs-estimated').textContent='$'+est.toFixed(2);
-  document.getElementById('bs-actual').textContent='$'+act.toFixed(2);
-  const re=document.getElementById('bs-remaining');
-  re.textContent='$'+Math.abs(rem).toFixed(2)+(rem<0?' over':'');
-  re.style.color=rem<0?'var(--red)':'var(--green)';
-  if(!expenses.length){
-    tbody.innerHTML=`<tr><td colspan="6" style="text-align:center;color:var(--text3);padding:2rem">No expenses yet</td></tr>`; return;
-  }
-  tbody.innerHTML=expenses.map(e=>`<tr>
-    <td>${ce[e.category]||'📌'} ${e.category}</td><td>${e.description}</td>
-    <td>$${parseFloat(e.estimated||0).toFixed(2)}</td>
-    <td class="${parseFloat(e.actual||0)>parseFloat(e.estimated||0)?'amount-over':'amount-positive'}">$${parseFloat(e.actual||0).toFixed(2)}</td>
-    <td>${e.paidBy}</td>
-    <td><button class="btn btn-danger btn-sm" onclick="deleteExpense('${e.id}')">🗑</button></td>
-  </tr>`).join('');
+  $('bs-est').textContent='$'+est.toFixed(2); $('bs-act').textContent='$'+act.toFixed(2);
+  const re=$('bs-rem'); re.textContent='$'+Math.abs(rem).toFixed(2)+(rem<0?' over':''); re.style.color=rem<0?'var(--red)':'var(--blue)';
+  tbody.innerHTML=expenses.length?expenses.map(e=>`<tr><td>${ce[e.category]||'📌'} ${e.category}</td><td>${e.description}</td><td>$${parseFloat(e.estimated||0).toFixed(2)}</td><td class="${parseFloat(e.actual||0)>parseFloat(e.estimated||0)?'amount-over':'amount-pos'}">$${parseFloat(e.actual||0).toFixed(2)}</td><td>${e.paidBy}</td><td><button class="btn btn-danger btn-sm" onclick="delExpense('${e.id}')">🗑</button></td></tr>`).join(''):`<tr><td colspan="6" style="text-align:center;color:var(--text3);padding:2rem">No expenses yet</td></tr>`;
 }
-document.getElementById('budget-trip-select').addEventListener('change',renderBudget);
-document.getElementById('btn-add-expense').addEventListener('click',()=>{
-  if(!document.getElementById('budget-trip-select').value){ showToast('Select a trip first','error'); return; }
-  ['exp-desc','exp-estimated','exp-actual'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('exp-category').value='flights';
-  document.getElementById('exp-paidby').value='me';
-  openModal('modal-expense');
+$('budget-trip-select').addEventListener('change',renderBudget);
+$('btn-add-expense').addEventListener('click',()=>{ ['ex-desc','ex-est','ex-act'].forEach(id=>setVal(id,'')); setVal('ex-cat','flights'); setVal('ex-paidby','me'); openModal('modal-expense'); });
+$('btn-save-expense').addEventListener('click',()=>{
+  const desc=getVal('ex-desc').trim(); if(!desc){ toast('Enter a description','error'); return; }
+  D.budget.push({id:uid(),category:getVal('ex-cat'),description:desc,estimated:getVal('ex-est'),actual:getVal('ex-act'),paidBy:getVal('ex-paidby'),createdAt:Date.now()});
+  closeModal('modal-expense'); renderBudget(); saveDrive(); toast('Expense added!');
 });
-document.getElementById('btn-save-expense').addEventListener('click',()=>{
-  const desc=document.getElementById('exp-desc').value.trim();
-  if(!desc){ showToast('Please enter a description','error'); return; }
-  appData.budget.push({
-    id:uid(), tripId:document.getElementById('budget-trip-select').value,
-    category:document.getElementById('exp-category').value, description:desc,
-    estimated:document.getElementById('exp-estimated').value,
-    actual:document.getElementById('exp-actual').value,
-    paidBy:document.getElementById('exp-paidby').value, createdAt:Date.now()
-  });
-  closeModal('modal-expense'); renderBudget(); saveToDrive(); showToast('Expense added!');
-});
-function deleteExpense(id){
-  if(!confirm('Remove this expense?')) return;
-  appData.budget=appData.budget.filter(x=>x.id!==id);
-  renderBudget(); saveToDrive(); showToast('Expense removed');
-}
+function delExpense(id){ if(!confirm('Remove?')) return; D.budget=D.budget.filter(x=>x.id!==id); renderBudget(); saveDrive(); toast('Removed'); }
 
-// ══ CALENDAR ══
+// ════════════════════════
+// CALENDAR
+// ════════════════════════
 function renderCalendar(){
-  const year=calViewDate.getFullYear(), month=calViewDate.getMonth();
-  const monthNames=['January','February','March','April','May','June','July','August','September','October','November','December'];
-  document.getElementById('cal-month-label').textContent=`${monthNames[month]} ${year}`;
-
-  const firstDay=new Date(year,month,1).getDay();
-  const daysInMonth=new Date(year,month+1,0).getDate();
+  const y=calDate.getFullYear(), m=calDate.getMonth();
+  const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  $('cal-lbl').textContent=`${MONTHS[m]} ${y}`;
+  const firstDay=new Date(y,m,1).getDay(), daysInMonth=new Date(y,m+1,0).getDate();
   const today=new Date();
-
-  // collect all events with dates
   const events=[];
-  (appData.trips||[]).forEach(t=>{
-    if(t.status==='booked' && t.startDate){
-      events.push({type:'trip',label:t.name,start:new Date(t.startDate+'T00:00:00'),end:t.endDate?new Date(t.endDate+'T23:59:59'):new Date(t.startDate+'T23:59:59'),id:t.id});
-    }
-  });
-  (appData.activities||[]).forEach(a=>{
-    if(a.itemType==='activity' && a.status==='booked' && a.startDate){
-      events.push({type:'activity',label:a.name,start:new Date(a.startDate),end:a.endDate?new Date(a.endDate):new Date(new Date(a.startDate).getTime()+3600000),id:a.id});
-    }
-    if(a.itemType==='wishlist'){
-      // show wishlist items without dates just in first day column header area — skip, only show dated ones
-    }
-  });
+  D.activities.forEach(a=>{ if(a.status==='booked'&&a.startDate) events.push({type:'act',lbl:a.name,s:new Date(a.startDate),e:a.endDate?new Date(a.endDate):new Date(new Date(a.startDate).getTime()+3600000)}); });
+  D.transport.forEach(t=>{ if(t.status==='booked'&&t.startDate) events.push({type:'trp',lbl:`${TTE[t.type]||'✈️'} ${t.name}`,s:new Date(t.startDate),e:t.endDate?new Date(t.endDate):new Date(new Date(t.startDate).getTime()+3600000)}); });
+  D.accommodation.forEach(a=>{ if(a.status==='booked'&&a.checkin) events.push({type:'acc',lbl:a.name,s:new Date(a.checkin),e:a.checkout?new Date(a.checkout):new Date(new Date(a.checkin).getTime()+86400000)}); });
 
-  const grid=document.getElementById('cal-grid');
-  const days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-  let html=days.map(d=>`<div class="cal-day-header">${d}</div>`).join('');
-
-  // blank cells before first day
-  for(let i=0;i<firstDay;i++) html+=`<div class="cal-day other-month"><span class="cal-day-num"></span></div>`;
-
+  const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  let html=DAYS.map(d=>`<div class="cal-day-hdr">${d}</div>`).join('');
+  for(let i=0;i<firstDay;i++) html+=`<div class="cal-day other-month"><span class="cal-dn"></span></div>`;
   for(let d=1;d<=daysInMonth;d++){
-    const date=new Date(year,month,d);
+    const date=new Date(y,m,d);
     const isToday=date.toDateString()===today.toDateString();
-    const dayEvents=events.filter(e=>{
-      const ds=new Date(e.start); ds.setHours(0,0,0,0);
-      const de=new Date(e.end); de.setHours(23,59,59,999);
-      return date>=ds && date<=de;
-    });
-    const hasEvents=dayEvents.length>0;
-    html+=`<div class="cal-day${isToday?' today':''}${hasEvents?' has-events':''}" onclick="calDayClick(${year},${month},${d})">
-      <span class="cal-day-num">${d}</span>
-      ${dayEvents.map(e=>`<div class="cal-event ${e.type}" title="${e.label}">${e.label}</div>`).join('')}
+    const dayEvs=events.filter(e=>{ const s=new Date(e.s); s.setHours(0,0,0,0); const en=new Date(e.e); en.setHours(23,59,59,999); return date>=s&&date<=en; });
+    html+=`<div class="cal-day${isToday?' today':''}${dayEvs.length?' has-ev':''}" onclick="calClick(${y},${m},${d})">
+      <span class="cal-dn">${d}</span>
+      ${dayEvs.map(e=>`<div class="cal-ev ${e.type}" title="${e.lbl}">${e.lbl}</div>`).join('')}
       <span class="cal-add-hint">+ add</span>
     </div>`;
   }
-
-  // fill remaining cells
-  const totalCells=firstDay+daysInMonth;
-  const remaining=(7-totalCells%7)%7;
-  for(let i=0;i<remaining;i++) html+=`<div class="cal-day other-month"><span class="cal-day-num"></span></div>`;
-
-  grid.innerHTML=html;
+  const rem=(7-(firstDay+daysInMonth)%7)%7;
+  for(let i=0;i<rem;i++) html+=`<div class="cal-day other-month"><span class="cal-dn"></span></div>`;
+  $('cal-grid').innerHTML=html;
 }
+$('cal-prev').addEventListener('click',()=>{ calDate=new Date(calDate.getFullYear(),calDate.getMonth()-1,1); renderCalendar(); });
+$('cal-next').addEventListener('click',()=>{ calDate=new Date(calDate.getFullYear(),calDate.getMonth()+1,1); renderCalendar(); });
+$('cal-today').addEventListener('click',()=>{ calDate=new Date(); renderCalendar(); });
 
-document.getElementById('cal-prev').addEventListener('click',()=>{
-  calViewDate=new Date(calViewDate.getFullYear(),calViewDate.getMonth()-1,1);
-  renderCalendar();
-});
-document.getElementById('cal-next').addEventListener('click',()=>{
-  calViewDate=new Date(calViewDate.getFullYear(),calViewDate.getMonth()+1,1);
-  renderCalendar();
-});
-document.getElementById('cal-today-btn').addEventListener('click',()=>{
-  calViewDate=new Date(); renderCalendar();
-});
-
-function calDayClick(y,m,d){
+function calClick(y,m,d){
   calAddDate=new Date(y,m,d);
+  $('cal-add-title').textContent=`Add for ${calAddDate.toLocaleDateString([],{month:'long',day:'numeric'})}`;
   setCalAddType('activity');
-  renderCalAddForm();
-  document.getElementById('cal-add-title').textContent=`Add for ${calAddDate.toLocaleDateString([],{month:'long',day:'numeric'})}`;
   openModal('modal-cal-add');
 }
-
 function setCalAddType(type){
   calAddType=type;
-  document.getElementById('cal-seg-act').classList.toggle('active',type==='activity');
-  document.getElementById('cal-seg-trip').classList.toggle('active',type==='trip');
-  renderCalAddForm();
+  const types=['activity','transport','accommodation'];
+  const labels=['🎯 Activity','✈️ Transport','🏨 Accommodation'];
+  $('cal-add-tabs').innerHTML=types.map((t,i)=>`<button class="btn ${t===type?'btn-primary':'btn-secondary'} btn-sm" onclick="setCalAddType('${t}')">${labels[i]}</button>`).join('');
+  const ds=calAddDate?calAddDate.toISOString().slice(0,10):'';
+  const def9=`${ds}T09:00`, def10=`${ds}T10:00`;
+  const forms={
+    activity:`<div class="form-group"><label class="form-label">Name *</label><input class="form-input" id="caf-name" placeholder="e.g. Cooking class"/></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Start</label><input class="form-input" type="datetime-local" id="caf-start" value="${def9}"/></div>
+        <div class="form-group"><label class="form-label">End (optional)</label><input class="form-input" type="datetime-local" id="caf-end" value="${def10}"/></div>
+      </div>
+      <div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="caf-notes"></textarea></div>
+      <div class="form-actions"><button class="btn btn-secondary" data-close="modal-cal-add">Cancel</button><button class="btn btn-primary" onclick="saveCalItem()">Save</button></div>`,
+    transport:`<div class="form-group"><label class="form-label">Name / Reference *</label><input class="form-input" id="caf-name" placeholder="e.g. Flight AA123"/></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Type</label><select class="form-select" id="caf-ttype"><option value="flight">✈️ Flight</option><option value="train">🚆 Train</option><option value="bus">🚌 Bus</option><option value="car">🚗 Car</option><option value="boat">⛵ Boat</option><option value="other">📍 Other</option></select></div>
+        <div class="form-group"><label class="form-label">Departure</label><input class="form-input" type="datetime-local" id="caf-start" value="${def9}"/></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">From</label><input class="form-input" id="caf-from" placeholder="Origin"/></div>
+        <div class="form-group"><label class="form-label">To</label><input class="form-input" id="caf-to" placeholder="Destination"/></div>
+      </div>
+      <div class="form-actions"><button class="btn btn-secondary" data-close="modal-cal-add">Cancel</button><button class="btn btn-primary" onclick="saveCalItem()">Save</button></div>`,
+    accommodation:`<div class="form-group"><label class="form-label">Name *</label><input class="form-input" id="caf-name" placeholder="e.g. Hotel Tokyo"/></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Check-in</label><input class="form-input" type="datetime-local" id="caf-start" value="${def9}"/></div>
+        <div class="form-group"><label class="form-label">Check-out</label><input class="form-input" type="datetime-local" id="caf-end"/></div>
+      </div>
+      <div class="form-group"><label class="form-label">Location</label><input class="form-input" id="caf-loc" placeholder="City, Country"/></div>
+      <div class="form-actions"><button class="btn btn-secondary" data-close="modal-cal-add">Cancel</button><button class="btn btn-primary" onclick="saveCalItem()">Save</button></div>`
+  };
+  $('cal-add-form').innerHTML=forms[type];
 }
-
-function renderCalAddForm(){
-  const dateStr=calAddDate?calAddDate.toISOString().slice(0,10):'';
-  const defaultStart=dateStr?`${dateStr}T09:00`:'';
-  const defaultEnd=dateStr?`${dateStr}T10:00`:'';
-
+async function saveCalItem(){
+  const name=$('caf-name')?.value.trim(); if(!name){ toast('Enter a name','error'); return; }
+  const start=$('caf-start')?.value||'';
+  closeModal('modal-cal-add');
   if(calAddType==='activity'){
-    document.getElementById('cal-add-content').innerHTML=`
-      <div class="form-group"><label class="form-label">Activity Name *</label><input class="form-input" id="cal-act-name" placeholder="e.g. Snorkeling tour" /></div>
-      <div class="form-row">
-        <div class="form-group"><label class="form-label">Start</label><input class="form-input" type="datetime-local" id="cal-act-start" value="${defaultStart}" /></div>
-        <div class="form-group"><label class="form-label">End (optional)</label><input class="form-input" type="datetime-local" id="cal-act-end" value="${defaultEnd}" /></div>
-      </div>
-      <div class="form-group"><label class="form-label">Status</label>
-        <select class="form-select" id="cal-act-status">
-          <option value="planning">📝 Planning</option><option value="booked" selected>✅ Booked</option>
-        </select>
-      </div>
-      <div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="cal-act-notes" placeholder="Details..."></textarea></div>
-      <div class="form-actions">
-        <button class="btn btn-secondary" data-close="modal-cal-add">Cancel</button>
-        <button class="btn btn-primary" onclick="saveCalActivity()">Save Activity</button>
-      </div>`;
+    const item={id:uid(),name,country:'',type:'other',status:'booked',startDate:start,endDate:$('caf-end')?.value||'',notes:$('caf-notes')?.value||'',mapsLink:'',tripId:'',files:[],gcalEventId:null,createdAt:Date.now()};
+    D.activities.push(item); renderActivities(); await saveDrive();
+    if(start&&gcalOk){ item.gcalEventId=await mkGcalEvent('🎯 '+name,'',start,item.endDate||null,false); if(item.gcalEventId){ D.activities=D.activities.map(x=>x.id===item.id?item:x); await saveDrive(); } }
+  } else if(calAddType==='transport'){
+    const item={id:uid(),name,type:$('caf-ttype')?.value||'flight',status:'booked',from:$('caf-from')?.value||'',to:$('caf-to')?.value||'',startDate:start,endDate:'',notes:'',files:[],gcalEventId:null,createdAt:Date.now()};
+    D.transport.push(item); renderTransport(); populateBudgetSel(); await saveDrive();
+    if(start&&gcalOk){ item.gcalEventId=await mkGcalEvent(`${TTE[item.type]||'✈️'} ${name}`,`${item.from}→${item.to}`,start,null,false); if(item.gcalEventId){ D.transport=D.transport.map(x=>x.id===item.id?item:x); await saveDrive(); } }
   } else {
-    document.getElementById('cal-add-content').innerHTML=`
-      <div class="form-group"><label class="form-label">Trip Name *</label><input class="form-input" id="cal-trip-name" placeholder="e.g. Weekend in Paris" /></div>
-      <div class="form-row">
-        <div class="form-group"><label class="form-label">Start Date</label><input class="form-input" type="date" id="cal-trip-start" value="${dateStr}" /></div>
-        <div class="form-group"><label class="form-label">End Date (optional)</label><input class="form-input" type="date" id="cal-trip-end" /></div>
-      </div>
-      <div class="form-group"><label class="form-label">Destination</label><input class="form-input" id="cal-trip-dest" placeholder="Paris, France" /></div>
-      <div class="form-actions">
-        <button class="btn btn-secondary" data-close="modal-cal-add">Cancel</button>
-        <button class="btn btn-primary" onclick="saveCalTrip()">Save Trip</button>
-      </div>`;
+    const item={id:uid(),name,location:$('caf-loc')?.value||'',status:'booked',checkin:start,checkout:$('caf-end')?.value||'',mapsLink:'',notes:'',files:[],gcalEventId:null,createdAt:Date.now()};
+    D.accommodation.push(item); renderAccommodation(); await saveDrive();
+    if(start&&gcalOk){ item.gcalEventId=await mkGcalEvent('🏨 '+name,'',start,item.checkout||null,false); if(item.gcalEventId){ D.accommodation=D.accommodation.map(x=>x.id===item.id?item:x); await saveDrive(); } }
   }
+  renderCalendar(); toast('Added!');
 }
 
-async function saveCalActivity(){
-  const name=document.getElementById('cal-act-name').value.trim();
-  if(!name){ showToast('Please enter a name','error'); return; }
-  const item={
-    id:uid(), itemType:'activity', name,
-    country:'', type:'other',
-    status:document.getElementById('cal-act-status').value,
-    startDate:document.getElementById('cal-act-start').value,
-    endDate:document.getElementById('cal-act-end').value,
-    notes:document.getElementById('cal-act-notes').value,
-    mapsLink:'', gcalEventId:null, suggestedBy:'me', createdAt:Date.now()
-  };
-  appData.activities.push(item);
-  closeModal('modal-cal-add');
-  renderActivities(); renderCalendar();
-  await saveToDrive();
-  if(item.status==='booked' && item.startDate && gcalOk){
-    await addActivityToGcal(item.id);
-  }
-  showToast('Activity added!');
-}
-
-async function saveCalTrip(){
-  const name=document.getElementById('cal-trip-name').value.trim();
-  if(!name){ showToast('Please enter a trip name','error'); return; }
-  const item={
-    id:uid(), name,
-    destination:document.getElementById('cal-trip-dest').value.trim(),
-    status:'booked',
-    startDate:document.getElementById('cal-trip-start').value,
-    endDate:document.getElementById('cal-trip-end').value,
-    notes:'', files:[], gcalEventId:null, createdAt:Date.now()
-  };
-  appData.trips.push(item);
-  closeModal('modal-cal-add');
-  renderTrips(); renderCalendar();
-  await saveToDrive();
-  if(item.startDate && gcalOk){
-    const evId=await createGcalEvent({
-      summary:'✈️ '+item.name, description:'',
-      start:item.startDate, end:item.endDate||item.startDate, allDay:true
-    });
-    if(evId){ appData.trips.find(x=>x.id===item.id).gcalEventId=evId; await saveToDrive(); renderTrips(); }
-    showToast('Trip added to Calendar!');
-  } else { showToast('Trip added!'); }
-}
-
-function renderAll(){ renderActivities(); renderTrips(); renderChecklists(); renderBudget(); }
+// ── RENDER ALL ──
+function renderAll(){ renderWishlist(); renderActivities(); renderTransport(); renderAccommodation(); renderChecklists(); populateBudgetSel(); renderBudget(); }
 
 initGoogle();
 </script>
