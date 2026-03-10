@@ -10,7 +10,7 @@
       --bg:#0a0f0a;--bg2:#111811;--bg3:#172017;--card:#1a241a;--card2:#1f2d1f;
       --border:#2a3d2a;--green:#4ade80;--green2:#22c55e;--green3:#16a34a;
       --green-dim:#166534;--green-glow:#4ade8033;--text:#e8f5e8;--text2:#a3bfa3;
-      --text3:#6b8f6b;--red:#f87171;--yellow:#fbbf24;--radius:14px;--radius-sm:8px;
+      --text3:#6b8f6b;--red:#f87171;--yellow:#fbbf24;--blue:#60a5fa;--radius:14px;--radius-sm:8px;
     }
     *{box-sizing:border-box;margin:0;padding:0}
     body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
@@ -79,6 +79,7 @@
     .badge-green{background:#16a34a30;color:var(--green)}
     .badge-yellow{background:#fbbf2420;color:var(--yellow)}
     .badge-gray{background:var(--card2);color:var(--text3)}
+    .badge-blue{background:#60a5fa20;color:var(--blue)}
 
     /* MODAL */
     .modal-overlay{display:none;position:fixed;inset:0;background:#00000090;backdrop-filter:blur(4px);z-index:1000;align-items:center;justify-content:center;padding:1rem}
@@ -100,6 +101,11 @@
     .form-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
     .form-actions{display:flex;gap:.75rem;justify-content:flex-end;margin-top:1.5rem}
 
+    /* SEGMENT CONTROL */
+    .segment-control{display:flex;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:3px;gap:3px;margin-bottom:1.25rem}
+    .segment-btn{flex:1;padding:.5rem;border:none;border-radius:6px;background:transparent;color:var(--text3);font-family:'DM Sans',sans-serif;font-size:.875rem;font-weight:500;cursor:pointer;transition:all .2s}
+    .segment-btn.active{background:var(--green-dim);color:var(--green);font-weight:600}
+
     /* EMPTY STATE */
     .empty-state{text-align:center;padding:4rem 2rem;color:var(--text3)}
     .empty-state .emoji{font-size:3rem;margin-bottom:1rem;display:block}
@@ -116,10 +122,13 @@
     .sync-text{color:var(--text2);flex:1}
     .sync-time{color:var(--text3);font-size:.78rem}
 
-    /* PRIORITY BORDERS */
+    /* PRIORITY / STATUS BORDERS */
     .priority-dream{border-left:3px solid var(--green)}
     .priority-next{border-left:3px solid var(--yellow)}
     .priority-someday{border-left:3px solid var(--text3)}
+    .status-planning{border-left:3px solid var(--yellow)}
+    .status-booked{border-left:3px solid var(--green)}
+    .status-completed{border-left:3px solid var(--text3)}
 
     /* MAPS LINK */
     .maps-link{display:inline-flex;align-items:center;gap:.3rem;color:var(--green);font-size:.82rem;text-decoration:none;transition:opacity .2s}
@@ -162,6 +171,36 @@
     .amount-positive{color:var(--green);font-weight:600}
     .amount-over{color:var(--red);font-weight:600}
 
+    /* ── CALENDAR ── */
+    .cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
+    .cal-month{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:700;color:var(--text)}
+    .cal-nav{display:flex;gap:.5rem}
+    .cal-nav-btn{background:var(--card2);border:1px solid var(--border);color:var(--text2);width:36px;height:36px;border-radius:var(--radius-sm);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .2s}
+    .cal-nav-btn:hover{border-color:var(--green-dim);color:var(--green)}
+    .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;background:var(--border);border-radius:var(--radius);overflow:hidden;border:1px solid var(--border)}
+    .cal-day-header{background:var(--bg2);padding:.5rem;text-align:center;font-size:.75rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.5px}
+    .cal-day{background:var(--bg3);min-height:90px;padding:.4rem;cursor:pointer;transition:background .15s;position:relative}
+    .cal-day:hover{background:var(--card)}
+    .cal-day.today{background:var(--card2)}
+    .cal-day.today .cal-day-num{color:var(--green);font-weight:700}
+    .cal-day.other-month .cal-day-num{color:var(--text3)}
+    .cal-day-num{font-size:.8rem;font-weight:600;color:var(--text2);margin-bottom:.25rem;display:block}
+    .cal-event{font-size:.7rem;border-radius:4px;padding:2px 5px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;line-height:1.4}
+    .cal-event.trip{background:#16a34a40;color:var(--green);border-left:2px solid var(--green)}
+    .cal-event.activity{background:#60a5fa20;color:var(--blue);border-left:2px solid var(--blue)}
+    .cal-event.wishlist-item{background:#fbbf2420;color:var(--yellow);border-left:2px solid var(--yellow)}
+    .cal-gcal-badge{font-size:.65rem;color:var(--text3);margin-top:1px;display:flex;align-items:center;gap:2px}
+    .cal-add-hint{position:absolute;bottom:3px;right:3px;font-size:.65rem;color:var(--text3);opacity:0;transition:opacity .2s}
+    .cal-day:hover .cal-add-hint{opacity:1}
+    .cal-legend{display:flex;gap:1rem;flex-wrap:wrap;margin-top:1rem;font-size:.8rem;color:var(--text3)}
+    .cal-legend-item{display:flex;align-items:center;gap:.35rem}
+    .cal-legend-dot{width:10px;height:10px;border-radius:2px}
+    .gcal-status{display:flex;align-items:center;gap:.5rem;font-size:.82rem;color:var(--text3);margin-bottom:1rem}
+    .gcal-status-dot{width:7px;height:7px;border-radius:50%;background:var(--text3);flex-shrink:0}
+    .gcal-status-dot.ok{background:var(--green)}
+    .gcal-status-dot.err{background:var(--red)}
+    .gcal-status-dot.syncing{background:var(--yellow);animation:pulse 1s infinite}
+
     /* SCROLLBAR */
     ::-webkit-scrollbar{width:6px;height:6px}
     ::-webkit-scrollbar-track{background:var(--bg2)}
@@ -175,14 +214,23 @@
     #toast.error{border-color:#f8717150;color:var(--red)}
 
     /* SPINNER */
-    .spinner{width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--green);border-radius:50%;animation:spin .8s linear infinite;display:inline-block}
+    .spinner{width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--green);border-radius:50%;animation:spin .8s linear infinite;display:inline-block;vertical-align:middle}
     @keyframes spin{to{transform:rotate(360deg)}}
 
-    @media(max-width:600px){.form-row{grid-template-columns:1fr}.budget-summary{grid-template-columns:1fr}.card-grid{grid-template-columns:1fr}main{padding:1.25rem 1rem}}
+    @media(max-width:600px){
+      .form-row{grid-template-columns:1fr}
+      .budget-summary{grid-template-columns:1fr}
+      .card-grid{grid-template-columns:1fr}
+      main{padding:1.25rem 1rem}
+      .cal-day{min-height:60px}
+      .cal-event{display:none}
+      .cal-day.has-events::after{content:'•';color:var(--green);font-size:1rem;display:block;text-align:center}
+    }
   </style>
 </head>
 <body>
 
+<!-- LOGIN -->
 <div id="login-screen">
   <div class="login-glow"></div>
   <div class="login-box">
@@ -194,11 +242,12 @@
       Sign in with Google
     </button>
     <div id="config-notice">
-      <p>⚠️ <strong>Setup required:</strong> Open this file and replace <code>YOUR_CLIENT_ID_HERE</code> with your actual OAuth Client ID before using the app.</p>
+      <p>⚠️ <strong>Setup required:</strong> Open this file and replace <code>YOUR_CLIENT_ID_HERE</code> with your actual OAuth Client ID.</p>
     </div>
   </div>
 </div>
 
+<!-- APP -->
 <div id="app">
   <header>
     <div class="header-logo">✈ travels</div>
@@ -210,10 +259,11 @@
   </header>
 
   <nav>
-    <button class="tab active" data-tab="wishlist"><span>🌍</span> Wishlist</button>
+    <button class="tab active" data-tab="activities"><span>🎯</span> Activities</button>
     <button class="tab" data-tab="trips"><span>✈️</span> Trips</button>
     <button class="tab" data-tab="checklist"><span>📋</span> Checklists</button>
     <button class="tab" data-tab="budget"><span>💰</span> Budget</button>
+    <button class="tab" data-tab="calendar"><span>📅</span> Calendar</button>
   </nav>
 
   <main>
@@ -224,14 +274,22 @@
       <button class="btn btn-secondary btn-sm" id="btn-sync">↻ Sync</button>
     </div>
 
-    <section id="section-wishlist" class="section active">
+    <!-- ACTIVITIES -->
+    <section id="section-activities" class="section active">
       <div class="section-header">
-        <h2 class="section-title">Places We <span>Want to Visit</span></h2>
-        <button class="btn btn-primary" id="btn-add-wish">+ Add Place</button>
+        <h2 class="section-title">Our <span>Activities</span></h2>
+        <button class="btn btn-primary" id="btn-add-activity">+ Add</button>
       </div>
-      <div class="card-grid" id="wishlist-grid"></div>
+      <!-- Filter tabs -->
+      <div style="display:flex;gap:.5rem;margin-bottom:1.25rem;flex-wrap:wrap">
+        <button class="btn btn-secondary btn-sm act-filter active" data-filter="all">All</button>
+        <button class="btn btn-secondary btn-sm act-filter" data-filter="wishlist">🌍 Wishlist</button>
+        <button class="btn btn-secondary btn-sm act-filter" data-filter="activity">🎯 Activities</button>
+      </div>
+      <div class="card-grid" id="activities-grid"></div>
     </section>
 
+    <!-- TRIPS -->
     <section id="section-trips" class="section">
       <div class="section-header">
         <h2 class="section-title">Our <span>Trips</span></h2>
@@ -240,6 +298,7 @@
       <div class="card-grid" id="trips-grid"></div>
     </section>
 
+    <!-- CHECKLIST -->
     <section id="section-checklist" class="section">
       <div class="section-header">
         <h2 class="section-title">Packing <span>Checklists</span></h2>
@@ -248,6 +307,7 @@
       <div class="card-grid" id="checklist-grid"></div>
     </section>
 
+    <!-- BUDGET -->
     <section id="section-budget" class="section">
       <div class="section-header">
         <h2 class="section-title">Trip <span>Budget</span></h2>
@@ -268,36 +328,128 @@
         </table>
       </div>
     </section>
+
+    <!-- CALENDAR -->
+    <section id="section-calendar" class="section">
+      <div class="section-header">
+        <h2 class="section-title">📅 <span>Calendar</span></h2>
+      </div>
+      <div class="gcal-status">
+        <div class="gcal-status-dot" id="gcal-dot"></div>
+        <span id="gcal-text">Connecting to Google Calendar...</span>
+      </div>
+      <div class="cal-header">
+        <div class="cal-month" id="cal-month-label"></div>
+        <div class="cal-nav">
+          <button class="cal-nav-btn" id="cal-prev">‹</button>
+          <button class="cal-nav-btn" id="cal-today-btn" style="width:auto;padding:0 .75rem;font-size:.8rem">Today</button>
+          <button class="cal-nav-btn" id="cal-next">›</button>
+        </div>
+      </div>
+      <div class="cal-grid" id="cal-grid"></div>
+      <div class="cal-legend">
+        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--green)"></div>Trip (booked)</div>
+        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--blue)"></div>Activity (booked)</div>
+        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--yellow)"></div>Wishlist item</div>
+      </div>
+    </section>
   </main>
 </div>
 
-<!-- WISHLIST MODAL -->
-<div class="modal-overlay" id="modal-wish">
+<!-- ═══════════════════ MODALS ═══════════════════ -->
+
+<!-- ACTIVITY MODAL -->
+<div class="modal-overlay" id="modal-activity">
   <div class="modal">
-    <div class="modal-header"><span class="modal-title" id="wish-modal-title">Add Place</span><button class="modal-close" data-close="modal-wish">✕</button></div>
-    <div class="form-group"><label class="form-label">Place / Destination *</label><input class="form-input" id="wish-name" placeholder="e.g. Kyoto, Japan" /></div>
+    <div class="modal-header">
+      <span class="modal-title" id="activity-modal-title">Add Activity</span>
+      <button class="modal-close" data-close="modal-activity">✕</button>
+    </div>
+    <!-- Type selector -->
+    <div class="segment-control">
+      <button class="segment-btn active" id="seg-wishlist" onclick="setActivityType('wishlist')">🌍 Wishlist</button>
+      <button class="segment-btn" id="seg-activity" onclick="setActivityType('activity')">🎯 Activity</button>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Name *</label>
+      <input class="form-input" id="act-name" placeholder="e.g. Kyoto, Japan / Snorkeling in Maldives" />
+    </div>
     <div class="form-row">
-      <div class="form-group"><label class="form-label">Country</label><input class="form-input" id="wish-country" placeholder="Japan" /></div>
-      <div class="form-group"><label class="form-label">Type</label>
-        <select class="form-select" id="wish-type">
-          <option value="city">🏙 City</option><option value="beach">🏖 Beach</option><option value="nature">🌿 Nature</option>
-          <option value="cultural">🏛 Cultural</option><option value="adventure">🧗 Adventure</option><option value="other">📍 Other</option>
+      <div class="form-group">
+        <label class="form-label">Country</label>
+        <input class="form-input" id="act-country" placeholder="Japan" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Type</label>
+        <select class="form-select" id="act-type">
+          <option value="city">🏙 City</option><option value="beach">🏖 Beach</option>
+          <option value="nature">🌿 Nature</option><option value="cultural">🏛 Cultural</option>
+          <option value="adventure">🧗 Adventure</option><option value="food">🍜 Food</option>
+          <option value="other">📍 Other</option>
         </select>
       </div>
     </div>
-    <div class="form-row">
-      <div class="form-group"><label class="form-label">Priority</label>
-        <select class="form-select" id="wish-priority">
-          <option value="dream">⭐ Dream Trip</option><option value="next">🔜 Next Up</option><option value="someday">☁ Someday</option>
-        </select>
-      </div>
-      <div class="form-group"><label class="form-label">Suggested by</label>
-        <select class="form-select" id="wish-by"><option value="me">Me</option><option value="partner">Partner</option><option value="both">Both of us</option></select>
+    <!-- WISHLIST fields -->
+    <div id="act-wishlist-fields">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Priority</label>
+          <select class="form-select" id="act-priority">
+            <option value="dream">⭐ Dream Trip</option>
+            <option value="next">🔜 Next Up</option>
+            <option value="someday">☁ Someday</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Suggested by</label>
+          <select class="form-select" id="act-by">
+            <option value="me">Me</option><option value="partner">Partner</option><option value="both">Both of us</option>
+          </select>
+        </div>
       </div>
     </div>
-    <div class="form-group"><label class="form-label">Google Maps Link</label><input class="form-input" id="wish-maps" placeholder="Paste Google Maps URL here" /></div>
-    <div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="wish-notes" placeholder="Things to do, restaurants, tips..."></textarea></div>
-    <div class="form-actions"><button class="btn btn-secondary" data-close="modal-wish">Cancel</button><button class="btn btn-primary" id="btn-save-wish">Save Place</button></div>
+    <!-- ACTIVITY fields -->
+    <div id="act-activity-fields" style="display:none">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Status</label>
+          <select class="form-select" id="act-status">
+            <option value="planning">📝 Planning</option>
+            <option value="booked">✅ Booked</option>
+            <option value="completed">✔ Completed</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Suggested by</label>
+          <select class="form-select" id="act-by2">
+            <option value="me">Me</option><option value="partner">Partner</option><option value="both">Both of us</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Start Date & Time</label>
+          <input class="form-input" type="datetime-local" id="act-start" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">End Date & Time <span style="color:var(--text3);font-weight:400">(optional)</span></label>
+          <input class="form-input" type="datetime-local" id="act-end" />
+        </div>
+      </div>
+    </div>
+    <!-- Shared fields -->
+    <div class="form-group">
+      <label class="form-label">Google Maps Link</label>
+      <input class="form-input" id="act-maps" placeholder="Paste Google Maps URL here" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">Notes</label>
+      <textarea class="form-textarea" id="act-notes" placeholder="Details, tips, links..."></textarea>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-secondary" data-close="modal-activity">Cancel</button>
+      <button class="btn btn-primary" id="btn-save-activity">Save</button>
+    </div>
   </div>
 </div>
 
@@ -331,7 +483,7 @@
     <div class="form-group"><label class="form-label">Linked Trip (optional)</label>
       <select class="form-select" id="checklist-trip"><option value="">No trip linked</option></select>
     </div>
-    <div class="form-actions"><button class="btn btn-secondary" data-close="modal-checklist">Cancel</button><button class="btn btn-primary" id="btn-save-checklist">Create Checklist</button></div>
+    <div class="form-actions"><button class="btn btn-secondary" data-close="modal-checklist">Cancel</button><button class="btn btn-primary" id="btn-save-checklist">Create</button></div>
   </div>
 </div>
 
@@ -368,6 +520,18 @@
   </div>
 </div>
 
+<!-- CALENDAR ADD MODAL -->
+<div class="modal-overlay" id="modal-cal-add">
+  <div class="modal">
+    <div class="modal-header"><span class="modal-title" id="cal-add-title">Add to Calendar</span><button class="modal-close" data-close="modal-cal-add">✕</button></div>
+    <div class="segment-control">
+      <button class="segment-btn active" id="cal-seg-act" onclick="setCalAddType('activity')">🎯 Activity</button>
+      <button class="segment-btn" id="cal-seg-trip" onclick="setCalAddType('trip')">✈️ Trip</button>
+    </div>
+    <div id="cal-add-content"></div>
+  </div>
+</div>
+
 <div id="toast"></div>
 
 <script>
@@ -377,13 +541,18 @@
 const CLIENT_ID = '633441558716-3lbaitogvc09hr2pu4hqp254fbgci2s5.apps.googleusercontent.com';
 // ══════════════════════════════════════════
 
-const SCOPES = 'https://www.googleapis.com/auth/drive.file';
+const SCOPES = 'https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/calendar.events';
 const DATA_FILE_NAME = 'travel-app-data.json';
 
-let appData = { wishlist:[], trips:[], checklists:[], budget:[] };
+let appData = { activities:[], trips:[], checklists:[], budget:[] };
 let driveFileId = null;
 let tokenClient = null;
 let editingId = null;
+let currentActivityType = 'wishlist';
+let calViewDate = new Date();
+let calAddDate = null;
+let calAddType = 'activity';
+let gcalOk = false;
 
 function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2); }
 
@@ -397,6 +566,11 @@ function setSyncState(state,text,time=''){
   document.getElementById('sync-dot').className=`sync-dot ${state}`;
   document.getElementById('sync-text').textContent=text;
   document.getElementById('sync-time').textContent=time;
+}
+
+function setGcalState(state, text){
+  document.getElementById('gcal-dot').className=`gcal-status-dot ${state}`;
+  document.getElementById('gcal-text').textContent=text;
 }
 
 // ── AUTH ──
@@ -413,7 +587,10 @@ function initGoogle(){
   document.head.appendChild(s1);
   const s2=document.createElement('script'); s2.src='https://apis.google.com/js/api.js';
   s2.onload=()=>gapi.load('client',()=>gapi.client.init({
-    discoveryDocs:['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest']
+    discoveryDocs:[
+      'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest',
+      'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'
+    ]
   }));
   document.head.appendChild(s2);
 }
@@ -429,6 +606,7 @@ function onTokenReceived(r){
   document.getElementById('login-screen').style.display='none';
   document.getElementById('app').style.display='block';
   loadFromDrive();
+  initGcal();
 }
 
 document.getElementById('btn-login').addEventListener('click',()=>{
@@ -442,7 +620,7 @@ document.getElementById('btn-signout').addEventListener('click',()=>{
   gapi.client.setToken(null);
   document.getElementById('app').style.display='none';
   document.getElementById('login-screen').style.display='flex';
-  driveFileId=null;
+  driveFileId=null; gcalOk=false;
 });
 
 // ── DRIVE ──
@@ -457,7 +635,13 @@ async function loadFromDrive(){
     if(files.length>0){
       driveFileId=files[0].id;
       const c=await gapi.client.drive.files.get({fileId:driveFileId,alt:'media'});
-      appData=JSON.parse(c.body);
+      const loaded=JSON.parse(c.body);
+      // migrate old wishlist key to activities
+      if(loaded.wishlist && !loaded.activities){
+        loaded.activities=loaded.wishlist.map(w=>({...w,itemType:'wishlist'}));
+        delete loaded.wishlist;
+      }
+      appData={activities:[],trips:[],checklists:[],budget:[],...loaded};
     } else { await saveToDrive(); }
     setSyncState('synced','Synced with Google Drive','just now');
     renderAll();
@@ -492,7 +676,7 @@ async function saveToDrive(){
   }catch(e){ setSyncState('error','Save failed'); showToast('Could not save to Drive','error'); }
 }
 
-document.getElementById('btn-sync').addEventListener('click',loadFromDrive);
+document.getElementById('btn-sync').addEventListener('click',()=>{ loadFromDrive(); initGcal(); });
 
 // ── TABS ──
 document.querySelectorAll('.tab').forEach(tab=>{
@@ -501,6 +685,7 @@ document.querySelectorAll('.tab').forEach(tab=>{
     document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
     tab.classList.add('active');
     document.getElementById('section-'+tab.dataset.tab).classList.add('active');
+    if(tab.dataset.tab==='calendar') renderCalendar();
   });
 });
 
@@ -510,80 +695,273 @@ function closeModal(id){ document.getElementById(id).classList.remove('open'); }
 document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>closeModal(b.dataset.close)));
 document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{ if(e.target===o) o.classList.remove('open'); }));
 
-// ══ WISHLIST ══
-function renderWishlist(){
-  const grid=document.getElementById('wishlist-grid');
-  if(!appData.wishlist.length){
-    grid.innerHTML=`<div class="empty-state" style="grid-column:1/-1"><span class="emoji">🗺️</span><h3>No places yet</h3><p>Start adding destinations you'd love to visit together.</p></div>`;
+// ══ GOOGLE CALENDAR ══
+async function initGcal(){
+  setGcalState('syncing','Syncing with Google Calendar...');
+  try{
+    // just verify we can list calendars
+    await gapi.client.calendar.calendarList.list({maxResults:1});
+    gcalOk=true;
+    setGcalState('ok','Synced with Google Calendar');
+    await syncAllToGcal();
+  }catch(e){
+    gcalOk=false;
+    setGcalState('err','Google Calendar unavailable — check Calendar API scope');
+  }
+}
+
+async function syncAllToGcal(){
+  if(!gcalOk) return;
+  const token=gapi.client.getToken()?.access_token;
+  if(!token) return;
+
+  // sync booked trips
+  for(const trip of appData.trips){
+    if(trip.status==='booked' && trip.startDate && !trip.gcalEventId){
+      trip.gcalEventId = await createGcalEvent({
+        summary: '✈️ '+trip.name,
+        description: trip.notes||'',
+        start: trip.startDate,
+        end: trip.endDate||trip.startDate,
+        allDay: true
+      });
+    }
+  }
+
+  // sync booked activities
+  for(const act of appData.activities){
+    if(act.itemType==='activity' && act.status==='booked' && act.startDate && !act.gcalEventId){
+      act.gcalEventId = await createGcalEvent({
+        summary: '🎯 '+act.name,
+        description: act.notes||'',
+        start: act.startDate,
+        end: act.endDate||null,
+        allDay: false,
+        defaultDuration: 60
+      });
+    }
+  }
+
+  await saveToDrive();
+  renderCalendar();
+}
+
+async function createGcalEvent({summary, description, start, end, allDay, defaultDuration=60}){
+  try{
+    let eventBody;
+    if(allDay){
+      eventBody={
+        summary, description,
+        start:{date: start},
+        end:{date: end||start}
+      };
+    } else {
+      const startDt=new Date(start);
+      let endDt = end ? new Date(end) : new Date(startDt.getTime()+defaultDuration*60000);
+      eventBody={
+        summary, description,
+        start:{dateTime: startDt.toISOString()},
+        end:{dateTime: endDt.toISOString()}
+      };
+    }
+    const res=await gapi.client.calendar.events.insert({
+      calendarId:'primary',
+      resource:eventBody
+    });
+    return res.result.id;
+  }catch(e){ return null; }
+}
+
+async function deleteGcalEvent(eventId){
+  if(!gcalOk||!eventId) return;
+  try{ await gapi.client.calendar.events.delete({calendarId:'primary',eventId}); }catch(e){}
+}
+
+// ══ ACTIVITIES ══
+let actFilter='all';
+
+document.querySelectorAll('.act-filter').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.act-filter').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    actFilter=btn.dataset.filter;
+    renderActivities();
+  });
+});
+
+function setActivityType(type){
+  currentActivityType=type;
+  document.getElementById('seg-wishlist').classList.toggle('active',type==='wishlist');
+  document.getElementById('seg-activity').classList.toggle('active',type==='activity');
+  document.getElementById('act-wishlist-fields').style.display=type==='wishlist'?'block':'none';
+  document.getElementById('act-activity-fields').style.display=type==='activity'?'block':'none';
+}
+
+function renderActivities(){
+  const grid=document.getElementById('activities-grid');
+  let items=appData.activities||[];
+  if(actFilter!=='all') items=items.filter(x=>x.itemType===actFilter);
+
+  if(!items.length){
+    grid.innerHTML=`<div class="empty-state" style="grid-column:1/-1"><span class="emoji">${actFilter==='activity'?'🎯':'🗺️'}</span><h3>Nothing here yet</h3><p>${actFilter==='wishlist'?'Add places you dream of visiting.':actFilter==='activity'?'Add planned activities with dates.':'Add places to visit or activities to do together.'}</p></div>`;
     return;
   }
-  const te={city:'🏙',beach:'🏖',nature:'🌿',cultural:'🏛',adventure:'🧗',other:'📍'};
+
+  const te={city:'🏙',beach:'🏖',nature:'🌿',cultural:'🏛',adventure:'🧗',food:'🍜',other:'📍'};
   const pl={dream:'⭐ Dream Trip',next:'🔜 Next Up',someday:'☁ Someday'};
   const pb={dream:'badge-green',next:'badge-yellow',someday:'badge-gray'};
-  grid.innerHTML=appData.wishlist.map(w=>`
-    <div class="card priority-${w.priority}">
-      <div class="card-title">${te[w.type]||'📍'} ${w.name}</div>
+  const sl={planning:'📝 Planning',booked:'✅ Booked',completed:'✔ Completed'};
+  const sb={planning:'badge-yellow',booked:'badge-green',completed:'badge-gray'};
+
+  grid.innerHTML=items.map(a=>{
+    const isAct=a.itemType==='activity';
+    const borderClass=isAct?`status-${a.status||'planning'}`:`priority-${a.priority||'dream'}`;
+    const gcalBadge=a.gcalEventId?`<span style="font-size:.75rem;color:var(--text3)">📅 On calendar</span>`:'';
+    return `<div class="card ${borderClass}">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem">
+        <div class="card-title">${te[a.type]||'📍'} ${a.name}</div>
+        <span class="badge ${isAct?'badge-blue':'badge-gray'}" style="flex-shrink:0">${isAct?'🎯 Activity':'🌍 Wishlist'}</span>
+      </div>
       <div class="card-meta">
-        ${w.country?`<span>${w.country}</span>`:''}
-        <span class="badge ${pb[w.priority]}">${pl[w.priority]}</span>
-        <span>by ${w.suggestedBy}</span>
+        ${a.country?`<span>${a.country}</span>`:''}
+        ${isAct
+          ?`<span class="badge ${sb[a.status||'planning']}">${sl[a.status||'planning']}</span>`
+          :`<span class="badge ${pb[a.priority||'dream']}">${pl[a.priority||'dream']}</span>`
+        }
+        <span>by ${a.suggestedBy||a.suggestedBy2||'—'}</span>
       </div>
-      ${w.mapsLink?`<a class="maps-link" href="${w.mapsLink}" target="_blank">📍 Open in Maps ↗</a>`:''}
-      ${w.notes?`<p style="font-size:.85rem;color:var(--text2);margin-top:.5rem;line-height:1.5">${w.notes}</p>`:''}
+      ${isAct&&a.startDate?`<div style="font-size:.82rem;color:var(--text3);margin-bottom:.4rem">🕐 ${formatDateTime(a.startDate)}${a.endDate?' → '+formatDateTime(a.endDate):' (1h)'}</div>`:''}
+      ${gcalBadge}
+      ${a.mapsLink?`<a class="maps-link" href="${a.mapsLink}" target="_blank">📍 Open in Maps ↗</a>`:''}
+      ${a.notes?`<p style="font-size:.85rem;color:var(--text2);margin-top:.5rem;line-height:1.5">${a.notes}</p>`:''}
       <div class="card-actions">
-        <button class="btn btn-secondary btn-sm" onclick="editWish('${w.id}')">✏ Edit</button>
-        <button class="btn btn-danger btn-sm" onclick="deleteWish('${w.id}')">🗑 Remove</button>
+        ${isAct&&a.status==='booked'&&a.startDate&&!a.gcalEventId&&gcalOk?`<button class="btn btn-secondary btn-sm" onclick="addActivityToGcal('${a.id}')">📅 Add to Calendar</button>`:''}
+        <button class="btn btn-secondary btn-sm" onclick="editActivity('${a.id}')">✏ Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteActivity('${a.id}')">🗑</button>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
-document.getElementById('btn-add-wish').addEventListener('click',()=>{
+function formatDateTime(dt){
+  if(!dt) return '';
+  const d=new Date(dt);
+  if(isNaN(d)) return dt;
+  return d.toLocaleString([],{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+}
+
+document.getElementById('btn-add-activity').addEventListener('click',()=>{
   editingId=null;
-  document.getElementById('wish-modal-title').textContent='Add Place';
-  ['wish-name','wish-country','wish-maps','wish-notes'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('wish-priority').value='dream';
-  document.getElementById('wish-type').value='city';
-  document.getElementById('wish-by').value='me';
-  openModal('modal-wish');
+  document.getElementById('activity-modal-title').textContent='Add Activity';
+  ['act-name','act-country','act-maps','act-notes','act-start','act-end'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('act-priority').value='dream';
+  document.getElementById('act-type').value='city';
+  document.getElementById('act-by').value='me';
+  document.getElementById('act-by2').value='me';
+  document.getElementById('act-status').value='planning';
+  setActivityType('wishlist');
+  openModal('modal-activity');
 });
 
-function editWish(id){
-  const w=appData.wishlist.find(x=>x.id===id); if(!w) return;
+function editActivity(id){
+  const a=appData.activities.find(x=>x.id===id); if(!a) return;
   editingId=id;
-  document.getElementById('wish-modal-title').textContent='Edit Place';
-  document.getElementById('wish-name').value=w.name;
-  document.getElementById('wish-country').value=w.country||'';
-  document.getElementById('wish-type').value=w.type;
-  document.getElementById('wish-priority').value=w.priority;
-  document.getElementById('wish-by').value=w.suggestedBy;
-  document.getElementById('wish-maps').value=w.mapsLink||'';
-  document.getElementById('wish-notes').value=w.notes||'';
-  openModal('modal-wish');
+  document.getElementById('activity-modal-title').textContent='Edit Activity';
+  document.getElementById('act-name').value=a.name;
+  document.getElementById('act-country').value=a.country||'';
+  document.getElementById('act-type').value=a.type||'city';
+  document.getElementById('act-maps').value=a.mapsLink||'';
+  document.getElementById('act-notes').value=a.notes||'';
+  if(a.itemType==='activity'){
+    setActivityType('activity');
+    document.getElementById('act-status').value=a.status||'planning';
+    document.getElementById('act-by2').value=a.suggestedBy||'me';
+    document.getElementById('act-start').value=a.startDate||'';
+    document.getElementById('act-end').value=a.endDate||'';
+  } else {
+    setActivityType('wishlist');
+    document.getElementById('act-priority').value=a.priority||'dream';
+    document.getElementById('act-by').value=a.suggestedBy||'me';
+  }
+  openModal('modal-activity');
 }
 
-document.getElementById('btn-save-wish').addEventListener('click',()=>{
-  const name=document.getElementById('wish-name').value.trim();
-  if(!name){ showToast('Please enter a place name','error'); return; }
+document.getElementById('btn-save-activity').addEventListener('click',async()=>{
+  const name=document.getElementById('act-name').value.trim();
+  if(!name){ showToast('Please enter a name','error'); return; }
+  const existing=editingId?appData.activities.find(x=>x.id===editingId):null;
+  const isAct=currentActivityType==='activity';
+
   const item={
-    id:editingId||uid(), name,
-    country:document.getElementById('wish-country').value.trim(),
-    type:document.getElementById('wish-type').value,
-    priority:document.getElementById('wish-priority').value,
-    suggestedBy:document.getElementById('wish-by').value,
-    mapsLink:document.getElementById('wish-maps').value.trim(),
-    notes:document.getElementById('wish-notes').value.trim(),
-    createdAt:editingId?appData.wishlist.find(x=>x.id===editingId)?.createdAt:Date.now()
+    id:editingId||uid(),
+    itemType:currentActivityType,
+    name,
+    country:document.getElementById('act-country').value.trim(),
+    type:document.getElementById('act-type').value,
+    mapsLink:document.getElementById('act-maps').value.trim(),
+    notes:document.getElementById('act-notes').value.trim(),
+    gcalEventId:existing?.gcalEventId||null,
+    createdAt:existing?.createdAt||Date.now()
   };
-  if(editingId) appData.wishlist=appData.wishlist.map(x=>x.id===editingId?item:x);
-  else appData.wishlist.push(item);
-  closeModal('modal-wish'); renderWishlist(); saveToDrive();
-  showToast(editingId?'Place updated!':'Place added!');
+
+  if(isAct){
+    item.status=document.getElementById('act-status').value;
+    item.suggestedBy=document.getElementById('act-by2').value;
+    item.startDate=document.getElementById('act-start').value;
+    item.endDate=document.getElementById('act-end').value;
+  } else {
+    item.priority=document.getElementById('act-priority').value;
+    item.suggestedBy=document.getElementById('act-by').value;
+  }
+
+  // if status changed away from booked, remove gcal event
+  if(existing?.gcalEventId && isAct && item.status!=='booked'){
+    await deleteGcalEvent(existing.gcalEventId);
+    item.gcalEventId=null;
+  }
+
+  if(editingId) appData.activities=appData.activities.map(x=>x.id===editingId?item:x);
+  else appData.activities.push(item);
+
+  closeModal('modal-activity');
+  renderActivities();
+  await saveToDrive();
+
+  // auto-add to gcal if booked activity with date
+  if(isAct && item.status==='booked' && item.startDate && !item.gcalEventId && gcalOk){
+    await addActivityToGcal(item.id);
+  }
+
+  showToast(editingId?'Updated!':'Saved!');
 });
 
-function deleteWish(id){
-  if(!confirm('Remove this place?')) return;
-  appData.wishlist=appData.wishlist.filter(x=>x.id!==id);
-  renderWishlist(); saveToDrive(); showToast('Place removed');
+async function addActivityToGcal(id){
+  const act=appData.activities.find(x=>x.id===id); if(!act) return;
+  const evId=await createGcalEvent({
+    summary:'🎯 '+act.name,
+    description:act.notes||'',
+    start:act.startDate,
+    end:act.endDate||null,
+    allDay:false,
+    defaultDuration:60
+  });
+  if(evId){
+    act.gcalEventId=evId;
+    await saveToDrive();
+    renderActivities();
+    renderCalendar();
+    showToast('Added to Google Calendar!');
+  } else {
+    showToast('Could not add to Calendar','error');
+  }
+}
+
+async function deleteActivity(id){
+  if(!confirm('Delete this item?')) return;
+  const act=appData.activities.find(x=>x.id===id);
+  if(act?.gcalEventId) await deleteGcalEvent(act.gcalEventId);
+  appData.activities=appData.activities.filter(x=>x.id!==id);
+  renderActivities(); await saveToDrive(); showToast('Deleted');
 }
 
 // ══ TRIPS ══
@@ -603,25 +981,23 @@ function renderTrips(){
         <div class="card-meta" style="margin-top:.5rem">
           ${t.startDate?`<span>📅 ${t.startDate}${t.endDate?' → '+t.endDate:''}</span>`:''}
           <span class="badge ${sb[t.status]}">${sl[t.status]}</span>
+          ${t.gcalEventId?`<span style="font-size:.75rem;color:var(--text3)">📅 On calendar</span>`:''}
         </div>
         ${t.notes?`<p style="font-size:.85rem;color:var(--text2);margin-top:.5rem;line-height:1.5">${t.notes}</p>`:''}
         <div style="font-size:.82rem;color:var(--text3);margin-top:.5rem">📎 ${fc} document${fc!==1?'s':''}</div>
         <div class="card-actions">
-          <button class="btn btn-secondary btn-sm" onclick="openTripDetail('${t.id}')">📂 Documents</button>
+          <button class="btn btn-secondary btn-sm" onclick="openTripDetail('${t.id}')">📂 Docs</button>
           <button class="btn btn-secondary btn-sm" onclick="editTrip('${t.id}')">✏ Edit</button>
           <button class="btn btn-danger btn-sm" onclick="deleteTrip('${t.id}')">🗑</button>
         </div>
       </div>`;
     }).join('');
   }
-
   const sel=document.getElementById('budget-trip-select');
   const prev=sel.value;
   sel.innerHTML='<option value="">Select trip...</option>'+appData.trips.map(t=>`<option value="${t.id}">${t.name}</option>`).join('');
   if(prev) sel.value=prev;
-
-  const csel=document.getElementById('checklist-trip');
-  csel.innerHTML='<option value="">No trip linked</option>'+appData.trips.map(t=>`<option value="${t.id}">${t.name}</option>`).join('');
+  document.getElementById('checklist-trip').innerHTML='<option value="">No trip linked</option>'+appData.trips.map(t=>`<option value="${t.id}">${t.name}</option>`).join('');
 }
 
 document.getElementById('btn-add-trip').addEventListener('click',()=>{
@@ -647,31 +1023,64 @@ function editTrip(id){
   openModal('modal-trip');
 }
 
-document.getElementById('btn-save-trip').addEventListener('click',()=>{
+document.getElementById('btn-save-trip').addEventListener('click',async()=>{
   const name=document.getElementById('trip-name').value.trim();
   if(!name){ showToast('Please enter a trip name','error'); return; }
   const ex=editingId?appData.trips.find(x=>x.id===editingId):null;
+  const newStatus=document.getElementById('trip-status').value;
+
+  // remove gcal event if status changed away from booked
+  if(ex?.gcalEventId && newStatus!=='booked'){
+    await deleteGcalEvent(ex.gcalEventId);
+    ex.gcalEventId=null;
+  }
+
   const item={
     id:editingId||uid(), name,
     destination:document.getElementById('trip-dest').value.trim(),
-    status:document.getElementById('trip-status').value,
+    status:newStatus,
     startDate:document.getElementById('trip-start').value,
     endDate:document.getElementById('trip-end').value,
     notes:document.getElementById('trip-notes').value.trim(),
     files:ex?.files||[],
+    gcalEventId:ex?.gcalEventId||null,
     createdAt:ex?.createdAt||Date.now()
   };
   if(editingId) appData.trips=appData.trips.map(x=>x.id===editingId?item:x);
   else appData.trips.push(item);
-  closeModal('modal-trip'); renderTrips(); saveToDrive();
-  showToast(editingId?'Trip updated!':'Trip added!');
+
+  closeModal('modal-trip');
+  renderTrips();
+  await saveToDrive();
+
+  // auto-add to gcal if booked with date
+  if(item.status==='booked' && item.startDate && !item.gcalEventId && gcalOk){
+    const evId=await createGcalEvent({
+      summary:'✈️ '+item.name,
+      description:item.notes||'',
+      start:item.startDate,
+      end:item.endDate||item.startDate,
+      allDay:true
+    });
+    if(evId){
+      appData.trips.find(x=>x.id===item.id).gcalEventId=evId;
+      await saveToDrive();
+      renderTrips();
+      renderCalendar();
+      showToast('Trip added to Google Calendar!');
+    }
+  } else {
+    showToast(editingId?'Trip updated!':'Trip added!');
+  }
 });
 
-function deleteTrip(id){
+async function deleteTrip(id){
   if(!confirm('Delete this trip?')) return;
+  const trip=appData.trips.find(x=>x.id===id);
+  if(trip?.gcalEventId) await deleteGcalEvent(trip.gcalEventId);
   appData.trips=appData.trips.filter(x=>x.id!==id);
   appData.budget=appData.budget.filter(x=>x.tripId!==id);
-  renderTrips(); renderBudget(); saveToDrive(); showToast('Trip deleted');
+  renderTrips(); renderBudget(); await saveToDrive(); showToast('Trip deleted');
 }
 
 function openTripDetail(id){
@@ -680,7 +1089,7 @@ function openTripDetail(id){
   const files=trip.files||[];
   document.getElementById('detail-content').innerHTML=`
     <div>
-      ${files.length===0?`<p style="color:var(--text3);font-size:.9rem;margin-bottom:1rem">No documents yet. Upload plane tickets, hotel confirmations, etc.</p>`:''}
+      ${files.length===0?`<p style="color:var(--text3);font-size:.9rem;margin-bottom:1rem">No documents yet.</p>`:''}
       ${files.map(f=>`
         <div class="file-item">
           <div class="file-item-name">📄 <span>${f.name}</span></div>
@@ -692,7 +1101,7 @@ function openTripDetail(id){
     </div>
     <div class="file-upload-area" onclick="document.getElementById('file-input-${id}').click()">
       <input type="file" id="file-input-${id}" style="display:none" multiple onchange="uploadFiles(event,'${id}')" />
-      📎 Click to upload documents (PDF, images, etc.)
+      📎 Click to upload documents
     </div>
     <div id="upload-progress" style="margin-top:.75rem;font-size:.85rem;color:var(--text2)"></div>`;
   openModal('modal-trip-detail');
@@ -739,8 +1148,7 @@ function renderChecklists(){
     return;
   }
   grid.innerHTML=appData.checklists.map(cl=>{
-    const total=cl.items?.length||0;
-    const done=cl.items?.filter(i=>i.checked).length||0;
+    const total=cl.items?.length||0, done=cl.items?.filter(i=>i.checked).length||0;
     const trip=cl.tripId?appData.trips.find(t=>t.id===cl.tripId):null;
     const pct=total>0?Math.round((done/total)*100):0;
     return `<div class="card">
@@ -765,7 +1173,7 @@ function renderChecklists(){
         <button class="btn btn-primary btn-sm" onclick="addCheckItem('${cl.id}')">+</button>
       </div>
       <div class="card-actions" style="margin-top:.75rem">
-        <button class="btn btn-danger btn-sm" onclick="deleteChecklist('${cl.id}')">🗑 Delete List</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteChecklist('${cl.id}')">🗑 Delete</button>
       </div>
     </div>`;
   }).join('');
@@ -776,14 +1184,12 @@ document.getElementById('btn-add-checklist').addEventListener('click',()=>{
   document.getElementById('checklist-trip').value='';
   openModal('modal-checklist');
 });
-
 document.getElementById('btn-save-checklist').addEventListener('click',()=>{
   const name=document.getElementById('checklist-name').value.trim();
   if(!name){ showToast('Please enter a list name','error'); return; }
   appData.checklists.push({id:uid(),name,tripId:document.getElementById('checklist-trip').value,items:[],createdAt:Date.now()});
   closeModal('modal-checklist'); renderChecklists(); saveToDrive(); showToast('Checklist created!');
 });
-
 function addCheckItem(clId){
   const input=document.getElementById('cl-add-'+clId);
   const text=input.value.trim(); if(!text) return;
@@ -792,17 +1198,14 @@ function addCheckItem(clId){
   cl.items.push({id:uid(),text,checked:false});
   input.value=''; renderChecklists(); saveToDrive();
 }
-
 function toggleCheck(clId,itemId,checked){
   const item=appData.checklists.find(x=>x.id===clId)?.items?.find(x=>x.id===itemId);
   if(item){ item.checked=checked; renderChecklists(); saveToDrive(); }
 }
-
 function deleteCheckItem(clId,itemId){
   const cl=appData.checklists.find(x=>x.id===clId);
   if(cl){ cl.items=cl.items.filter(x=>x.id!==itemId); renderChecklists(); saveToDrive(); }
 }
-
 function deleteChecklist(id){
   if(!confirm('Delete this checklist?')) return;
   appData.checklists=appData.checklists.filter(x=>x.id!==id);
@@ -829,52 +1232,211 @@ function renderBudget(){
   re.textContent='$'+Math.abs(rem).toFixed(2)+(rem<0?' over':'');
   re.style.color=rem<0?'var(--red)':'var(--green)';
   if(!expenses.length){
-    tbody.innerHTML=`<tr><td colspan="6" style="text-align:center;color:var(--text3);padding:2rem">No expenses yet for this trip</td></tr>`; return;
+    tbody.innerHTML=`<tr><td colspan="6" style="text-align:center;color:var(--text3);padding:2rem">No expenses yet</td></tr>`; return;
   }
   tbody.innerHTML=expenses.map(e=>`<tr>
-    <td>${ce[e.category]||'📌'} ${e.category}</td>
-    <td>${e.description}</td>
+    <td>${ce[e.category]||'📌'} ${e.category}</td><td>${e.description}</td>
     <td>$${parseFloat(e.estimated||0).toFixed(2)}</td>
     <td class="${parseFloat(e.actual||0)>parseFloat(e.estimated||0)?'amount-over':'amount-positive'}">$${parseFloat(e.actual||0).toFixed(2)}</td>
     <td>${e.paidBy}</td>
     <td><button class="btn btn-danger btn-sm" onclick="deleteExpense('${e.id}')">🗑</button></td>
   </tr>`).join('');
 }
-
 document.getElementById('budget-trip-select').addEventListener('change',renderBudget);
-
 document.getElementById('btn-add-expense').addEventListener('click',()=>{
   if(!document.getElementById('budget-trip-select').value){ showToast('Select a trip first','error'); return; }
-  document.getElementById('exp-desc').value='';
-  document.getElementById('exp-estimated').value='';
-  document.getElementById('exp-actual').value='';
+  ['exp-desc','exp-estimated','exp-actual'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('exp-category').value='flights';
   document.getElementById('exp-paidby').value='me';
   openModal('modal-expense');
 });
-
 document.getElementById('btn-save-expense').addEventListener('click',()=>{
   const desc=document.getElementById('exp-desc').value.trim();
   if(!desc){ showToast('Please enter a description','error'); return; }
   appData.budget.push({
     id:uid(), tripId:document.getElementById('budget-trip-select').value,
-    category:document.getElementById('exp-category').value,
-    description:desc,
+    category:document.getElementById('exp-category').value, description:desc,
     estimated:document.getElementById('exp-estimated').value,
     actual:document.getElementById('exp-actual').value,
-    paidBy:document.getElementById('exp-paidby').value,
-    createdAt:Date.now()
+    paidBy:document.getElementById('exp-paidby').value, createdAt:Date.now()
   });
   closeModal('modal-expense'); renderBudget(); saveToDrive(); showToast('Expense added!');
 });
-
 function deleteExpense(id){
   if(!confirm('Remove this expense?')) return;
   appData.budget=appData.budget.filter(x=>x.id!==id);
   renderBudget(); saveToDrive(); showToast('Expense removed');
 }
 
-function renderAll(){ renderWishlist(); renderTrips(); renderChecklists(); renderBudget(); }
+// ══ CALENDAR ══
+function renderCalendar(){
+  const year=calViewDate.getFullYear(), month=calViewDate.getMonth();
+  const monthNames=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('cal-month-label').textContent=`${monthNames[month]} ${year}`;
+
+  const firstDay=new Date(year,month,1).getDay();
+  const daysInMonth=new Date(year,month+1,0).getDate();
+  const today=new Date();
+
+  // collect all events with dates
+  const events=[];
+  (appData.trips||[]).forEach(t=>{
+    if(t.status==='booked' && t.startDate){
+      events.push({type:'trip',label:t.name,start:new Date(t.startDate+'T00:00:00'),end:t.endDate?new Date(t.endDate+'T23:59:59'):new Date(t.startDate+'T23:59:59'),id:t.id});
+    }
+  });
+  (appData.activities||[]).forEach(a=>{
+    if(a.itemType==='activity' && a.status==='booked' && a.startDate){
+      events.push({type:'activity',label:a.name,start:new Date(a.startDate),end:a.endDate?new Date(a.endDate):new Date(new Date(a.startDate).getTime()+3600000),id:a.id});
+    }
+    if(a.itemType==='wishlist'){
+      // show wishlist items without dates just in first day column header area — skip, only show dated ones
+    }
+  });
+
+  const grid=document.getElementById('cal-grid');
+  const days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  let html=days.map(d=>`<div class="cal-day-header">${d}</div>`).join('');
+
+  // blank cells before first day
+  for(let i=0;i<firstDay;i++) html+=`<div class="cal-day other-month"><span class="cal-day-num"></span></div>`;
+
+  for(let d=1;d<=daysInMonth;d++){
+    const date=new Date(year,month,d);
+    const isToday=date.toDateString()===today.toDateString();
+    const dayEvents=events.filter(e=>{
+      const ds=new Date(e.start); ds.setHours(0,0,0,0);
+      const de=new Date(e.end); de.setHours(23,59,59,999);
+      return date>=ds && date<=de;
+    });
+    const hasEvents=dayEvents.length>0;
+    html+=`<div class="cal-day${isToday?' today':''}${hasEvents?' has-events':''}" onclick="calDayClick(${year},${month},${d})">
+      <span class="cal-day-num">${d}</span>
+      ${dayEvents.map(e=>`<div class="cal-event ${e.type}" title="${e.label}">${e.label}</div>`).join('')}
+      <span class="cal-add-hint">+ add</span>
+    </div>`;
+  }
+
+  // fill remaining cells
+  const totalCells=firstDay+daysInMonth;
+  const remaining=(7-totalCells%7)%7;
+  for(let i=0;i<remaining;i++) html+=`<div class="cal-day other-month"><span class="cal-day-num"></span></div>`;
+
+  grid.innerHTML=html;
+}
+
+document.getElementById('cal-prev').addEventListener('click',()=>{
+  calViewDate=new Date(calViewDate.getFullYear(),calViewDate.getMonth()-1,1);
+  renderCalendar();
+});
+document.getElementById('cal-next').addEventListener('click',()=>{
+  calViewDate=new Date(calViewDate.getFullYear(),calViewDate.getMonth()+1,1);
+  renderCalendar();
+});
+document.getElementById('cal-today-btn').addEventListener('click',()=>{
+  calViewDate=new Date(); renderCalendar();
+});
+
+function calDayClick(y,m,d){
+  calAddDate=new Date(y,m,d);
+  setCalAddType('activity');
+  renderCalAddForm();
+  document.getElementById('cal-add-title').textContent=`Add for ${calAddDate.toLocaleDateString([],{month:'long',day:'numeric'})}`;
+  openModal('modal-cal-add');
+}
+
+function setCalAddType(type){
+  calAddType=type;
+  document.getElementById('cal-seg-act').classList.toggle('active',type==='activity');
+  document.getElementById('cal-seg-trip').classList.toggle('active',type==='trip');
+  renderCalAddForm();
+}
+
+function renderCalAddForm(){
+  const dateStr=calAddDate?calAddDate.toISOString().slice(0,10):'';
+  const defaultStart=dateStr?`${dateStr}T09:00`:'';
+  const defaultEnd=dateStr?`${dateStr}T10:00`:'';
+
+  if(calAddType==='activity'){
+    document.getElementById('cal-add-content').innerHTML=`
+      <div class="form-group"><label class="form-label">Activity Name *</label><input class="form-input" id="cal-act-name" placeholder="e.g. Snorkeling tour" /></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Start</label><input class="form-input" type="datetime-local" id="cal-act-start" value="${defaultStart}" /></div>
+        <div class="form-group"><label class="form-label">End (optional)</label><input class="form-input" type="datetime-local" id="cal-act-end" value="${defaultEnd}" /></div>
+      </div>
+      <div class="form-group"><label class="form-label">Status</label>
+        <select class="form-select" id="cal-act-status">
+          <option value="planning">📝 Planning</option><option value="booked" selected>✅ Booked</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="cal-act-notes" placeholder="Details..."></textarea></div>
+      <div class="form-actions">
+        <button class="btn btn-secondary" data-close="modal-cal-add">Cancel</button>
+        <button class="btn btn-primary" onclick="saveCalActivity()">Save Activity</button>
+      </div>`;
+  } else {
+    document.getElementById('cal-add-content').innerHTML=`
+      <div class="form-group"><label class="form-label">Trip Name *</label><input class="form-input" id="cal-trip-name" placeholder="e.g. Weekend in Paris" /></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Start Date</label><input class="form-input" type="date" id="cal-trip-start" value="${dateStr}" /></div>
+        <div class="form-group"><label class="form-label">End Date (optional)</label><input class="form-input" type="date" id="cal-trip-end" /></div>
+      </div>
+      <div class="form-group"><label class="form-label">Destination</label><input class="form-input" id="cal-trip-dest" placeholder="Paris, France" /></div>
+      <div class="form-actions">
+        <button class="btn btn-secondary" data-close="modal-cal-add">Cancel</button>
+        <button class="btn btn-primary" onclick="saveCalTrip()">Save Trip</button>
+      </div>`;
+  }
+}
+
+async function saveCalActivity(){
+  const name=document.getElementById('cal-act-name').value.trim();
+  if(!name){ showToast('Please enter a name','error'); return; }
+  const item={
+    id:uid(), itemType:'activity', name,
+    country:'', type:'other',
+    status:document.getElementById('cal-act-status').value,
+    startDate:document.getElementById('cal-act-start').value,
+    endDate:document.getElementById('cal-act-end').value,
+    notes:document.getElementById('cal-act-notes').value,
+    mapsLink:'', gcalEventId:null, suggestedBy:'me', createdAt:Date.now()
+  };
+  appData.activities.push(item);
+  closeModal('modal-cal-add');
+  renderActivities(); renderCalendar();
+  await saveToDrive();
+  if(item.status==='booked' && item.startDate && gcalOk){
+    await addActivityToGcal(item.id);
+  }
+  showToast('Activity added!');
+}
+
+async function saveCalTrip(){
+  const name=document.getElementById('cal-trip-name').value.trim();
+  if(!name){ showToast('Please enter a trip name','error'); return; }
+  const item={
+    id:uid(), name,
+    destination:document.getElementById('cal-trip-dest').value.trim(),
+    status:'booked',
+    startDate:document.getElementById('cal-trip-start').value,
+    endDate:document.getElementById('cal-trip-end').value,
+    notes:'', files:[], gcalEventId:null, createdAt:Date.now()
+  };
+  appData.trips.push(item);
+  closeModal('modal-cal-add');
+  renderTrips(); renderCalendar();
+  await saveToDrive();
+  if(item.startDate && gcalOk){
+    const evId=await createGcalEvent({
+      summary:'✈️ '+item.name, description:'',
+      start:item.startDate, end:item.endDate||item.startDate, allDay:true
+    });
+    if(evId){ appData.trips.find(x=>x.id===item.id).gcalEventId=evId; await saveToDrive(); renderTrips(); }
+    showToast('Trip added to Calendar!');
+  } else { showToast('Trip added!'); }
+}
+
+function renderAll(){ renderActivities(); renderTrips(); renderChecklists(); renderBudget(); }
 
 initGoogle();
 </script>
