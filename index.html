@@ -389,15 +389,10 @@
         </select>
       </div>
     </div>
-    <div class="form-row">
-      <div class="form-group"><label class="form-label">Status</label>
-        <select class="form-select" id="a-status">
-          <option value="planning">📝 Planning</option><option value="booked">✅ Booked</option><option value="completed">✔ Completed</option>
-        </select>
-      </div>
-      <div class="form-group"><label class="form-label">Linked Trip</label>
-        <select class="form-select" id="a-trip"><option value="">None</option></select>
-      </div>
+    <div class="form-group"><label class="form-label">Status</label>
+      <select class="form-select" id="a-status">
+        <option value="planning">📝 Planning</option><option value="booked">✅ Booked</option><option value="completed">✔ Completed</option>
+      </select>
     </div>
     <div class="form-row">
       <div class="form-group"><label class="form-label">Start Date &amp; Time</label><input class="form-input" type="datetime-local" id="a-start"/></div>
@@ -518,6 +513,14 @@
       <div class="form-group"><label class="form-label">Actual ($)</label><input class="form-input" type="number" id="ex-act" placeholder="0.00" min="0" step="0.01"/></div>
     </div>
     <div class="form-actions"><button class="btn btn-secondary" data-close="modal-expense">Cancel</button><button class="btn btn-primary" id="btn-save-expense">Save</button></div>
+  </div>
+</div>
+
+<!-- DOCS VIEWER -->
+<div class="modal-overlay" id="modal-docs">
+  <div class="modal" style="max-width:400px">
+    <div class="modal-header"><span class="modal-title">📁 Documents</span><button class="modal-close" data-close="modal-docs">✕</button></div>
+    <div id="docs-list"></div>
   </div>
 </div>
 
@@ -697,6 +700,15 @@ async function uploadFiles(fileList, progId){
   if(prog) prog.innerHTML='';
   return uploaded;
 }
+function viewDocs(type, id){
+  const map={activity:D.activities,transport:D.transport,accommodation:D.accommodation};
+  const files=(map[type]||[]).find(x=>x.id===id)?.files||[];
+  $('docs-list').innerHTML=files.length
+    ?files.map(f=>`<a href="${f.url}" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;gap:.75rem;text-decoration:none;padding:.65rem .75rem;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:.4rem;transition:border-color .2s" onmouseover="this.style.borderColor='var(--blue-dim)'" onmouseout="this.style.borderColor='var(--border)'"><span style="flex:1;font-size:.9rem;color:var(--text2)">📄 ${f.name}</span><span style="font-size:.8rem;color:var(--blue)">↗ Open</span></a>`).join('')
+    :`<p style="color:var(--text3);text-align:center;padding:1.5rem 0">No documents attached.</p>`;
+  openModal('modal-docs');
+}
+
 function renderFiles(files, listId, delFn){
   const el=$(listId); if(!el) return;
   el.innerHTML=files.map(f=>`<div class="file-item"><div class="file-item-name">📄 <span>${f.name}</span></div><div style="display:flex;gap:.5rem"><a href="${f.url}" target="_blank" class="btn btn-secondary btn-sm">↗</a><button class="btn btn-danger btn-sm" onclick="${delFn}('${f.fileId}')">🗑</button></div></div>`).join('');
@@ -766,9 +778,9 @@ function renderActivities(){
       ${a.startDate?`<div style="font-size:.82rem;color:var(--text3);margin-bottom:.4rem">🕐 ${fmtDT(a.startDate)}${a.endDate?' → '+fmtDT(a.endDate):' (1h)'}</div>`:''}
       ${a.mapsLink?`<a class="maps-link" href="${a.mapsLink}" target="_blank">📍 Maps ↗</a>`:''}
       ${a.notes?`<p style="font-size:.85rem;color:var(--text2);margin-top:.4rem;line-height:1.5">${a.notes}</p>`:''}
-      ${(a.files||[]).length?`<div style="font-size:.8rem;color:var(--text3);margin-top:.4rem">📎 ${a.files.length} doc${a.files.length!==1?'s':''}</div>`:''}
       <div class="card-actions">
         ${a.status==='booked'&&a.startDate&&!a.gcalEventId&&gcalOk?`<button class="btn btn-secondary btn-sm" onclick="addActGcal('${a.id}')">📅</button>`:''}
+        ${(a.files||[]).length?`<button class="btn btn-secondary btn-sm" onclick="viewDocs('activity','${a.id}')" title="${a.files.length} document${a.files.length!==1?'s':''}">📁</button>`:''}
         <button class="btn btn-secondary btn-sm" onclick="editActivity('${a.id}')">✏ Edit</button>
         <button class="btn btn-danger btn-sm" onclick="delActivity('${a.id}')">🗑</button>
       </div>
@@ -782,7 +794,6 @@ $('btn-add-activity').addEventListener('click',()=>{
   ['a-name','a-country','a-maps','a-notes','a-start','a-end'].forEach(id=>setVal(id,''));
   setVal('a-status','planning'); setVal('a-type','adventure');
   $('a-file-list').innerHTML=''; $('a-upload-prog').innerHTML=''; $('a-file-input').value='';
-  populateTripSel('a-trip');
   openModal('modal-activity');
 });
 $('a-file-input').addEventListener('change',async e=>{
@@ -799,7 +810,6 @@ function editActivity(id){
   setVal('a-status',a.status||'planning'); setVal('a-start',a.startDate); setVal('a-end',a.endDate);
   setVal('a-maps',a.mapsLink); setVal('a-notes',a.notes);
   $('a-upload-prog').innerHTML=''; renderFiles(pf.a,'a-file-list','delPfA');
-  populateTripSel('a-trip'); setVal('a-trip',a.tripId||'');
   openModal('modal-activity');
 }
 $('btn-save-activity').addEventListener('click',async()=>{
@@ -807,7 +817,7 @@ $('btn-save-activity').addEventListener('click',async()=>{
   const ex=editId?D.activities.find(x=>x.id===editId):null;
   const ns=getVal('a-status');
   if(ex?.gcalEventId&&ns!=='booked') await rmGcalEvent(ex.gcalEventId);
-  const item={id:editId||uid(),name,country:getVal('a-country').trim(),type:getVal('a-type'),status:ns,startDate:getVal('a-start'),endDate:getVal('a-end'),mapsLink:getVal('a-maps').trim(),notes:getVal('a-notes').trim(),tripId:getVal('a-trip'),files:[...pf.a],gcalEventId:ns==='booked'?(ex?.gcalEventId||null):null,createdAt:ex?.createdAt||Date.now()};
+  const item={id:editId||uid(),name,country:getVal('a-country').trim(),type:getVal('a-type'),status:ns,startDate:getVal('a-start'),endDate:getVal('a-end'),mapsLink:getVal('a-maps').trim(),notes:getVal('a-notes').trim(),files:[...pf.a],gcalEventId:ns==='booked'?(ex?.gcalEventId||null):null,createdAt:ex?.createdAt||Date.now()};
   if(editId) D.activities=D.activities.map(x=>x.id===editId?item:x); else D.activities.push(item);
   closeModal('modal-activity'); renderActivities(); await saveDrive();
   if(item.status==='booked'&&item.startDate&&!item.gcalEventId&&gcalOk){
@@ -844,8 +854,8 @@ function renderTransport(){
       ${(t.from||t.to)?`<div style="font-size:.85rem;color:var(--text2);margin-bottom:.4rem">📍 ${t.from||'?'} → ${t.to||'?'}</div>`:''}
       ${t.startDate?`<div style="font-size:.82rem;color:var(--text3);margin-bottom:.4rem">🕐 ${fmtDT(t.startDate)}${t.endDate?' → '+fmtDT(t.endDate):''}</div>`:''}
       ${t.notes?`<p style="font-size:.85rem;color:var(--text2);margin-top:.4rem;line-height:1.5">${t.notes}</p>`:''}
-      ${(t.files||[]).length?`<div style="font-size:.8rem;color:var(--text3);margin-top:.4rem">📎 ${t.files.length} doc${t.files.length!==1?'s':''}</div>`:''}
       <div class="card-actions">
+        ${(t.files||[]).length?`<button class="btn btn-secondary btn-sm" onclick="viewDocs('transport','${t.id}')" title="${t.files.length} document${t.files.length!==1?'s':''}">📁</button>`:''}
         <button class="btn btn-secondary btn-sm" onclick="editTransport('${t.id}')">✏ Edit</button>
         <button class="btn btn-danger btn-sm" onclick="delTransport('${t.id}')">🗑</button>
       </div>
@@ -910,8 +920,8 @@ function renderAccommodation(){
       ${a.checkin?`<div style="font-size:.82rem;color:var(--text3);margin-bottom:.4rem">📅 Check-in: ${fmtDT(a.checkin)}${a.checkout?' · Check-out: '+fmtDT(a.checkout):''}</div>`:''}
       ${a.mapsLink?`<a class="maps-link" href="${a.mapsLink}" target="_blank">📍 Maps ↗</a>`:''}
       ${a.notes?`<p style="font-size:.85rem;color:var(--text2);margin-top:.4rem;line-height:1.5">${a.notes}</p>`:''}
-      ${(a.files||[]).length?`<div style="font-size:.8rem;color:var(--text3);margin-top:.4rem">📎 ${a.files.length} doc${a.files.length!==1?'s':''}</div>`:''}
       <div class="card-actions">
+        ${(a.files||[]).length?`<button class="btn btn-secondary btn-sm" onclick="viewDocs('accommodation','${a.id}')" title="${a.files.length} document${a.files.length!==1?'s':''}">📁</button>`:''}
         <button class="btn btn-secondary btn-sm" onclick="editAccommodation('${a.id}')">✏ Edit</button>
         <button class="btn btn-danger btn-sm" onclick="delAccommodation('${a.id}')">🗑</button>
       </div>
