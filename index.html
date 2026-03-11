@@ -7,10 +7,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
   <style>
     :root{
-      --bg:#0a0f1a;--bg2:#111829;--bg3:#172240;--card:#1a2947;--card2:#1f3356;
-      --border:#2a4a7a;--blue:#a8d8ff;--blue2:#7ec8ff;--blue-dim:#1e3a8a;--blue-glow:#a8d8ff33;
-      --text:#e0f2ff;--text2:#a8c8ff;--text3:#7a9cff;
-      --red:#f87171;--yellow:#fbbf24;--purple:#c084fc;--orange:#fb923c;
+      --bg:#f0f6ff;--bg2:#e4eefb;--bg3:#d6e6f9;--card:#ffffff;--card2:#edf4fd;
+      --border:#bdd5f0;--blue:#2563eb;--blue2:#3b82f6;--blue-dim:#dbeafe;--blue-glow:#3b82f620;
+      --text:#1e3a5f;--text2:#3b6090;--text3:#6b93bf;
+      --red:#dc2626;--yellow:#b45309;--purple:#6d28d9;--orange:#c2410c;
       --radius:14px;--radius-sm:8px;
     }
     *{box-sizing:border-box;margin:0;padding:0}
@@ -19,22 +19,22 @@
 
     /* LOGIN */
     #login-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem;position:relative;z-index:1}
-    .login-glow{position:absolute;width:600px;height:600px;background:radial-gradient(circle,#a8d8ff15 0%,transparent 70%);pointer-events:none}
-    .login-box{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:3rem;max-width:420px;width:100%;text-align:center;position:relative;box-shadow:0 0 80px #a8d8ff10,0 32px 64px #00000060}
+    .login-glow{position:absolute;width:600px;height:600px;background:radial-gradient(circle,#bfdbfe40 0%,transparent 70%);pointer-events:none}
+    .login-box{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:3rem;max-width:420px;width:100%;text-align:center;position:relative;box-shadow:0 4px 32px #2563eb12,0 12px 40px #1e3a5f0e}
     .plane{font-size:3.5rem;margin-bottom:1.5rem;display:block;animation:float 3s ease-in-out infinite}
     @keyframes float{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-10px) rotate(5deg)}}
     .login-box h1{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--blue);margin-bottom:.5rem;letter-spacing:-.5px}
     .login-box p{color:var(--text2);font-size:.95rem;margin-bottom:2.5rem;line-height:1.6}
-    .btn-google{display:flex;align-items:center;justify-content:center;gap:.75rem;width:100%;padding:.875rem 1.5rem;background:var(--blue);color:#0a0f1a;border:none;border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:600;cursor:pointer;transition:all .2s;box-shadow:0 0 24px var(--blue-glow)}
-    .btn-google:hover{background:var(--blue2);transform:translateY(-2px);box-shadow:0 0 40px #a8d8ff50}
+    .btn-google{display:flex;align-items:center;justify-content:center;gap:.75rem;width:100%;padding:.875rem 1.5rem;background:var(--blue);color:#ffffff;border:none;border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:600;cursor:pointer;transition:all .2s;box-shadow:0 2px 12px #2563eb30}
+    .btn-google:hover{background:var(--blue2);transform:translateY(-2px);box-shadow:0 4px 20px #2563eb40}
     .btn-google svg{width:20px;height:20px;flex-shrink:0}
-    #config-notice{display:none;background:#1a1505;border:1px solid #fbbf2440;border-radius:var(--radius);padding:1.25rem;margin-top:1.5rem;text-align:left}
-    #config-notice p{color:var(--yellow);font-size:.85rem;line-height:1.6}
-    #config-notice code{background:#2a2005;padding:2px 6px;border-radius:4px;font-family:monospace;font-size:.8rem;color:var(--yellow)}
+    #config-notice{display:none;background:#fffbeb;border:1px solid #fcd34d;border-radius:var(--radius);padding:1.25rem;margin-top:1.5rem;text-align:left}
+    #config-notice p{color:#92400e;font-size:.85rem;line-height:1.6}
+    #config-notice code{background:#fef3c7;padding:2px 6px;border-radius:4px;font-family:monospace;font-size:.8rem;color:#92400e}
 
     /* APP SHELL */
     #app{display:none;position:relative;z-index:1}
-    header{position:sticky;top:0;z-index:100;background:#0a0f1aee;backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:60px}
+    header{position:sticky;top:0;z-index:100;background:#f0f6ffee;backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:60px}
     .header-logo{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:800;color:var(--blue);letter-spacing:-.5px}
     .header-user{display:flex;align-items:center;gap:.75rem}
     .user-avatar{width:32px;height:32px;border-radius:50%;border:2px solid var(--blue-dim);object-fit:cover}
@@ -59,8 +59,8 @@
 
     /* BUTTONS */
     .btn{display:inline-flex;align-items:center;gap:.4rem;padding:.6rem 1.25rem;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:600;cursor:pointer;transition:all .2s;border:none}
-    .btn-primary{background:var(--blue);color:#0a0f1a;box-shadow:0 0 16px var(--blue-glow)}
-    .btn-primary:hover{background:var(--blue2);transform:translateY(-1px);box-shadow:0 0 28px #a8d8ff50}
+    .btn-primary{background:var(--blue);color:#ffffff;box-shadow:0 2px 10px #2563eb25}
+    .btn-primary:hover{background:var(--blue2);transform:translateY(-1px);box-shadow:0 4px 14px #2563eb35}
     .btn-secondary{background:var(--card2);color:var(--text2);border:1px solid var(--border)}
     .btn-secondary:hover{background:var(--card);color:var(--text)}
     .btn-danger{background:transparent;color:var(--red);border:1px solid #f8717130}
@@ -69,7 +69,7 @@
 
     /* CARDS */
     .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;transition:border-color .2s,box-shadow .2s}
-    .card:hover{border-color:var(--blue-dim);box-shadow:0 0 20px #a8d8ff08}
+    .card:hover{border-color:#93c5fd;box-shadow:0 4px 16px #2563eb0f}
     .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem}
     .card-title{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;color:var(--text);margin-bottom:.4rem}
     .card-meta{font-size:.82rem;color:var(--text3);display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin-bottom:.6rem}
@@ -77,11 +77,10 @@
 
     /* BADGES */
     .badge{display:inline-flex;align-items:center;padding:.2rem .6rem;border-radius:999px;font-size:.75rem;font-weight:600}
-    .badge-blue{background:#a8d8ff20;color:var(--blue)}
-    .badge-yellow{background:#fbbf2420;color:var(--yellow)}
-    .badge-gray{background:var(--card2);color:var(--text3)}
-    .badge-blue{background:#60a5fa20;color:var(--blue)}
-    .badge-purple{background:#c084fc20;color:var(--purple)}
+    .badge-blue{background:#dbeafe;color:#1d4ed8}
+    .badge-yellow{background:#fef3c7;color:#92400e}
+    .badge-gray{background:#f1f5f9;color:#64748b}
+    .badge-purple{background:#ede9fe;color:#5b21b6}
 
     /* STATUS LEFT BORDER */
     .s-planning{border-left:3px solid var(--yellow)}
@@ -92,9 +91,9 @@
     .p-someday{border-left:3px solid var(--text3)}
 
     /* MODAL */
-    .modal-overlay{display:none;position:fixed;inset:0;background:#00000090;backdrop-filter:blur(4px);z-index:1000;align-items:center;justify-content:center;padding:1rem}
+    .modal-overlay{display:none;position:fixed;inset:0;background:#1e3a5f50;backdrop-filter:blur(4px);z-index:1000;align-items:center;justify-content:center;padding:1rem}
     .modal-overlay.open{display:flex}
-    .modal{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2rem;width:100%;max-width:540px;max-height:90vh;overflow-y:auto;box-shadow:0 32px 80px #00000080;animation:modalIn .25s ease}
+    .modal{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2rem;width:100%;max-width:540px;max-height:90vh;overflow-y:auto;box-shadow:0 8px 40px #1e3a5f18;animation:modalIn .25s ease}
     @keyframes modalIn{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:none}}
     .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
     .modal-title{font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:700}
@@ -106,7 +105,7 @@
     .form-label{display:block;font-size:.82rem;font-weight:600;color:var(--text2);margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.5px}
     .form-input,.form-select,.form-textarea{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.65rem .9rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.95rem;transition:border-color .2s,box-shadow .2s;outline:none}
     .form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--blue-dim);box-shadow:0 0 0 3px #a8d8ff15}
-    .form-select{cursor:pointer}.form-select option{background:var(--bg3)}
+    .form-select{cursor:pointer}.form-select option{background:var(--card)}
     .form-textarea{resize:vertical;min-height:80px}
     .form-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
     .form-actions{display:flex;gap:.75rem;justify-content:flex-end;margin-top:1.5rem}
@@ -136,7 +135,7 @@
     .file-item-name{display:flex;align-items:center;gap:.5rem;color:var(--text2);overflow:hidden;flex:1;min-width:0}
     .file-item-name span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .file-upload-area{border:2px dashed var(--border);border-radius:var(--radius-sm);padding:1.25rem;text-align:center;cursor:pointer;transition:all .2s;color:var(--text3);font-size:.9rem;margin-top:.75rem}
-    .file-upload-area:hover{border-color:var(--blue-dim);color:var(--text2);background:#a8d8ff05}
+    .file-upload-area:hover{border-color:#93c5fd;color:var(--text);background:#eff6ff}
 
     /* CHECKLIST */
     .checklist-item{display:flex;align-items:center;gap:.75rem;padding:.6rem 0;border-bottom:1px solid var(--border)}
@@ -171,16 +170,16 @@
     .cal-btn:hover{border-color:var(--blue-dim);color:var(--blue)}
     .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;background:var(--border);border-radius:var(--radius);overflow:hidden;border:1px solid var(--border)}
     .cal-day-hdr{background:var(--bg2);padding:.5rem;text-align:center;font-size:.72rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.5px}
-    .cal-day{background:var(--bg3);min-height:88px;padding:.4rem;cursor:pointer;transition:background .15s;position:relative}
-    .cal-day:hover{background:var(--card2)}
-    .cal-day.today .cal-dn{color:var(--blue);font-weight:700}
-    .cal-day.today{background:var(--card2)}
-    .cal-day.other-month .cal-dn{color:var(--text3)}
+    .cal-day{background:var(--card);min-height:88px;padding:.4rem;cursor:pointer;transition:background .15s;position:relative}
+    .cal-day:hover{background:var(--bg3)}
+    .cal-day.today .cal-dn{color:#1d4ed8;font-weight:700}
+    .cal-day.today{background:#dbeafe}
+    .cal-day.other-month{background:var(--bg2)}.cal-day.other-month .cal-dn{color:var(--text3)}
     .cal-dn{font-size:.8rem;font-weight:600;color:var(--text2);margin-bottom:.2rem;display:block}
     .cal-ev{font-size:.68rem;border-radius:4px;padding:2px 5px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.4}
-    .cal-ev.act{background:#a8d8ff20;color:var(--blue);border-left:2px solid var(--blue)}
-    .cal-ev.trp{background:#a8d8ff20;color:var(--blue);border-left:2px solid var(--blue)}
-    .cal-ev.acc{background:#c084fc20;color:var(--purple);border-left:2px solid var(--purple)}
+    .cal-ev.act{background:#dbeafe;color:#1d4ed8;border-left:2px solid #3b82f6}
+    .cal-ev.trp{background:#d1fae5;color:#065f46;border-left:2px solid #10b981}
+    .cal-ev.acc{background:#ede9fe;color:#5b21b6;border-left:2px solid #7c3aed}
     .cal-add-hint{position:absolute;bottom:3px;right:4px;font-size:.62rem;color:var(--text3);opacity:0;transition:opacity .15s}
     .cal-day:hover .cal-add-hint{opacity:1}
     .cal-legend{display:flex;gap:1rem;flex-wrap:wrap;margin-top:1rem;font-size:.8rem;color:var(--text3)}
@@ -194,10 +193,10 @@
     ::-webkit-scrollbar-thumb:hover{background:var(--blue-dim)}
 
     /* TOAST */
-    #toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:.85rem 1.25rem;font-size:.9rem;color:var(--text);z-index:9999;box-shadow:0 8px 32px #00000060;transform:translateY(100px);opacity:0;transition:all .3s ease;max-width:320px}
+    #toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:.85rem 1.25rem;font-size:.9rem;color:var(--text);z-index:9999;box-shadow:0 4px 20px #1e3a5f12;transform:translateY(100px);opacity:0;transition:all .3s ease;max-width:320px}
     #toast.show{transform:translateY(0);opacity:1}
-    #toast.success{border-color:var(--blue-dim);color:var(--blue)}
-    #toast.error{border-color:#f8717150;color:var(--red)}
+    #toast.success{border-color:#93c5fd;color:#1d4ed8}
+    #toast.error{border-color:#fca5a5;color:#dc2626}
 
     .spinner{width:18px;height:18px;border:2px solid var(--border);border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite;display:inline-block;vertical-align:middle}
     @keyframes spin{to{transform:rotate(360deg)}}
@@ -323,7 +322,10 @@
 
     <!-- CALENDAR -->
     <section id="section-calendar" class="section">
-      <div class="section-header"><h2 class="section-title">📅 <span>Calendar</span></h2></div>
+      <div class="section-header">
+        <h2 class="section-title">📅 <span>Calendar</span></h2>
+        <button class="btn btn-secondary" id="btn-sync-gcal" title="Push all booked items to your personal Google Calendar">📅 Sync to my Calendar</button>
+      </div>
       <div class="gcal-bar"><div class="gcal-dot" id="gcal-dot"></div><span id="gcal-text">Connecting to Google Calendar...</span></div>
       <div class="cal-toolbar">
         <div class="cal-month-lbl" id="cal-lbl"></div>
@@ -335,9 +337,9 @@
       </div>
       <div class="cal-grid" id="cal-grid"></div>
       <div class="cal-legend">
-        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--blue)"></div>Activity</div>
-        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--blue)"></div>Transport</div>
-        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--purple)"></div>Accommodation</div>
+        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#3b82f6"></div>Activity</div>
+        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#10b981"></div>Transport</div>
+        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#7c3aed"></div>Accommodation</div>
       </div>
     </section>
   </main>
@@ -536,13 +538,18 @@
 <div id="toast"></div>
 
 <script>
-// ══════════════════════════
-// ⚙️  YOUR CLIENT ID
-// ══════════════════════════
+// ══════════════════════════════════════════════════════
+// ⚙️  CONFIG — fill in both values before deploying
+// ══════════════════════════════════════════════════════
 const CLIENT_ID = '633441558716-3lbaitogvc09hr2pu4hqp254fbgci2s5.apps.googleusercontent.com';
-// ══════════════════════════
 
-const SCOPES = 'https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/calendar.events';
+// Paste the file ID from the shared travel-app-data.json URL:
+// drive.google.com/file/d/FILE_ID_HERE/view  ← copy FILE_ID_HERE
+// Leave as '' to fall back to searching by filename (single-user mode)
+const SHARED_FILE_ID = '1w6Sf2uHMfmxh90mEC5mIgU-GWulIf0DZ';
+// ══════════════════════════════════════════════════════
+
+const SCOPES = 'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/calendar.events';
 const DATA_FILE = 'travel-app-data.json';
 
 let D = { wishlist:[], activities:[], transport:[], accommodation:[], checklists:[], budget:[] };
@@ -602,10 +609,15 @@ $('btn-signout').addEventListener('click',()=>{
 async function loadDrive(){
   syncState('syncing','Loading from Google Drive...');
   try{
-    const res=await gapi.client.drive.files.list({q:`name='${DATA_FILE}' and trashed=false`,fields:'files(id)',spaces:'drive'});
-    const files=res.result.files;
-    if(files.length){
-      driveFileId=files[0].id;
+    if(SHARED_FILE_ID){
+      // Use the hardcoded shared file — both users always read/write the same data
+      driveFileId=SHARED_FILE_ID;
+    } else {
+      const res=await gapi.client.drive.files.list({q:`name='${DATA_FILE}' and trashed=false`,fields:'files(id)',spaces:'drive'});
+      const files=res.result.files;
+      if(files.length) driveFileId=files[0].id;
+    }
+    if(driveFileId){
       const c=await gapi.client.drive.files.get({fileId:driveFileId,alt:'media'});
       const loaded=JSON.parse(c.body);
       // data migrations from previous versions
@@ -665,6 +677,40 @@ async function initGcal(){
     await syncAllGcal();
   }catch(e){ gcalOk=false; gcalState('err','Google Calendar unavailable'); }
 }
+async function forceSyncAllGcal(){
+  if(!gcalOk){ toast('Google Calendar not connected','error'); return; }
+  const btn=$('btn-sync-gcal');
+  btn.disabled=true; btn.textContent='Syncing...';
+  let added=0;
+  // Clear stale gcalEventIds first (events that no longer exist on calendar)
+  const allItems=[
+    ...D.activities.filter(a=>a.status==='booked'&&a.startDate),
+    ...D.transport.filter(t=>t.status==='booked'&&t.startDate),
+    ...D.accommodation.filter(a=>a.status==='booked'&&a.checkin)
+  ];
+  for(const item of D.activities){
+    if(item.status==='booked'&&item.startDate){
+      const eid=await mkGcalEvent('🎯 '+item.name,item.notes||'',item.startDate,item.endDate||null,false);
+      if(eid){ item.gcalEventId=eid; added++; }
+    }
+  }
+  for(const item of D.transport){
+    if(item.status==='booked'&&item.startDate){
+      const eid=await mkGcalEvent(`${TTE[item.type]||'✈️'} ${item.name}`,`${item.from||''}→${item.to||''}`,item.startDate,item.endDate||null,false);
+      if(eid){ item.gcalEventId=eid; added++; }
+    }
+  }
+  for(const item of D.accommodation){
+    if(item.status==='booked'&&item.checkin){
+      const eid=await mkGcalEvent('🏨 '+item.name,item.notes||'',item.checkin,item.checkout||null,false);
+      if(eid){ item.gcalEventId=eid; added++; }
+    }
+  }
+  await saveDrive(); renderCalendar();
+  btn.disabled=false; btn.textContent='📅 Sync to my Calendar';
+  toast(added>0?`${added} event${added!==1?'s':''} added to your Calendar!`:'All booked items already synced ✓');
+}
+
 async function syncAllGcal(){
   if(!gcalOk) return; let changed=false;
   for(const a of D.activities){ if(a.status==='booked'&&a.startDate&&!a.gcalEventId){ a.gcalEventId=await mkGcalEvent('🎯 '+a.name,a.notes||'',a.startDate,a.endDate||null,false); changed=true; } }
@@ -694,6 +740,11 @@ async function uploadFiles(fileList, progId){
       form.append('file',file);
       const res=await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id,webViewLink',{method:'POST',headers:{Authorization:`Bearer ${token}`},body:form});
       const data=await res.json();
+      // Auto-share: make file readable by anyone with the link so partner can open it
+      await fetch(`https://www.googleapis.com/drive/v3/files/${data.id}/permissions`,{
+        method:'POST',headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},
+        body:JSON.stringify({role:'reader',type:'anyone'})
+      }).catch(()=>{});
       uploaded.push({name:file.name,fileId:data.id,url:data.webViewLink});
     }catch(e){ toast(`Failed: ${file.name}`,'error'); }
   }
@@ -1140,6 +1191,7 @@ async function saveCalItem(){
 // ── RENDER ALL ──
 function renderAll(){ renderWishlist(); renderActivities(); renderTransport(); renderAccommodation(); renderChecklists(); populateBudgetSel(); renderBudget(); }
 
+$('btn-sync-gcal').addEventListener('click', forceSyncAllGcal);
 initGoogle();
 </script>
 </body>
