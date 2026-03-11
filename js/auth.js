@@ -14,12 +14,13 @@ function initGoogle(){
       'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest',
       'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'
     ]
-  }));
+  }).then(()=>window._resolveGapi()));
   document.head.appendChild(s2);
 }
 
-function onToken(r){
+async function onToken(r){
   if(r.error){ toast('Sign in failed','error'); return; }
+  await gapiReady;
   gapi.client.setToken({ access_token: r.access_token });
   fetch('https://www.googleapis.com/oauth2/v3/userinfo',{headers:{Authorization:'Bearer '+r.access_token}})
     .then(x=>x.json()).then(i=>{ $('user-avatar').src=i.picture||''; $('user-name').textContent=i.name||i.email||''; });

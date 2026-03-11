@@ -5,6 +5,7 @@ const DATA_FILE = 'travel-app-data.json';
 
 let D = { wishlist:[], activities:[], transport:[], accommodation:[], checklists:[], budget:[] };
 let driveFileId = null, tokenClient = null, editId = null, gcalOk = false;
+let gapiReady = new Promise(r => { window._resolveGapi = r; });
 let calDate = new Date(), calAddDate = null, calAddType = 'activity';
 let pf = { a:[], t:[], ac:[] };
 
