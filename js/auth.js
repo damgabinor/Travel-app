@@ -20,7 +20,8 @@ function initGoogle(){
 
 function onToken(r){
   if(r.error){ toast('Sign in failed','error'); return; }
-  fetch('https://www.googleapis.com/oauth2/v3/userinfo',{headers:{Authorization:'Bearer '+gapi.client.getToken().access_token}})
+  gapi.client.setToken({ access_token: r.access_token });
+  fetch('https://www.googleapis.com/oauth2/v3/userinfo',{headers:{Authorization:'Bearer '+r.access_token}})
     .then(x=>x.json()).then(i=>{ $('user-avatar').src=i.picture||''; $('user-name').textContent=i.name||i.email||''; });
   $('login-screen').style.display='none'; $('app').style.display='block';
   loadDrive(); initGcal();

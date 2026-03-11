@@ -34,24 +34,33 @@ async function forceSyncAllGcal(){
   toast(added>0 ? `${added} event${added!==1?'s':''} added to your Calendar!` : 'All booked items already synced ✓');
 }
 
-async function syncAllGcal(){
-  if(!gcalOk) return; let changed=false;
-  for(const a of D.activities){
-    if(a.status==='booked' && a.startDate && !a.gcalEventId){
-      a.gcalEventId=await mkGcalEvent('🎯 '+a.name, a.notes||'', a.startDate, a.endDate||null, false); changed=true;
+async function forceSyncAllGcal(){
+  if(!gcalOk){ toast('Google Calendar not connected','error'); return; }
+  const btn=$('btn-sync-gcal'); btn.disabled=true; btn.textContent='Syncing...';
+  let added=0;
+
+  for(const item of D.activities){
+    if(item.status==='booked' && item.startDate && !item.gcalEventId){ // ← added !item.gcalEventId
+      const eid=await mkGcalEvent('🎯 '+item.name, item.notes||'', item.startDate, item.endDate||null, false);
+      if(eid){ item.gcalEventId=eid; added++; }
     }
   }
-  for(const t of D.transport){
-    if(t.status==='booked' && t.startDate && !t.gcalEventId){
-      t.gcalEventId=await mkGcalEvent(`${TTE[t.type]||'✈️'} ${t.name}`, `${t.from||''}→${t.to||''}\n${t.notes||''}`, t.startDate, t.endDate||null, false); changed=true;
+  for(const item of D.transport){
+    if(item.status==='booked' && item.startDate && !item.gcalEventId){ // ← added !item.gcalEventId
+      const eid=await mkGcalEvent(`${TTE[item.type]||'✈️'} ${item.name}`, `${item.from||''}→${item.to||''}`, item.startDate, item.endDate||null, false);
+      if(eid){ item.gcalEventId=eid; added++; }
     }
   }
-  for(const a of D.accommodation){
-    if(a.status==='booked' && a.checkin && !a.gcalEventId){
-      a.gcalEventId=await mkGcalEvent('🏨 '+a.name, a.notes||'', a.checkin, a.checkout||null, false); changed=true;
+  for(const item of D.accommodation){
+    if(item.status==='booked' && item.checkin && !item.gcalEventId){ // ← added !item.gcalEventId
+      const eid=await mkGcalEvent('🏨 '+item.name, item.notes||'', item.checkin, item.checkout||null, false);
+      if(eid){ item.gcalEventId=eid; added++; }
     }
   }
-  if(changed){ await saveDrive(); renderCalendar(); }
+
+  await saveDrive(); renderCalendar();
+  btn.disabled=false; btn.textContent='📅 Sync to my Calendar';
+  toast(added>0 ? `${added} event${added!==1?'s':''} added to your Calendar!` : 'All booked items already synced ✓');
 }
 
 async function mkGcalEvent(summary, description, start, end, allDay){
