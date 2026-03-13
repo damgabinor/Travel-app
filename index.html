@@ -1,350 +1,737 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>✈ Our Travel App</title>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="css/styles.css"/>
-  <link rel="manifest" href="manifest.json"/>
-</head>
-<body>
-
-<!-- LOGIN -->
-<div id="login-screen">
-  <div class="login-glow"></div>
-  <div class="login-box">
-    <span class="plane">✈️</span>
-    <h1>Our Travel App</h1>
-    <p>Plan trips together, store documents, and track your adventures — synced via Google Drive.</p>
-    <button class="btn-google" id="btn-login" disabled style="opacity:.5;cursor:not-allowed">
-      <svg viewBox="0 0 24 24" fill="none"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
-      Sign in with Google
-    </button>
-    <div id="config-notice"><p>⚠️ <strong>Setup required:</strong> Replace <code>YOUR_CLIENT_ID_HERE</code> with your OAuth Client ID.</p></div>
-  </div>
-</div>
-
-<!-- APP -->
-<div id="app">
-  <header>
-    <div class="header-logo">✈ travels</div>
-    <div class="header-user">
-      <img class="user-avatar" id="user-avatar" src="" alt=""/>
-      <span class="user-name" id="user-name"></span>
-      <button class="btn-signout" id="btn-signout">Sign out</button>
-    </div>
-  </header>
-  <nav>
-    <button class="tab active" data-tab="wishlist">🌍 Wishlist</button>
-    <button class="tab" data-tab="activities">🎯 Activities</button>
-    <button class="tab" data-tab="transport">✈️ Transport</button>
-    <button class="tab" data-tab="accommodation">🏨 Accommodation</button>
-    <button class="tab" data-tab="checklist">📋 Checklists</button>
-    <button class="tab" data-tab="budget">💰 Budget</button>
-    <button class="tab" data-tab="calendar">📅 Calendar</button>
-  </nav>
-  <main>
-    <div class="sync-bar">
-      <div class="sync-dot" id="sync-dot"></div>
-      <span class="sync-text" id="sync-text">Connecting...</span>
-      <span class="sync-time" id="sync-time"></span>
-      <button class="btn btn-secondary btn-sm" id="btn-sync">↻ Sync</button>
-    </div>
-
-    <!-- WISHLIST -->
-    <section id="section-wishlist" class="section active">
-      <div class="section-header">
-        <h2 class="section-title">Our <span>Wishlist</span></h2>
-        <button class="btn btn-primary" id="btn-add-wish">+ Add Place</button>
-      </div>
-      <div class="card-grid" id="wishlist-grid"></div>
-    </section>
-
-    <!-- ACTIVITIES -->
-    <section id="section-activities" class="section">
-      <div class="section-header">
-        <h2 class="section-title">Our <span>Activities</span></h2>
-        <button class="btn btn-primary" id="btn-add-activity">+ Add Activity</button>
-      </div>
-      <div class="card-grid" id="activities-grid"></div>
-    </section>
-
-    <!-- TRANSPORT -->
-    <section id="section-transport" class="section">
-      <div class="section-header">
-        <h2 class="section-title">Our <span>Transportation</span></h2>
-        <button class="btn btn-primary" id="btn-add-transport">+ Add Transport</button>
-      </div>
-      <div class="card-grid" id="transport-grid"></div>
-    </section>
-
-    <!-- ACCOMMODATION -->
-    <section id="section-accommodation" class="section">
-      <div class="section-header">
-        <h2 class="section-title">Our <span>Accommodation</span></h2>
-        <button class="btn btn-primary" id="btn-add-accommodation">+ Add Accommodation</button>
-      </div>
-      <div class="card-grid" id="accommodation-grid"></div>
-    </section>
-
-    <!-- CHECKLISTS -->
-    <section id="section-checklist" class="section">
-      <div class="section-header">
-        <h2 class="section-title">Packing <span>Checklists</span></h2>
-        <button class="btn btn-primary" id="btn-add-checklist">+ New Checklist</button>
-      </div>
-      <div class="card-grid" id="checklist-grid"></div>
-    </section>
-
-    <!-- BUDGET -->
-    <section id="section-budget" class="section">
-      <div class="section-header">
-        <h2 class="section-title">Expenses & <span>Budget</span></h2>
-        <button class="btn btn-primary" id="btn-add-expense">+ Add Expense</button>
-      </div>
-      <div class="budget-summary">
-        <div class="budget-stat"><div class="budget-stat-value" id="bs-est">$0</div><div class="budget-stat-label">Estimated</div></div>
-        <div class="budget-stat"><div class="budget-stat-value" id="bs-act">$0</div><div class="budget-stat-label">Actual Spent</div></div>
-        <div class="budget-stat"><div class="budget-stat-value" id="bs-rem">$0</div><div class="budget-stat-label">Remaining</div></div>
-      </div>
-      <div class="card">
-        <table class="budget-table">
-          <thead><tr><th>Category</th><th>Description</th><th>Estimated</th><th>Actual</th><th>Paid by</th><th></th></tr></thead>
-          <tbody id="budget-tbody"><tr><td colspan="6" style="text-align:center;color:var(--text3);padding:2rem">No expenses yet</td></tr></tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- CALENDAR -->
-    <section id="section-calendar" class="section">
-      <div class="section-header">
-        <h2 class="section-title">📅 <span>Calendar</span></h2>
-        <button class="btn btn-secondary" id="btn-sync-gcal" title="Push all booked items to your personal Google Calendar">📅 Sync to my Calendar</button>
-      </div>
-      <div class="gcal-bar"><div class="gcal-dot" id="gcal-dot"></div><span id="gcal-text">Connecting to Google Calendar...</span></div>
-      <div class="cal-toolbar">
-        <div class="cal-month-lbl" id="cal-lbl"></div>
-        <div class="cal-nav">
-          <button class="cal-btn" id="cal-prev">‹</button>
-          <button class="cal-btn" id="cal-today" style="font-size:.85rem">Today</button>
-          <button class="cal-btn" id="cal-next">›</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>✈ Our Travel App</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="manifest" href="manifest.json" />
+  </head>
+  <body>
+    <!-- LOGIN -->
+    <div id="login-screen">
+      <div class="login-glow"></div>
+      <div class="login-box">
+        <span class="plane">✈️</span>
+        <h1>Our Travel App</h1>
+        <p>
+          Plan trips together, store documents, and track your adventures —
+          synced via Google Drive.
+        </p>
+        <button
+          class="btn-google"
+          id="btn-login"
+          disabled
+          style="opacity: 0.5; cursor: not-allowed"
+        >
+          <svg viewBox="0 0 24 24" fill="none">
+            <path
+              d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+              fill="#4285F4"
+            />
+            <path
+              d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+              fill="#34A853"
+            />
+            <path
+              d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"
+              fill="#FBBC05"
+            />
+            <path
+              d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+              fill="#EA4335"
+            />
+          </svg>
+          Sign in with Google
+        </button>
+        <div id="config-notice">
+          <p>
+            ⚠️ <strong>Setup required:</strong> Replace
+            <code>YOUR_CLIENT_ID_HERE</code> with your OAuth Client ID.
+          </p>
         </div>
       </div>
-      <div class="cal-grid" id="cal-grid"></div>
-      <div class="cal-legend">
-        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#3b82f6"></div>Activity</div>
-        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#10b981"></div>Transport</div>
-        <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#7c3aed"></div>Accommodation</div>
-      </div>
-    </section>
-  </main>
-</div>
+    </div>
 
-<!-- ═══ MODALS ═══ -->
+    <!-- APP -->
+    <div id="app">
+      <header>
+        <div class="header-logo">✈ travels</div>
+        <div class="header-user">
+          <img class="user-avatar" id="user-avatar" src="" alt="" />
+          <span class="user-name" id="user-name"></span>
+          <button class="btn-signout" id="btn-signout">Sign out</button>
+        </div>
+      </header>
+      <nav>
+        <button class="tab active" data-tab="wishlist">🌍 Wishlist</button>
+        <button class="tab" data-tab="activities">🎯 Activities</button>
+        <button class="tab" data-tab="transport">✈️ Transport</button>
+        <button class="tab" data-tab="accommodation">🏨 Accommodation</button>
+        <button class="tab" data-tab="checklist">📋 Checklists</button>
+        <button class="tab" data-tab="budget">💰 Budget</button>
+        <button class="tab" data-tab="calendar">📅 Calendar</button>
+      </nav>
+      <main>
+        <div class="sync-bar">
+          <div class="sync-dot" id="sync-dot"></div>
+          <span class="sync-text" id="sync-text">Connecting...</span>
+          <span class="sync-time" id="sync-time"></span>
+          <button class="btn btn-secondary btn-sm" id="btn-sync">↻ Sync</button>
+        </div>
 
-<!-- WISHLIST -->
-<div class="modal-overlay" id="modal-wish">
-  <div class="modal">
-    <div class="modal-header"><span class="modal-title" id="wish-title">Add Place</span><button class="modal-close" data-close="modal-wish">✕</button></div>
-    <div class="form-group"><label class="form-label">Place / Destination *</label><input class="form-input" id="w-name" placeholder="e.g. Kyoto, Japan"/></div>
-    <div class="form-row">
-      <div class="form-group"><label class="form-label">Country</label><input class="form-input" id="w-country" placeholder="Japan"/></div>
-      <div class="form-group"><label class="form-label">Type</label>
-        <select class="form-select" id="w-type">
-          <option value="city">🏙 City</option><option value="beach">🏖 Beach</option><option value="nature">🌿 Nature</option>
-          <option value="cultural">🏛 Cultural</option><option value="adventure">🧗 Adventure</option><option value="other">📍 Other</option>
-        </select>
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group"><label class="form-label">Priority</label>
-        <select class="form-select" id="w-priority">
-          <option value="dream">⭐ Dream Trip</option><option value="next">🔜 Next Up</option><option value="someday">☁ Someday</option>
-        </select>
-      </div>
-      <div class="form-group"><label class="form-label">Suggested by</label>
-        <select class="form-select" id="w-by"><option value="me">Me</option><option value="partner">Partner</option><option value="both">Both</option></select>
-      </div>
-    </div>
-    <div class="form-group"><label class="form-label">Google Maps Link</label><input class="form-input" id="w-maps" placeholder="Paste Google Maps URL"/></div>
-    <div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="w-notes" placeholder="Things to do, restaurants, tips..."></textarea></div>
-    <div class="form-actions"><button class="btn btn-secondary" data-close="modal-wish">Cancel</button><button class="btn btn-primary" id="btn-save-wish">Save</button></div>
-  </div>
-</div>
+        <!-- WISHLIST -->
+        <section id="section-wishlist" class="section active">
+          <div class="section-header">
+            <h2 class="section-title">Our <span>Wishlist</span></h2>
+            <button class="btn btn-primary" id="btn-add-wish">
+              + Add Place
+            </button>
+          </div>
+          <div class="card-grid" id="wishlist-grid"></div>
+        </section>
 
-<!-- ACTIVITY -->
-<div class="modal-overlay" id="modal-activity">
-  <div class="modal">
-    <div class="modal-header"><span class="modal-title" id="act-title">Add Activity</span><button class="modal-close" data-close="modal-activity">✕</button></div>
-    <div class="form-group"><label class="form-label">Activity Name *</label><input class="form-input" id="a-name" placeholder="e.g. Snorkeling in Maldives"/></div>
-    <div class="form-row">
-      <div class="form-group"><label class="form-label">Location / Country</label><input class="form-input" id="a-country" placeholder="Maldives"/></div>
-      <div class="form-group"><label class="form-label">Type</label>
-        <select class="form-select" id="a-type">
-          <option value="adventure">🧗 Adventure</option><option value="food">🍜 Food &amp; Drink</option><option value="cultural">🏛 Cultural</option>
-          <option value="nature">🌿 Nature</option><option value="entertainment">🎭 Entertainment</option><option value="sport">⚽ Sport</option><option value="other">📍 Other</option>
-        </select>
-      </div>
-    </div>
-    <div class="form-group"><label class="form-label">Status</label>
-      <select class="form-select" id="a-status">
-        <option value="planning">📝 Planning</option><option value="booked">✅ Booked</option><option value="completed">✔ Completed</option>
-      </select>
-    </div>
-    <div class="form-row">
-      <div class="form-group"><label class="form-label">Start Date &amp; Time</label><input class="form-input" type="datetime-local" id="a-start"/></div>
-      <div class="form-group"><label class="form-label">End <span style="font-weight:400;color:var(--text3)">(optional)</span></label><input class="form-input" type="datetime-local" id="a-end"/><div class="form-hint">Defaults to 1 hour if empty</div></div>
-    </div>
-    <div class="form-group"><label class="form-label">Google Maps Link</label><input class="form-input" id="a-maps" placeholder="Paste Google Maps URL"/></div>
-    <div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="a-notes" placeholder="Details, booking ref, tips..."></textarea></div>
-    <div class="form-group"><label class="form-label">Documents</label>
-      <div id="a-file-list"></div>
-      <div class="file-upload-area" onclick="document.getElementById('a-file-input').click()">
-        <input type="file" id="a-file-input" style="display:none" multiple/>📎 Upload documents
-      </div>
-      <div id="a-upload-prog"></div>
-    </div>
-    <div class="form-actions"><button class="btn btn-secondary" data-close="modal-activity">Cancel</button><button class="btn btn-primary" id="btn-save-activity">Save</button></div>
-  </div>
-</div>
+        <!-- ACTIVITIES -->
+        <section id="section-activities" class="section">
+          <div class="section-header">
+            <h2 class="section-title">Our <span>Activities</span></h2>
+            <button class="btn btn-primary" id="btn-add-activity">
+              + Add Activity
+            </button>
+          </div>
+          <div class="card-grid" id="activities-grid"></div>
+        </section>
 
-<!-- TRANSPORT -->
-<div class="modal-overlay" id="modal-transport">
-  <div class="modal">
-    <div class="modal-header"><span class="modal-title" id="trp-title">Add Transport</span><button class="modal-close" data-close="modal-transport">✕</button></div>
-    <div class="form-row">
-      <div class="form-group"><label class="form-label">Type</label>
-        <select class="form-select" id="t-type">
-          <option value="flight">✈️ Flight</option><option value="train">🚆 Train</option><option value="bus">🚌 Bus</option>
-          <option value="car">🚗 Car</option><option value="boat">⛵ Boat</option><option value="other">📍 Other</option>
-        </select>
-      </div>
-      <div class="form-group"><label class="form-label">Status</label>
-        <select class="form-select" id="t-status">
-          <option value="planning">📝 Planning</option><option value="booked">✅ Booked</option><option value="completed">✔ Completed</option>
-        </select>
-      </div>
-    </div>
-    <div class="form-group"><label class="form-label">Name / Reference *</label><input class="form-input" id="t-name" placeholder="e.g. Flight to Tokyo · AA123"/></div>
-    <div class="form-row">
-      <div class="form-group"><label class="form-label">From (Starting Point)</label><input class="form-input" id="t-from" placeholder="New York JFK"/></div>
-      <div class="form-group"><label class="form-label">To (Destination)</label><input class="form-input" id="t-to" placeholder="Tokyo NRT"/></div>
-    </div>
-    <div class="form-row">
-      <div class="form-group"><label class="form-label">Departure</label><input class="form-input" type="datetime-local" id="t-start"/></div>
-      <div class="form-group"><label class="form-label">Arrival <span style="font-weight:400;color:var(--text3)">(optional)</span></label><input class="form-input" type="datetime-local" id="t-end"/></div>
-    </div>
-    <div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="t-notes" placeholder="Booking ref, seat numbers, terminal..."></textarea></div>
-    <div class="form-group"><label class="form-label">Documents</label>
-      <div id="t-file-list"></div>
-      <div class="file-upload-area" onclick="document.getElementById('t-file-input').click()">
-        <input type="file" id="t-file-input" style="display:none" multiple/>📎 Upload tickets / confirmations
-      </div>
-      <div id="t-upload-prog"></div>
-    </div>
-    <div class="form-actions"><button class="btn btn-secondary" data-close="modal-transport">Cancel</button><button class="btn btn-primary" id="btn-save-transport">Save</button></div>
-  </div>
-</div>
+        <!-- TRANSPORT -->
+        <section id="section-transport" class="section">
+          <div class="section-header">
+            <h2 class="section-title">Our <span>Transportation</span></h2>
+            <button class="btn btn-primary" id="btn-add-transport">
+              + Add Transport
+            </button>
+          </div>
+          <div class="card-grid" id="transport-grid"></div>
+        </section>
 
-<!-- ACCOMMODATION -->
-<div class="modal-overlay" id="modal-accommodation">
-  <div class="modal">
-    <div class="modal-header"><span class="modal-title" id="acc-title">Add Accommodation</span><button class="modal-close" data-close="modal-accommodation">✕</button></div>
-    <div class="form-group"><label class="form-label">Name *</label><input class="form-input" id="ac-name" placeholder="e.g. Park Hyatt Tokyo"/></div>
-    <div class="form-row">
-      <div class="form-group"><label class="form-label">Location</label><input class="form-input" id="ac-location" placeholder="Tokyo, Japan"/></div>
-      <div class="form-group"><label class="form-label">Status</label>
-        <select class="form-select" id="ac-status">
-          <option value="planning">📝 Planning</option><option value="booked">✅ Booked</option><option value="completed">✔ Completed</option>
-        </select>
+        <!-- ACCOMMODATION -->
+        <section id="section-accommodation" class="section">
+          <div class="section-header">
+            <h2 class="section-title">Our <span>Accommodation</span></h2>
+            <button class="btn btn-primary" id="btn-add-accommodation">
+              + Add Accommodation
+            </button>
+          </div>
+          <div class="card-grid" id="accommodation-grid"></div>
+        </section>
+
+        <!-- CHECKLISTS -->
+        <section id="section-checklist" class="section">
+          <div class="section-header">
+            <h2 class="section-title">Packing <span>Checklists</span></h2>
+            <button class="btn btn-primary" id="btn-add-checklist">
+              + New Checklist
+            </button>
+          </div>
+          <div class="card-grid" id="checklist-grid"></div>
+        </section>
+
+        <!-- BUDGET -->
+        <section id="section-budget" class="section">
+          <div class="section-header">
+            <h2 class="section-title">Expenses & <span>Budget</span></h2>
+            <button class="btn btn-primary" id="btn-add-expense">
+              + Add Expense
+            </button>
+          </div>
+          <div class="budget-summary">
+            <div class="budget-stat">
+              <div class="budget-stat-value" id="bs-est">$0</div>
+              <div class="budget-stat-label">Estimated</div>
+            </div>
+            <div class="budget-stat">
+              <div class="budget-stat-value" id="bs-act">$0</div>
+              <div class="budget-stat-label">Actual Spent</div>
+            </div>
+            <div class="budget-stat">
+              <div class="budget-stat-value" id="bs-rem">$0</div>
+              <div class="budget-stat-label">Remaining</div>
+            </div>
+          </div>
+          <div class="card">
+            <table class="budget-table">
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Description</th>
+                  <th>Estimated</th>
+                  <th>Actual</th>
+                  <th>Paid by</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="budget-tbody">
+                <tr>
+                  <td
+                    colspan="6"
+                    style="
+                      text-align: center;
+                      color: var(--text3);
+                      padding: 2rem;
+                    "
+                  >
+                    No expenses yet
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- CALENDAR -->
+        <section id="section-calendar" class="section">
+          <div class="section-header">
+            <h2 class="section-title">📅 <span>Calendar</span></h2>
+            <button
+              class="btn btn-secondary"
+              id="btn-sync-gcal"
+              title="Push all booked items to your personal Google Calendar"
+            >
+              📅 Sync to my Calendar
+            </button>
+          </div>
+          <div class="gcal-bar">
+            <div class="gcal-dot" id="gcal-dot"></div>
+            <span id="gcal-text">Connecting to Google Calendar...</span>
+          </div>
+          <div class="cal-toolbar">
+            <div class="cal-month-lbl" id="cal-lbl"></div>
+            <div class="cal-nav">
+              <button class="cal-btn" id="cal-prev">‹</button>
+              <button class="cal-btn" id="cal-today" style="font-size: 0.85rem">
+                Today
+              </button>
+              <button class="cal-btn" id="cal-next">›</button>
+            </div>
+          </div>
+          <div class="cal-grid" id="cal-grid"></div>
+          <div class="cal-legend">
+            <div class="cal-legend-item">
+              <div class="cal-legend-dot" style="background: #3b82f6"></div>
+              Activity
+            </div>
+            <div class="cal-legend-item">
+              <div class="cal-legend-dot" style="background: #10b981"></div>
+              Transport
+            </div>
+            <div class="cal-legend-item">
+              <div class="cal-legend-dot" style="background: #7c3aed"></div>
+              Accommodation
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- ═══ MODALS ═══ -->
+
+    <!-- WISHLIST -->
+    <div class="modal-overlay" id="modal-wish">
+      <div class="modal">
+        <div class="modal-header">
+          <span class="modal-title" id="wish-title">Add Place</span
+          ><button class="modal-close" data-close="modal-wish">✕</button>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Place / Destination *</label
+          ><input
+            class="form-input"
+            id="w-name"
+            placeholder="e.g. Kyoto, Japan"
+          />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Country</label
+            ><input class="form-input" id="w-country" placeholder="Japan" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Type</label>
+            <select class="form-select" id="w-type">
+              <option value="city">🏙 City</option>
+              <option value="beach">🏖 Beach</option>
+              <option value="nature">🌿 Nature</option>
+              <option value="cultural">🏛 Cultural</option>
+              <option value="adventure">🧗 Adventure</option>
+              <option value="other">📍 Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Priority</label>
+            <select class="form-select" id="w-priority">
+              <option value="dream">⭐ Dream Trip</option>
+              <option value="next">🔜 Next Up</option>
+              <option value="someday">☁ Someday</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Suggested by</label>
+            <select class="form-select" id="w-by">
+              <option value="me">Me</option>
+              <option value="partner">Partner</option>
+              <option value="both">Both</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Google Maps Link</label
+          ><input
+            class="form-input"
+            id="w-maps"
+            placeholder="Paste Google Maps URL"
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Notes</label
+          ><textarea
+            class="form-textarea"
+            id="w-notes"
+            placeholder="Things to do, restaurants, tips..."
+          ></textarea>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-secondary" data-close="modal-wish">
+            Cancel</button
+          ><button class="btn btn-primary" id="btn-save-wish">Save</button>
+        </div>
       </div>
     </div>
-    <div class="form-row">
-      <div class="form-group"><label class="form-label">Check-in</label><input class="form-input" type="datetime-local" id="ac-checkin"/></div>
-      <div class="form-group"><label class="form-label">Check-out</label><input class="form-input" type="datetime-local" id="ac-checkout"/></div>
-    </div>
-    <div class="form-group"><label class="form-label">Google Maps Link</label><input class="form-input" id="ac-maps" placeholder="Paste Google Maps URL"/></div>
-    <div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="ac-notes" placeholder="Booking ref, address, check-in info..."></textarea></div>
-    <div class="form-group"><label class="form-label">Documents</label>
-      <div id="ac-file-list"></div>
-      <div class="file-upload-area" onclick="document.getElementById('ac-file-input').click()">
-        <input type="file" id="ac-file-input" style="display:none" multiple/>📎 Upload confirmation / vouchers
+
+    <!-- ACTIVITY -->
+    <div class="modal-overlay" id="modal-activity">
+      <div class="modal">
+        <div class="modal-header">
+          <span class="modal-title" id="act-title">Add Activity</span
+          ><button class="modal-close" data-close="modal-activity">✕</button>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Activity Name *</label
+          ><input
+            class="form-input"
+            id="a-name"
+            placeholder="e.g. Snorkeling in Maldives"
+          />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Location / Country</label
+            ><input class="form-input" id="a-country" placeholder="Maldives" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Type</label>
+            <select class="form-select" id="a-type">
+              <option value="adventure">🧗 Adventure</option>
+              <option value="food">🍜 Food &amp; Drink</option>
+              <option value="cultural">🏛 Cultural</option>
+              <option value="nature">🌿 Nature</option>
+              <option value="entertainment">🎭 Entertainment</option>
+              <option value="sport">⚽ Sport</option>
+              <option value="other">📍 Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Status</label>
+          <select class="form-select" id="a-status">
+            <option value="planning">📝 Planning</option>
+            <option value="booked">✅ Booked</option>
+            <option value="completed">✔ Completed</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Start Date &amp; Time</label
+            ><input class="form-input" type="datetime-local" id="a-start" />
+          </div>
+          <div class="form-group">
+            <label class="form-label"
+              >End
+              <span style="font-weight: 400; color: var(--text3)"
+                >(optional)</span
+              ></label
+            ><input class="form-input" type="datetime-local" id="a-end" />
+            <div class="form-hint">Defaults to 1 hour if empty</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Google Maps Link</label
+          ><input
+            class="form-input"
+            id="a-maps"
+            placeholder="Paste Google Maps URL"
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Notes</label
+          ><textarea
+            class="form-textarea"
+            id="a-notes"
+            placeholder="Details, booking ref, tips..."
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Documents</label>
+          <div id="a-file-list"></div>
+          <div
+            class="file-upload-area"
+            onclick="document.getElementById('a-file-input').click()"
+          >
+            <input
+              type="file"
+              id="a-file-input"
+              style="display: none"
+              multiple
+            />📎 Upload documents
+          </div>
+          <div id="a-upload-prog"></div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-secondary" data-close="modal-activity">
+            Cancel</button
+          ><button class="btn btn-primary" id="btn-save-activity">Save</button>
+        </div>
       </div>
-      <div id="ac-upload-prog"></div>
     </div>
-    <div class="form-actions"><button class="btn btn-secondary" data-close="modal-accommodation">Cancel</button><button class="btn btn-primary" id="btn-save-accommodation">Save</button></div>
-  </div>
-</div>
 
-<!-- CHECKLIST -->
-<div class="modal-overlay" id="modal-checklist">
-  <div class="modal">
-    <div class="modal-header"><span class="modal-title">New Checklist</span><button class="modal-close" data-close="modal-checklist">✕</button></div>
-    <div class="form-group"><label class="form-label">Name *</label><input class="form-input" id="cl-name" placeholder="e.g. Japan Packing List"/></div>
-    <div class="form-group"><label class="form-label">Linked Trip (optional)</label>
-      <select class="form-select" id="cl-trip"><option value="">None</option></select>
-    </div>
-    <div class="form-actions"><button class="btn btn-secondary" data-close="modal-checklist">Cancel</button><button class="btn btn-primary" id="btn-save-checklist">Create</button></div>
-  </div>
-</div>
-
-<!-- EXPENSE -->
-<div class="modal-overlay" id="modal-expense">
-  <div class="modal">
-    <div class="modal-header"><span class="modal-title">Add Expense</span><button class="modal-close" data-close="modal-expense">✕</button></div>
-    <div class="form-row">
-      <div class="form-group"><label class="form-label">Category</label>
-        <select class="form-select" id="ex-cat">
-          <option value="flights">✈️ Flights</option><option value="accommodation">🏨 Accommodation</option>
-          <option value="food">🍜 Food</option><option value="transport">🚌 Transport</option>
-          <option value="activities">🎭 Activities</option><option value="shopping">🛍 Shopping</option><option value="other">📌 Other</option>
-        </select>
+    <!-- TRANSPORT -->
+    <div class="modal-overlay" id="modal-transport">
+      <div class="modal">
+        <div class="modal-header">
+          <span class="modal-title" id="trp-title">Add Transport</span
+          ><button class="modal-close" data-close="modal-transport">✕</button>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Type</label>
+            <select class="form-select" id="t-type">
+              <option value="flight">✈️ Flight</option>
+              <option value="train">🚆 Train</option>
+              <option value="bus">🚌 Bus</option>
+              <option value="car">🚗 Car</option>
+              <option value="boat">⛵ Boat</option>
+              <option value="other">📍 Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Status</label>
+            <select class="form-select" id="t-status">
+              <option value="planning">📝 Planning</option>
+              <option value="booked">✅ Booked</option>
+              <option value="completed">✔ Completed</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Name / Reference *</label
+          ><input
+            class="form-input"
+            id="t-name"
+            placeholder="e.g. Flight to Tokyo · AA123"
+          />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">From (Starting Point)</label
+            ><input class="form-input" id="t-from" placeholder="New York JFK" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">To (Destination)</label
+            ><input class="form-input" id="t-to" placeholder="Tokyo NRT" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Departure</label
+            ><input class="form-input" type="datetime-local" id="t-start" />
+          </div>
+          <div class="form-group">
+            <label class="form-label"
+              >Arrival
+              <span style="font-weight: 400; color: var(--text3)"
+                >(optional)</span
+              ></label
+            ><input class="form-input" type="datetime-local" id="t-end" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Notes</label
+          ><textarea
+            class="form-textarea"
+            id="t-notes"
+            placeholder="Booking ref, seat numbers, terminal..."
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Documents</label>
+          <div id="t-file-list"></div>
+          <div
+            class="file-upload-area"
+            onclick="document.getElementById('t-file-input').click()"
+          >
+            <input
+              type="file"
+              id="t-file-input"
+              style="display: none"
+              multiple
+            />📎 Upload tickets / confirmations
+          </div>
+          <div id="t-upload-prog"></div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-secondary" data-close="modal-transport">
+            Cancel</button
+          ><button class="btn btn-primary" id="btn-save-transport">Save</button>
+        </div>
       </div>
-      <div class="form-group"><label class="form-label">Paid by</label>
-        <select class="form-select" id="ex-paidby"><option value="me">Me</option><option value="partner">Partner</option><option value="split">Split</option></select>
+    </div>
+
+    <!-- ACCOMMODATION -->
+    <div class="modal-overlay" id="modal-accommodation">
+      <div class="modal">
+        <div class="modal-header">
+          <span class="modal-title" id="acc-title">Add Accommodation</span
+          ><button class="modal-close" data-close="modal-accommodation">
+            ✕
+          </button>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Name *</label
+          ><input
+            class="form-input"
+            id="ac-name"
+            placeholder="e.g. Park Hyatt Tokyo"
+          />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Location</label
+            ><input
+              class="form-input"
+              id="ac-location"
+              placeholder="Tokyo, Japan"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Status</label>
+            <select class="form-select" id="ac-status">
+              <option value="planning">📝 Planning</option>
+              <option value="booked">✅ Booked</option>
+              <option value="completed">✔ Completed</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Check-in</label
+            ><input class="form-input" type="datetime-local" id="ac-checkin" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Check-out</label
+            ><input class="form-input" type="datetime-local" id="ac-checkout" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Google Maps Link</label
+          ><input
+            class="form-input"
+            id="ac-maps"
+            placeholder="Paste Google Maps URL"
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Notes</label
+          ><textarea
+            class="form-textarea"
+            id="ac-notes"
+            placeholder="Booking ref, address, check-in info..."
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Documents</label>
+          <div id="ac-file-list"></div>
+          <div
+            class="file-upload-area"
+            onclick="document.getElementById('ac-file-input').click()"
+          >
+            <input
+              type="file"
+              id="ac-file-input"
+              style="display: none"
+              multiple
+            />📎 Upload confirmation / vouchers
+          </div>
+          <div id="ac-upload-prog"></div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-secondary" data-close="modal-accommodation">
+            Cancel</button
+          ><button class="btn btn-primary" id="btn-save-accommodation">
+            Save
+          </button>
+        </div>
       </div>
     </div>
-    <div class="form-group"><label class="form-label">Description</label><input class="form-input" id="ex-desc" placeholder="e.g. Return flights Tokyo"/></div>
-    <div class="form-row">
-      <div class="form-group"><label class="form-label">Estimated ($)</label><input class="form-input" type="number" id="ex-est" placeholder="0.00" min="0" step="0.01"/></div>
-      <div class="form-group"><label class="form-label">Actual ($)</label><input class="form-input" type="number" id="ex-act" placeholder="0.00" min="0" step="0.01"/></div>
+
+    <!-- CHECKLIST -->
+    <div class="modal-overlay" id="modal-checklist">
+      <div class="modal">
+        <div class="modal-header">
+          <span class="modal-title">New Checklist</span
+          ><button class="modal-close" data-close="modal-checklist">✕</button>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Name *</label
+          ><input
+            class="form-input"
+            id="cl-name"
+            placeholder="e.g. Japan Packing List"
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Linked Trip (optional)</label>
+          <select class="form-select" id="cl-trip">
+            <option value="">None</option>
+          </select>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-secondary" data-close="modal-checklist">
+            Cancel</button
+          ><button class="btn btn-primary" id="btn-save-checklist">
+            Create
+          </button>
+        </div>
+      </div>
     </div>
-    <div class="form-actions"><button class="btn btn-secondary" data-close="modal-expense">Cancel</button><button class="btn btn-primary" id="btn-save-expense">Save</button></div>
-  </div>
-</div>
 
-<!-- DOCS VIEWER -->
-<div class="modal-overlay" id="modal-docs">
-  <div class="modal" style="max-width:400px">
-    <div class="modal-header"><span class="modal-title">📁 Documents</span><button class="modal-close" data-close="modal-docs">✕</button></div>
-    <div id="docs-list"></div>
-  </div>
-</div>
+    <!-- EXPENSE -->
+    <div class="modal-overlay" id="modal-expense">
+      <div class="modal">
+        <div class="modal-header">
+          <span class="modal-title">Add Expense</span
+          ><button class="modal-close" data-close="modal-expense">✕</button>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Category</label>
+            <select class="form-select" id="ex-cat">
+              <option value="flights">✈️ Flights</option>
+              <option value="accommodation">🏨 Accommodation</option>
+              <option value="food">🍜 Food</option>
+              <option value="transport">🚌 Transport</option>
+              <option value="activities">🎭 Activities</option>
+              <option value="shopping">🛍 Shopping</option>
+              <option value="other">📌 Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Paid by</label>
+            <select class="form-select" id="ex-paidby">
+              <option value="me">Me</option>
+              <option value="partner">Partner</option>
+              <option value="split">Split</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Description</label
+          ><input
+            class="form-input"
+            id="ex-desc"
+            placeholder="e.g. Return flights Tokyo"
+          />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Estimated ($)</label
+            ><input
+              class="form-input"
+              type="number"
+              id="ex-est"
+              placeholder="0.00"
+              min="0"
+              step="0.01"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Actual ($)</label
+            ><input
+              class="form-input"
+              type="number"
+              id="ex-act"
+              placeholder="0.00"
+              min="0"
+              step="0.01"
+            />
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-secondary" data-close="modal-expense">
+            Cancel</button
+          ><button class="btn btn-primary" id="btn-save-expense">Save</button>
+        </div>
+      </div>
+    </div>
 
-<!-- CALENDAR ADD -->
-<div class="modal-overlay" id="modal-cal-add">
-  <div class="modal">
-    <div class="modal-header"><span class="modal-title" id="cal-add-title">Add Event</span><button class="modal-close" data-close="modal-cal-add">✕</button></div>
-    <div style="display:flex;gap:.5rem;margin-bottom:1.25rem;flex-wrap:wrap" id="cal-add-tabs"></div>
-    <div id="cal-add-form"></div>
-  </div>
-</div>
+    <!-- DOCS VIEWER -->
+    <div class="modal-overlay" id="modal-docs">
+      <div class="modal" style="max-width: 400px">
+        <div class="modal-header">
+          <span class="modal-title">📁 Documents</span
+          ><button class="modal-close" data-close="modal-docs">✕</button>
+        </div>
+        <div id="docs-list"></div>
+      </div>
+    </div>
 
-<div id="toast"></div>
+    <!-- CALENDAR ADD -->
+    <div class="modal-overlay" id="modal-cal-add">
+      <div class="modal">
+        <div class="modal-header">
+          <span class="modal-title" id="cal-add-title">Add Event</span
+          ><button class="modal-close" data-close="modal-cal-add">✕</button>
+        </div>
+        <div
+          style="
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+            flex-wrap: wrap;
+          "
+          id="cal-add-tabs"
+        ></div>
+        <div id="cal-add-form"></div>
+      </div>
+    </div>
 
-<script src="js/config.js"></script>
-<script src="js/utils.js"></script>
-<script src="js/auth.js"></script>
-<script src="js/drive.js"></script>
-<script src="js/upload.js"></script>
-<script src="js/calendar.js"></script>
-<script src="js/wishlist.js"></script>
-<script src="js/activities.js"></script>
-<script src="js/transport.js"></script>
-<script src="js/accommodation.js"></script>
-<script src="js/checklist.js"></script>
-<script src="js/budget.js"></script>
-<script src="js/app.js"></script>
-</body>
+    <div id="toast"></div>
+
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/drive.js"></script>
+    <script src="js/upload.js"></script>
+    <script src="js/calendar.js"></script>
+    <script src="js/wishlist.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/transport.js"></script>
+    <script src="js/accommodation.js"></script>
+    <script src="js/checklist.js"></script>
+    <script src="js/budget.js"></script>
+    <script src="js/app.js"></script>
+  </body>
 </html>
