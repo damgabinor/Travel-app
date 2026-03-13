@@ -1,7 +1,10 @@
 async function initGcal() {
   gcalState("syncing", "Syncing...");
   try {
-    await gapi.client.calendar.calendarList.list({ maxResults: 1 });
+    await gapi.client.calendar.events.list({
+      calendarId: "primary",
+      maxResults: 1,
+    });
     gcalOk = true;
     gcalState("ok", "Synced with Google Calendar");
     await syncAllGcal();

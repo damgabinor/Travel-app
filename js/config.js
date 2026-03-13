@@ -2,7 +2,7 @@ const CLIENT_ID =
   "633441558716-3lbaitogvc09hr2pu4hqp254fbgci2s5.apps.googleusercontent.com";
 const SHARED_FILE_ID = "1w6Sf2uHMfmxh90mEC5mIgU-GWulIf0DZ";
 const SCOPES =
-  "https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/calendar.events";
+  "https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/calendar.events";
 const DATA_FILE = "travel-app-data.json";
 
 let D = {
